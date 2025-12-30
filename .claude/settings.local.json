@@ -1,0 +1,13 @@
+
+{
+  "permissions": {
+    "allow": [
+      "SlashCommand(/init)",
+      "Bash",
+      "Write",
+      "Read"
+    ]
+  },
+  "customInstructions": "Travaille de manière autonome. Explique-moi ce que tu fais.",
+  "outputStyle": "default"
+}

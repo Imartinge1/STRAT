@@ -1,0 +1,246 @@
+%% ========================================================================
+%% ARCHITECTURE ECRAN STRATEGIE V4 - STM32F469NI Discovery
+%% Système de contrôle robotique embarqué pour CRAC 2025
+%% Version: v0.1
+%% ========================================================================
+
+graph TB
+    %% ====================================================================
+    %% DÉFINITION DES SOUS-GRAPHES PAR COUCHE
+    %% ====================================================================
+
+    subgraph HARDWARE["COUCHE MATÉRIELLE - STM32F469NI"]
+        CAN_BUS["🔌 CAN2 Bus<br/>1 Mbps<br/>RX=PB_5 TX=PB_13"]
+        LCD["🖥️ LCD Touchscreen<br/>800x480 OTM8009A<br/>DMA2D GPU"]
+        SD_CARD["💾 SD Card<br/>SDIO Interface<br/>FAT Filesystem"]
+        AUDIO["🔊 CS43L22 Codec<br/>I2S/SAI DMA<br/>44.1kHz Audio"]
+        USB_SERIAL["💻 USB Serial<br/>921600 baud<br/>Debug Console"]
+    end
+
+    subgraph THREADS["COUCHE THREADS FreeRTOS"]
+        direction TB
+
+        subgraph PERMANENT["Threads Permanents"]
+            MAIN_THREAD["⚙️ Main Thread<br/>Priority: Normal<br/>State Machine & UI Logic"]
+            LVGL_THREAD["🎨 ThreadLvgl<br/>Priority: BelowNormal<br/>GUI Rendering 5ms"]
+            SD_THREAD["📁 ThreadSD<br/>Priority: Normal<br/>File Operations"]
+
+            subgraph CAN_THREADS["ThreadCAN Subsystem"]
+                CAN_READ["📥 CAN Read<br/>Priority: High<br/>RX Handler"]
+                CAN_DISPATCH["🔀 CAN Dispatch<br/>Priority: High<br/>Router"]
+                CAN_WRITE["📤 CAN Write<br/>Priority: AboveNormal<br/>TX Handler"]
+            end
+        end
+
+        subgraph DYNAMIC["Threads Dynamiques (On-Demand)"]
+            STRATEGY_THREAD["🎯 Strategy Thread<br/>Priority: Normal<br/>Match Execution"]
+            MP3_DECODER["🎵 MP3 Decoder<br/>Priority: Normal<br/>Helix Decoder"]
+            AUDIO_PLAY["🔈 Audio Playback<br/>Priority: Normal<br/>DMA Management"]
+            GARBAGE["🗑️ Garbage Collector<br/>Priority: Normal<br/>Thread Cleanup"]
+        end
+    end
+
+    subgraph MODULES["COUCHE MODULES APPLICATIFS"]
+        direction TB
+
+        subgraph CORE_LOGIC["Logique Métier"]
+            STRATEGIE["📋 strategie<br/>State Machine<br/>Instruction Exec"]
+            INSTRUCTION["📝 instruction<br/>File Parser<br/>Instruction Queue"]
+            EVITEMENT["🚧 evitement<br/>Obstacle<br/>Avoidance"]
+        end
+
+        subgraph CONTROL["Contrôle Robot"]
+            DEPLACEMENT["🤖 deplacement<br/>Movement<br/>Commands"]
+            HERKULEX["🦾 herkulex<br/>Servo/Actuator<br/>Control"]
+        end
+
+        subgraph UI_MODULES["Interface Utilisateur"]
+            IHM["🖱️ ihm<br/>GUI Implementation<br/>LVGL Events"]
+            TEST["🔧 test<br/>Actuator<br/>Testing"]
+        end
+
+        subgraph UTILS["Utilitaires"]
+            GLOBAL["🌐 global<br/>Global Variables<br/>Robot State"]
+            CONFIG["⚙️ config<br/>INI Parser<br/>mIni Library"]
+            IDENT["🏷️ identCrac<br/>254 CAN ID<br/>Definitions"]
+        end
+    end
+
+    subgraph SYNC["MÉCANISMES DE SYNCHRONISATION"]
+        direction LR
+        MAIL_RD["📬 Mail Read<br/>100 msg buffer"]
+        MAIL_WR["📮 Mail Write<br/>100 msg buffer"]
+        FLAGS_SD["🚩 SD EventFlags<br/>READY/BUSY/ERROR"]
+        FLAGS_SOUND["🚩 Sound EventFlags<br/>BUFFER0/1 READY"]
+        MUTEX_LVGL["🔒 LVGL Mutex<br/>GUI Protection"]
+    end
+
+    %% ====================================================================
+    %% FLUX DE DONNÉES - HARDWARE VERS THREADS
+    %% ====================================================================
+
+    CAN_BUS -.->|"CAN IRQ"| CAN_READ
+    LCD -.->|"Touch IRQ"| LVGL_THREAD
+    SD_CARD -.->|"SDIO IRQ"| SD_THREAD
+    AUDIO -.->|"DMA IRQ<br/>Half/Full"| AUDIO_PLAY
+    USB_SERIAL -.->|"UART RX"| MAIN_THREAD
+
+    %% ====================================================================
+    %% FLUX INTER-THREADS
+    %% ====================================================================
+
+    CAN_READ -->|"Mail Queue"| MAIL_RD
+    MAIL_RD --> CAN_DISPATCH
+    CAN_DISPATCH -->|"Callback<br/>canProcessRx()"| STRATEGY_THREAD
+    CAN_DISPATCH -->|"Callback<br/>remoteControl()"| SD_THREAD
+
+    MAIN_THREAD -->|"send()"| MAIL_WR
+    STRATEGY_THREAD -->|"send()"| MAIL_WR
+    MAIL_WR --> CAN_WRITE
+    CAN_WRITE --> CAN_BUS
+
+    MAIN_THREAD -.->|"Mutex Lock"| MUTEX_LVGL
+    MUTEX_LVGL -.-> LVGL_THREAD
+    LVGL_THREAD --> LCD
+
+    SD_THREAD -->|"EventFlags"| FLAGS_SD
+    FLAGS_SD -.-> MAIN_THREAD
+    FLAGS_SD -.-> STRATEGY_THREAD
+
+    MP3_DECODER -->|"EventFlags<br/>BUFFER_READY"| FLAGS_SOUND
+    FLAGS_SOUND --> AUDIO_PLAY
+    AUDIO_PLAY --> AUDIO
+
+    %% ====================================================================
+    %% FLUX MODULES VERS THREADS
+    %% ====================================================================
+
+    IHM -->|"EventFlags<br/>Button Clicks"| MAIN_THREAD
+    MAIN_THREAD -->|"State Machine"| IHM
+    MAIN_THREAD -->|"new Thread()"| STRATEGY_THREAD
+    MAIN_THREAD -->|"playMp3()"| MP3_DECODER
+    MAIN_THREAD -->|"playMp3()"| AUDIO_PLAY
+
+    STRATEGY_THREAD --> STRATEGIE
+    STRATEGIE --> INSTRUCTION
+    STRATEGIE --> EVITEMENT
+    STRATEGIE --> DEPLACEMENT
+    STRATEGIE --> HERKULEX
+
+    DEPLACEMENT -->|"CAN Msgs<br/>XYT/Lines/Curves"| MAIL_WR
+    HERKULEX -->|"CAN Msgs<br/>Servo/Gripper"| MAIL_WR
+
+    INSTRUCTION -->|"fopen()"| SD_THREAD
+    SD_THREAD --> SD_CARD
+
+    CONFIG -->|"INI Parse"| SD_THREAD
+    GLOBAL <-.-> STRATEGIE
+    GLOBAL <-.-> DEPLACEMENT
+    IDENT -.-> DEPLACEMENT
+    IDENT -.-> HERKULEX
+
+    TEST --> HERKULEX
+    MAIN_THREAD --> TEST
+
+    %% ====================================================================
+    %% CYCLE DE VIE DES THREADS DYNAMIQUES
+    %% ====================================================================
+
+    AUDIO_PLAY -.->|"playback done"| GARBAGE
+    MP3_DECODER -.->|"decode done"| GARBAGE
+    GARBAGE -.->|"terminate()"| MP3_DECODER
+    GARBAGE -.->|"terminate()"| AUDIO_PLAY
+
+    STRATEGY_THREAD -.->|"match end"| MAIN_THREAD
+
+    %% ====================================================================
+    %% LÉGENDE ET STYLES
+    %% ====================================================================
+
+    classDef hardwareClass fill:#e1f5ff,stroke:#01579b,stroke-width:3px,color:#000
+    classDef threadClass fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000
+    classDef moduleClass fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
+    classDef syncClass fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px,color:#000
+    classDef highPrioClass fill:#ffebee,stroke:#b71c1c,stroke-width:3px,color:#000
+
+    class CAN_BUS,LCD,SD_CARD,AUDIO,USB_SERIAL hardwareClass
+    class MAIN_THREAD,LVGL_THREAD,SD_THREAD,STRATEGY_THREAD,MP3_DECODER,AUDIO_PLAY,GARBAGE threadClass
+    class CAN_READ,CAN_DISPATCH,CAN_WRITE highPrioClass
+    class STRATEGIE,INSTRUCTION,EVITEMENT,DEPLACEMENT,HERKULEX,IHM,TEST,GLOBAL,CONFIG,IDENT moduleClass
+    class MAIL_RD,MAIL_WR,FLAGS_SD,FLAGS_SOUND,MUTEX_LVGL syncClass
+
+%% ========================================================================
+%% LÉGENDE DES SYMBOLES ET CONVENTIONS
+%% ========================================================================
+%%
+%% COULEURS:
+%%   - BLEU CLAIR    : Ressources matérielles (CAN, LCD, SD, Audio, USB)
+%%   - ORANGE        : Threads FreeRTOS standards (Normal/BelowNormal priority)
+%%   - ROUGE         : Threads haute priorité (High/AboveNormal - CAN subsystem)
+%%   - VIOLET        : Modules logiciels applicatifs
+%%   - VERT          : Mécanismes de synchronisation (Mail, EventFlags, Mutex)
+%%
+%% TYPES DE FLUX:
+%%   ───>    Flux de données synchrone (appel direct, transfert message)
+%%   -.->    Flux asynchrone (interruption, signal, dépendance faible)
+%%
+%% PRIORITÉS THREADS (FreeRTOS):
+%%   - High          : CAN Read, CAN Dispatch (temps réel critique)
+%%   - AboveNormal   : CAN Write (priorité élevée)
+%%   - Normal        : Main, SD, Strategy, Sound threads (défaut)
+%%   - BelowNormal   : LVGL GUI (plus basse pour éviter blocage)
+%%
+%% THREADS PERMANENTS:
+%%   - Créés au démarrage dans les constructeurs
+%%   - Tournent en continu pendant toute la durée du système
+%%   - Exemples: Main, ThreadLvgl, ThreadSD, ThreadCAN (3 threads)
+%%
+%% THREADS DYNAMIQUES:
+%%   - Créés à la demande via "new Thread()"
+%%   - Terminés après exécution de leur tâche
+%%   - Exemples: Strategy (match), MP3 Decoder, Audio Playback, Garbage
+%%
+%% MÉCANISMES IPC (Inter-Process Communication):
+%%   - Mail Queue    : Buffer FIFO thread-safe (100 msg pour CAN RX/TX)
+%%   - EventFlags    : Bits de signalisation (ready/busy/error/ack)
+%%   - Mutex         : Protection section critique (LVGL, SDIO)
+%%   - Callback      : Fonction enregistrée appelée sur événement CAN
+%%
+%% ARCHITECTURE MULTI-COUCHES:
+%%   1. HARDWARE     : STM32F469NI + périphériques (CAN, LCD, SD, Audio)
+%%   2. THREADS      : FreeRTOS (8-10 threads selon contexte)
+%%   3. MODULES      : Logique applicative (stratégie, IHM, contrôle)
+%%   4. SYNC         : Primitives de synchronisation inter-threads
+%%
+%% FLUX CAN DÉTAILLÉ:
+%%   Robot -> CAN Bus -> CAN Read (IRQ) -> Mail Read Buffer (100)
+%%     -> CAN Dispatch (callback routing) -> canProcessRx() Strategy
+%%     -> traitement instruction -> send() -> Mail Write Buffer (100)
+%%     -> CAN Write -> CAN Bus -> Robot
+%%
+%% CONTRAINTE MATÉRIELLE CRITIQUE:
+%%   - CAN1 DÉSACTIVÉ (conflit broches avec écran tactile LCD)
+%%   - Utilisation exclusive de CAN2 (RX=PB_5, TX=PB_13)
+%%
+%% FICHIERS SOURCES PRINCIPAUX:
+%%   - main.cpp                           : Point d'entrée, state machine
+%%   - lib/threadCAN/threadCAN.cpp        : 3 threads CAN (read/dispatch/write)
+%%   - lib/threadLvgl/threadLvgl.cpp      : Rendering GUI LVGL
+%%   - lib/threadSD/threadSD.cpp          : File system operations
+%%   - lib/threadSound/threadSound.cpp    : MP3 decoder + audio playback
+%%   - lib/strategie/strategie.cpp        : Match strategy state machine
+%%   - lib/ihm/ihm.cpp                    : Interface utilisateur LVGL
+%%
+%% TAILLE MÉMOIRE:
+%%   - Mail CAN RX  : 100 messages * sizeof(CANMessage) ≈ 1.6 KB
+%%   - Mail CAN TX  : 100 messages * sizeof(CANMessage) ≈ 1.6 KB
+%%   - LVGL buffers : 2 * (800*480*2)/10 ≈ 150 KB
+%%   - Audio buffers: 2 * 4096 bytes = 8 KB
+%%   - Stack threads: Default mbed (~4 KB par thread)
+%%
+%% SÉCURITÉ TEMPS RÉEL:
+%%   - CAN threads en priorité haute pour garantir réactivité <1ms
+%%   - LVGL en priorité basse pour ne jamais bloquer CAN/SD/Audio
+%%   - Strategy en normal car tolère latence (match sur 100 secondes)
+%%
+%% ========================================================================
