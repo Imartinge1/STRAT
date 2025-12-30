@@ -134,6 +134,7 @@ int main()
     led2 = 0;
     led3 = 0;
 
+    // ===== NOUVEAU SYSTÈME DE DÉTECTION SD =====
     // Démarrage du Ticker pour mise à jour CarteSD toutes les 2 secondes
     carteSDUpdateTicker.attach(callback(updateCarteSD), 2s);
 
@@ -147,6 +148,7 @@ int main()
     {
         ihm.updateCarteSDStatus(false, 0);
     }
+    // ===== FIN NOUVEAU SYSTÈME =====
 
     typedef enum
     {
@@ -162,7 +164,7 @@ int main()
 
     while (1)
     {
-        // Mise à jour périodique de l'onglet CarteSD
+        // ===== NOUVEAU SYSTÈME - Mise à jour périodique de l'onglet CarteSD =====
         if (flagUpdateCarteSD)
         {
             flagUpdateCarteSD = false;
@@ -178,6 +180,7 @@ int main()
                 ihm.updateCarteSDStatus(false, 0);
             }
         }
+        // ===== FIN NOUVEAU SYSTÈME =====
 
         switch (etat)
         {
@@ -709,6 +712,7 @@ int tempsRestant()
     return std::chrono::duration_cast<std::chrono::seconds>(timerMatch.remaining_time()).count();
 }
 
+// ===== NOUVEAU SYSTÈME - Fonctions de mise à jour CarteSD =====
 // Fonction appelée toutes les 2 secondes par le Ticker
 void updateCarteSD()
 {
@@ -720,3 +724,4 @@ int countStrategyFiles()
 {
     return fichiers.size();
 }
+// ===== FIN NOUVEAU SYSTÈME =====

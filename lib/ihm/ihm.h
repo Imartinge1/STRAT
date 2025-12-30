@@ -94,7 +94,7 @@ protected:
     lv_obj_t *tabActionneur;
     lv_obj_t *Pos_init;
 
-    //Onglet "Test"
+    //Onglet "Test Actionneur"
     lv_obj_t *tabTest;
 
     lv_obj_t *testventouse;
@@ -115,6 +115,18 @@ protected:
     // Test Ventouses - Navigation 3 niveaux
     lv_obj_t *btnTestVentouses;          // Bouton principal dans ActionneurInit
     lv_obj_t *ventousesContainer;        // Container pour les menus de navigation
+
+    // Nouvel Onglet "Test" avec navigation hiérarchique
+    lv_obj_t *tabTestNav;                // Nouvel onglet Test
+    lv_obj_t *testNavContainer;          // Container principal de navigation
+    lv_obj_t *testNavNiveau0Container;   // Niveau 0: Bouton Test Ventouses
+    lv_obj_t *testNavNiveau1Container;   // Niveau 1: Choix Position
+    lv_obj_t *testNavNiveau2Container;   // Niveau 2: Choix Numéro
+    lv_obj_t *testNavNiveau3Container;   // Niveau 3: Choix Action
+
+    int testNavNiveau;                   // Niveau actuel (0-3)
+    int testNavPosition;                 // Position choisie: 0=Gauche, 1=Droite
+    int testNavNumero;                   // Numéro choisi: 1-4
 
     // Onglet "CarteSD"
     lv_obj_t *tabCarteSD;
@@ -235,8 +247,19 @@ bool autretest(bool clearIfSet = true) { return getFlag(IHM_FLAG__autre, clearIf
     // CarteSD methods
     void updateCarteSDStatus(bool detected, int fileCount);
 
+    // Nouvel Onglet Test - Méthodes de navigation hiérarchique
+    void testNavInit();                          // Initialise l'onglet Test
+    void testNavShowNiveau0();                   // Niveau 0: Affiche bouton "Test Ventouses"
+    void testNavShowNiveau1();                   // Niveau 1: Affiche Position (Gauche/Droite/Annuler)
+    void testNavShowNiveau2();                   // Niveau 2: Affiche Numéro (V1/V2/V3/V4/Annuler)
+    void testNavShowNiveau3();                   // Niveau 3: Affiche Action (Attraper/Lâcher/Annuler)
+    void testNavExecuteAction(int action);       // Exécute l'action et envoie la commande CAN
+    void testNavRetourNiveau(int niveau);        // Retour au niveau spécifié
+    static void testNavEventHandler(lv_event_t *e); // Gestionnaire d'événements pour Test
+
 
 };
+
 
 
 #endif
