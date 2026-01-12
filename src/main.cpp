@@ -65,6 +65,7 @@ void run_show(void);
 
 int main()
 
+
 {
 
     printf("\n Show debut de l'écran de stratégie ->  \n");
@@ -164,7 +165,7 @@ int main()
 
     while (1)
     {
-        // ===== NOUVEAU SYSTÈME - Mise à jour périodique de l'onglet CarteSD =====
+       // NOUVEAU SYSTÈME - Mise à jour périodique de l'onglet CarteSD 
         if (flagUpdateCarteSD)
         {
             flagUpdateCarteSD = false;
@@ -180,8 +181,7 @@ int main()
                 ihm.updateCarteSDStatus(false, 0);
             }
         }
-        // ===== FIN NOUVEAU SYSTÈME =====
-
+   
         switch (etat)
         {
 
