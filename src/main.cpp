@@ -21,7 +21,6 @@
 
 // v0.1
 
-// ------ init de base pour le tout
 BufferedSerial pc(USBTX, USBRX, 921600); // communication avec le pc
 ThreadCAN threadCAN;                     // gestion de la communication can
 ThreadSD threadSD;                       // gestion de la carde sd
@@ -29,7 +28,7 @@ ThreadLvgl threadLvgl;                   // gestion de lvgl  affichage graphique
 Ihm ihm(&threadLvgl);                    // l'ecran lcd par lvgl on peut dire comme une liaison // variable ihm
 Deplacement deplacement(threadCAN);      // gestion des deplacement par bus can // creation d'un  variable deplacement pour effectuer c'est derniere
 Herkulex herkulex(threadCAN);            // herculex = actionneur // creation de la variable actionneur
-// --------------------------------------
+
 // gestion fichier et carte sd
 vector<string> fichiers;
 bool listeFichiers();
@@ -97,7 +96,7 @@ int main()
     //         NVIC_SystemReset();
     // }
 
-    // fin de la verif  -----------
+   
 
     readConfig(); // lecture du de carte sd avec les dossier et parametre
 
@@ -129,14 +128,13 @@ int main()
 
     ihm.show(fichiers); // onglet avec les fichier de strategie affichier
     ihm.ActionneurInit();
-    ihm.testTabInit();
     ThisThread::sleep_for(1ms);
     led1 = 0;
     led2 = 0;
     led3 = 0;
 
-    // ===== NOUVEAU SYSTÈME DE DÉTECTION SD =====
-    // Démarrage du Ticker pour mise à jour CarteSD toutes les 2 secondes
+   
+    // Démarrage du Ticket pour mise à jour CarteSD toutes les 2 secondes
     carteSDUpdateTicker.attach(callback(updateCarteSD), 2s);
 
     // Mise à jour initiale immédiate de l'état de la carte SD
@@ -149,23 +147,20 @@ int main()
     {
         ihm.updateCarteSDStatus(false, 0);
     }
-    // ===== FIN NOUVEAU SYSTÈME =====
-
+   
+    
     typedef enum
     {
         multi_init,
         show_run_page,
-        test,
-        test_ventouse_position,
-        test_ventouse_numero,
-        test_ventouse_action
+        test
     } type_etat;
     static type_etat etat;
     etat = multi_init;
 
     while (1)
     {
-       // NOUVEAU SYSTÈME - Mise à jour périodique de l'onglet CarteSD 
+       //  Mise à jour périodique de l'onglet CarteSD 
         if (flagUpdateCarteSD)
         {
             flagUpdateCarteSD = false;
@@ -442,76 +437,7 @@ int main()
             }
             else if (ihm.autretest())
             {
-                // Test si c'est le bouton Test Ventouses
-                if (flag_test_ventouses_clicked)
-                {
-                    flag_test_ventouses_clicked = false;
-                    selected_ventouse_position = 0;
-                    selected_ventouse_numero = 0;
-                    selected_ventouse_action = 0;
-                    etat = test_ventouse_position;
-                }
-                else
-                {
-                    threadCAN.sendAck(TEST_BRAS_1, 8);
-                }
-            }
-            break;
-
-        case test_ventouse_position:
-            ihm.showVentousePositionBox();
-            ThisThread::sleep_for(5s);
-            ihm.showVentousePositionBoxClose();
-
-            if (selected_ventouse_position == 4 || selected_ventouse_position == 0)
-            {
-                // Annuler ou timeout
-                etat = multi_init;
-            }
-            else if (selected_ventouse_position >= 1 && selected_ventouse_position <= 3)
-            {
-                etat = test_ventouse_numero;
-            }
-            break;
-
-        case test_ventouse_numero:
-            ihm.showVentouseNumeroBox();
-            ThisThread::sleep_for(5s);
-            ihm.showVentouseNumeroBoxClose();
-
-            if (selected_ventouse_numero == 6 || selected_ventouse_numero == 0)
-            {
-                // Annuler ou timeout
-                etat = multi_init;
-            }
-            else if (selected_ventouse_numero >= 1 && selected_ventouse_numero <= 5)
-            {
-                etat = test_ventouse_action;
-            }
-            break;
-
-        case test_ventouse_action:
-            ihm.showVentouseActionBox();
-            ThisThread::sleep_for(5s);
-            ihm.showVentouseActionBoxClose();
-
-            if (selected_ventouse_action == 3 || selected_ventouse_action == 0)
-            {
-                // Annuler ou timeout
-                etat = multi_init;
-            }
-            else if (selected_ventouse_action >= 1 && selected_ventouse_action <= 2)
-            {
-                // Executer l'action
-                printf("\n Test Ventouse effectue : \n");
-                printf("   Position: %d (1=Gauche, 2=Droite, 3=Les deux)\n", selected_ventouse_position);
-                printf("   Numero: %d (1-4=Ventouse, 5=Les 4)\n", selected_ventouse_numero);
-                printf("   Action: %d (1=Attraper, 2=Lacher)\n", selected_ventouse_action);
-
-                // TODO: Envoyer la commande CAN correspondante
-                // threadCAN.sendAck(ID_VENTOUSE_XX, valeur);
-
-                etat = multi_init;
+                threadCAN.sendAck(TEST_BRAS_1, 8);
             }
             break;
 
@@ -586,9 +512,7 @@ bool listeFichiers()
     {
         return false;
     }
-    // Récupère le résultat sous la forme /chemin*dossier1*dossier2*dossier3:fichier1:fichier2:fichier3?   * pour dossier  : pour fichier  ? pour fin
-    // Enlève le ? à la fin
-    if (!reply.empty())
+    // Récupère le résultat 
     {
         reply.pop_back();
     }
@@ -599,7 +523,7 @@ bool listeFichiers()
     {
         while (getline(txtStream, item, ':'))
         {
-            // Range chaque nom de fichier dans un tableau de string
+            // Range chaque nom de fichier 
             fichiers.push_back(item);
         }
     }
@@ -612,21 +536,11 @@ bool lectureFichier(int choix)
     string ligne;
     if (choix < 0)
     {
-        // Que faire si choix == -1 ????
+        
         return false;
     }
     ficStrat = "/sd" + config["Dossiers"]["strategie"] + "/" + fichiers[choix];
-    // ifstream monFlux(ficStrat);  // Ouverture d'un fichier en lecture
-    // if (monFlux) {
-    //     // Tout est prêt pour la lecture.
-    //     while (getline(monFlux, ligne)) {  // On lit une ligne complète
-    //         // printf("%s\n", ligne.c_str());
-    //         listeInstructions.ajout(ligne.c_str());
-    //         // debug_Instruction(listeInstructions.derniere());
-    //     }
-    //     monFlux.close();
-    //     return true;
-    // }
+ 
     FILE *f = fopen(ficStrat.c_str(), "r"); // Ouverture d'un fichier en lecture
     if (f)
     {
@@ -651,8 +565,8 @@ bool lectureFichier(int choix)
         fclose(f);
         return true;
     }
-    // ERREUR: Impossible d'ouvrir le fichier en lecture
-    // On fait la même chose que pour choix == -1 ????
+  
+    
     return false;
 }
 // bool lectureFichier(int choix) {
@@ -684,7 +598,7 @@ bool jack()
     return ((jackPin.read()) || getFlag(JACK, true));
 }
 
-// ancien code ------------------------------------------------------------
+
 
 void runRecalage()
 {
@@ -712,16 +626,15 @@ int tempsRestant()
     return std::chrono::duration_cast<std::chrono::seconds>(timerMatch.remaining_time()).count();
 }
 
-// ===== NOUVEAU SYSTÈME - Fonctions de mise à jour CarteSD =====
-// Fonction appelée toutes les 2 secondes par le Ticker
+//Fonctions de mise à jour CarteSD
 void updateCarteSD()
 {
     flagUpdateCarteSD = true;
 }
 
-// Fonction helper pour compter les fichiers de stratégie
+// Fonction pour compter les fichiers de stratégie
 int countStrategyFiles()
 {
     return fichiers.size();
 }
-// ===== FIN NOUVEAU SYSTÈME =====
+

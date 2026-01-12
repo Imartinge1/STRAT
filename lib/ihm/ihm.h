@@ -12,12 +12,6 @@
 #define FONT_NORMAL &liberation_24
 #define FONT_LARGE &liberation_40
 
-// Variables globales pour test ventouses
-extern int selected_ventouse_position;
-extern int selected_ventouse_numero;
-extern int selected_ventouse_action;
-extern bool flag_test_ventouses_clicked;
-
 // Variables globales pour sélection ascenseur et niveau
 extern int selected_level;
 extern int selected_ascenceur;
@@ -60,7 +54,7 @@ protected:
         IHM_FLAG_Niveaux_base =    (1UL << 19),
         IHM_FLAG_Niveaux_base_avant  =   (1UL << 26),
         IHM_FLAG_Niveaux_base_arriere =   (1UL << 27),
-        IHM_FLAG__choix_niv = (1UL << 31) , 
+        IHM_FLAG__choix_niv = (1UL << 31) ,
 
        IHM_FLAG__Position_init =       (1UL << 20),
 
@@ -94,39 +88,20 @@ protected:
     lv_obj_t *tabActionneur;
     lv_obj_t *Pos_init;
 
-    //Onglet "Test Actionneur"
-    lv_obj_t *tabTest;
-
     lv_obj_t *testventouse;
     lv_obj_t *testventouse_avant ;
     lv_obj_t *testventouse_arriere ;
 
     lv_obj_t *Gradinniveaux2;
-        lv_obj_t * Gradinniveaux2_avant ; 
-        lv_obj_t * Gradinniveaux2_arriere ; 
+        lv_obj_t * Gradinniveaux2_avant ;
+        lv_obj_t * Gradinniveaux2_arriere ;
 
     lv_obj_t *niveaux_base ;
         lv_obj_t *niveauxbase_avant ;
-        lv_obj_t *niveauxbase_arriere ; 
+        lv_obj_t *niveauxbase_arriere ;
 
     lv_obj_t * lacher ;
     lv_obj_t * autre ;
-
-    // Test Ventouses - Navigation 3 niveaux
-    lv_obj_t *btnTestVentouses;          // Bouton principal dans ActionneurInit
-    lv_obj_t *ventousesContainer;        // Container pour les menus de navigation
-
-    // Nouvel Onglet "Test" avec navigation hiérarchique
-    lv_obj_t *tabTestNav;                // Nouvel onglet Test
-    lv_obj_t *testNavContainer;          // Container principal de navigation
-    lv_obj_t *testNavNiveau0Container;   // Niveau 0: Bouton Test Ventouses
-    lv_obj_t *testNavNiveau1Container;   // Niveau 1: Choix Position
-    lv_obj_t *testNavNiveau2Container;   // Niveau 2: Choix Numéro
-    lv_obj_t *testNavNiveau3Container;   // Niveau 3: Choix Action
-
-    int testNavNiveau;                   // Niveau actuel (0-3)
-    int testNavPosition;                 // Position choisie: 0=Gauche, 1=Droite
-    int testNavNumero;                   // Numéro choisi: 1-4
 
     // Onglet "CarteSD"
     lv_obj_t *tabCarteSD;
@@ -139,7 +114,7 @@ protected:
 
     // Message Box recalage
     lv_obj_t *msgBoxRecalage;
-    lv_obj_t * msgBoxmatchmessage ; 
+    lv_obj_t * msgBoxmatchmessage ;
     // Message Box jack
     lv_obj_t *msgBoxJack;
     // Message Box générique
@@ -149,14 +124,9 @@ protected:
     void carteSDInit(lv_obj_t *parent);
     static void eventHandler(lv_event_t *e);
     bool getFlag(IhmFlag f, bool clearIfSet = true);
-    
+
 
 public:
-    // Variables publiques pour le système de test ventouses (accessibles par callbacks)
-    int ventousesCote;                   // 0=gauche, 1=droite, 2=les_deux
-    int ventousesNumero;                 // 1/2/3/4
-    int ventousesAction;                 // 0=attraper, 1=lacher, 2=les_deux
-
     Ihm(ThreadLvgl *t);
     void show(const vector<string> fichiers);
     void matchRollerSetOptions(const vector<string> fichiers, bool lock = true);
@@ -169,12 +139,12 @@ public:
     bool construction_niveaux_2(bool clearIfSet = true) { return getFlag(IHM_FLAG_Gradin_niveaux_2, clearIfSet); }
         bool construction_niveaux_2_avant(bool clearIfSet = true) { return getFlag(IHM_FLAG_Gradin_niveaux_2_avant, clearIfSet); }
         bool construction_niveaux_2_arriere(bool clearIfSet = true) { return getFlag(IHM_FLAG_Gradin_niveaux_2_arriere, clearIfSet); }
-    
+
     bool Niveaux_base(bool clearIfSet = true) { return getFlag(   IHM_FLAG_Niveaux_base, clearIfSet); }
         bool Niveaux_base_avant(bool clearIfSet = true) { return getFlag(   IHM_FLAG_Niveaux_base_avant, clearIfSet); }
         bool Niveaux_base_arriere(bool clearIfSet = true) { return getFlag(   IHM_FLAG_Niveaux_base_arriere, clearIfSet); }
      bool choix (bool clearIfSet = true) { return getFlag(IHM_FLAG__choix_niv , clearIfSet); }
-    
+
 
      bool lacherflag(bool clearIfSet = true) { return getFlag(IHM_FLAG_Lacher, clearIfSet); }
 
@@ -196,7 +166,7 @@ bool autretest(bool clearIfSet = true) { return getFlag(IHM_FLAG__autre, clearIf
     bool recalageHautDroitClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_RECALAGE_HAUTDROIT, clearIfSet); }
     bool recalageBasDroitClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_RECALAGE_BASDROIT, clearIfSet); }
     bool recalageMilieuHautClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_RECALAGE_HAUTMILIEU, clearIfSet);}
-    
+
     bool activationRecalageClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_RECALAGE_ETAT, clearIfSet); }
     bool playClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_PLAY, clearIfSet); }
     bool stopClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_STOP, clearIfSet); }
@@ -204,8 +174,8 @@ bool autretest(bool clearIfSet = true) { return getFlag(IHM_FLAG__autre, clearIf
     bool resetClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_RESET, clearIfSet); }
     bool volumeChanged(bool clearIfSet = true) { return getFlag(IHM_FLAG_VOLUME, clearIfSet); }
    // bool actionneurPoseCeriseClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_ACTIONNEUR_POSE_CERISE, clearIfSet); }
-    
-    
+
+
     bool asservOnClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_ACTIONNEUR_ASSERV_ON, clearIfSet); }
     bool asservOffClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_ACTIONNEUR_ASSERV_OFF, clearIfSet); }
     int choixStrategie() { return departStrategie; }
@@ -223,39 +193,15 @@ bool autretest(bool clearIfSet = true) { return getFlag(IHM_FLAG__autre, clearIf
     void ActionneurInit();
     void configRollerSetOptions(const vector<string> fichiers, bool lock = true);
     void configStopPlaying();
-    void showButtonSelectionBox() ; 
-    void showButtonSelectionBoxClose() ; 
+    void showButtonSelectionBox() ;
+    void showButtonSelectionBoxClose() ;
     void showButtonascenceurBox() ;
     void showButtonascenceurBoxClose() ;
     void msgBoxmatchshow (const string &strategie) ;
     void msgBoxmatchshowclose ()  ;
-    void testTabInit();
-    void showVentousePositionBox();
-    void showVentousePositionBoxClose();
-    void showVentouseNumeroBox();
-    void showVentouseNumeroBoxClose();
-    void showVentouseActionBox();
-    void showVentouseActionBoxClose();
-
-    // Test Ventouses - Méthodes de navigation
-    void showVentousesNiveau1();         // Affiche: Gauche/Droite/Les deux
-    void showVentousesNiveau2(int cote); // Affiche: Ventouse 1/2/3/4/Annuler
-    void showVentousesNiveau3(int cote, int numero); // Affiche: Attraper/Lâcher/Les deux/Annuler
-    void executeVentouse(int cote, int numero, int action); // Fonction finale d'exécution
-    void closeVentousesMenu();           // Ferme le menu et retourne à ActionneurInit
 
     // CarteSD methods
     void updateCarteSDStatus(bool detected, int fileCount);
-
-    // Nouvel Onglet Test - Méthodes de navigation hiérarchique
-    void testNavInit();                          // Initialise l'onglet Test
-    void testNavShowNiveau0();                   // Niveau 0: Affiche bouton "Test Ventouses"
-    void testNavShowNiveau1();                   // Niveau 1: Affiche Position (Gauche/Droite/Annuler)
-    void testNavShowNiveau2();                   // Niveau 2: Affiche Numéro (V1/V2/V3/V4/Annuler)
-    void testNavShowNiveau3();                   // Niveau 3: Affiche Action (Attraper/Lâcher/Annuler)
-    void testNavExecuteAction(int action);       // Exécute l'action et envoie la commande CAN
-    void testNavRetourNiveau(int niveau);        // Retour au niveau spécifié
-    static void testNavEventHandler(lv_event_t *e); // Gestionnaire d'événements pour Test
 
 
 };
