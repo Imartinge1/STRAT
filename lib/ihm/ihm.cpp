@@ -235,51 +235,51 @@ void Ihm::ActionneurInit()
                          LV_GRID_ALIGN_STRETCH, 2, 1);
     lv_obj_add_event_cb(testventouse, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
-    // Bouton "Test Construction"
-    Gradinniveaux2 = lv_btn_create(container);
-    label = lv_label_create(Gradinniveaux2);
-    lv_label_set_text(label, "Test Construction");
-    lv_obj_add_flag(Gradinniveaux2, LV_OBJ_FLAG_CHECKABLE);
-    lv_obj_set_style_bg_color(Gradinniveaux2, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(Gradinniveaux2, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
-    lv_obj_center(label);
-    lv_obj_set_grid_cell(Gradinniveaux2, LV_GRID_ALIGN_STRETCH, 1, 1,
-                         LV_GRID_ALIGN_STRETCH, 1, 1);
-    lv_obj_add_event_cb(Gradinniveaux2, Ihm::eventHandler, LV_EVENT_CLICKED, this);
+    // // Bouton "Test Construction"  
+    // Gradinniveaux2 = lv_btn_create(container);
+    // label = lv_label_create(Gradinniveaux2);
+    // lv_label_set_text(label, "Test Construction");
+    // lv_obj_add_flag(Gradinniveaux2, LV_OBJ_FLAG_CHECKABLE);
+    // lv_obj_set_style_bg_color(Gradinniveaux2, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
+    // lv_obj_set_style_bg_color(Gradinniveaux2, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
+    // lv_obj_center(label);
+    // lv_obj_set_grid_cell(Gradinniveaux2, LV_GRID_ALIGN_STRETCH, 1, 1,
+    //                      LV_GRID_ALIGN_STRETCH, 1, 1);
+    // lv_obj_add_event_cb(Gradinniveaux2, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
-    // Bouton "Test Niveaux B"
-    niveaux_base = lv_btn_create(container);
-    label = lv_label_create(niveaux_base);
-    lv_label_set_text(label, "Test Niveaux B");
-    lv_obj_add_flag(niveaux_base, LV_OBJ_FLAG_CHECKABLE);
-    lv_obj_set_style_bg_color(niveaux_base, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(niveaux_base, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
-    lv_obj_center(label);
-    lv_obj_set_grid_cell(niveaux_base, LV_GRID_ALIGN_STRETCH, 1, 1,
-                         LV_GRID_ALIGN_STRETCH, 2, 1);
-    lv_obj_add_event_cb(niveaux_base, Ihm::eventHandler, LV_EVENT_CLICKED, this);
+    // // Bouton "Test Niveaux B"
+    // niveaux_base = lv_btn_create(container);
+    // label = lv_label_create(niveaux_base);
+    // lv_label_set_text(label, "Test Niveaux B");
+    // lv_obj_add_flag(niveaux_base, LV_OBJ_FLAG_CHECKABLE);
+    // lv_obj_set_style_bg_color(niveaux_base, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
+    // lv_obj_set_style_bg_color(niveaux_base, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
+    // lv_obj_center(label);
+    // lv_obj_set_grid_cell(niveaux_base, LV_GRID_ALIGN_STRETCH, 1, 1,
+    //                      LV_GRID_ALIGN_STRETCH, 2, 1);
+    // lv_obj_add_event_cb(niveaux_base, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
-    // Bouton "Lâcher"
-    lacher = lv_btn_create(container);
-    label = lv_label_create(lacher);
-    lv_label_set_text(label, " Test Lâcher");
-    lv_obj_add_flag(lacher, LV_OBJ_FLAG_CHECKABLE);
-    lv_obj_set_style_bg_color(lacher, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(lacher, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
-    lv_obj_center(label);
-    lv_obj_set_grid_cell(lacher, LV_GRID_ALIGN_STRETCH, 2, 1, LV_GRID_ALIGN_STRETCH, 1, 1);
-    lv_obj_add_event_cb(lacher, Ihm::eventHandler, LV_EVENT_CLICKED, this);
+    // // Bouton "Lâcher"
+    // lacher = lv_btn_create(container);
+    // label = lv_label_create(lacher);
+    // lv_label_set_text(label, " Test Lâcher");
+    // lv_obj_add_flag(lacher, LV_OBJ_FLAG_CHECKABLE);
+    // lv_obj_set_style_bg_color(lacher, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
+    // lv_obj_set_style_bg_color(lacher, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
+    // lv_obj_center(label);
+    // lv_obj_set_grid_cell(lacher, LV_GRID_ALIGN_STRETCH, 2, 1, LV_GRID_ALIGN_STRETCH, 1, 1);
+    // lv_obj_add_event_cb(lacher, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
-    // Bouton "Autre"
-    autre = lv_btn_create(container);
-    label = lv_label_create(autre);
-    lv_label_set_text(label, "Test jpo");
-    lv_obj_add_flag(autre, LV_OBJ_FLAG_CHECKABLE);
-    lv_obj_set_style_bg_color(autre, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(autre, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
-    lv_obj_center(label);
-    lv_obj_set_grid_cell(autre, LV_GRID_ALIGN_STRETCH, 2, 1, LV_GRID_ALIGN_STRETCH, 2, 1);
-    lv_obj_add_event_cb(autre, Ihm::eventHandler, LV_EVENT_CLICKED, this);
+    // // Bouton "Autre"
+    // autre = lv_btn_create(container);
+    // label = lv_label_create(autre);
+    // lv_label_set_text(label, "Test jpo");
+    // lv_obj_add_flag(autre, LV_OBJ_FLAG_CHECKABLE);
+    // lv_obj_set_style_bg_color(autre, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
+    // lv_obj_set_style_bg_color(autre, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
+    // lv_obj_center(label);
+    // lv_obj_set_grid_cell(autre, LV_GRID_ALIGN_STRETCH, 2, 1, LV_GRID_ALIGN_STRETCH, 2, 1);
+    // lv_obj_add_event_cb(autre, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
     m_threadLvgl->unlock();
 }
@@ -501,35 +501,35 @@ static void selection_event_handler(lv_event_t *e)
     lv_obj_t *btn = lv_event_get_target(e);
     const char *btn_txt = lv_msgbox_get_active_btn_text(msgBoxSelection);
 
-    if (strcmp(btn_txt, "Niveaux 1") == 0)
+    if (strcmp(btn_txt, "1") == 0)
     {
         selected_level = 1;
     }
-    else if (strcmp(btn_txt, "Niveaux 2") == 0)
+    else if (strcmp(btn_txt, "2") == 0)
     {
         selected_level = 2;
     }
-    else if (strcmp(btn_txt, "Stable") == 0)
+    else if (strcmp(btn_txt, "3") == 0)
     {
         selected_level = 3;
     }
-    else if (strcmp(btn_txt, "Tout") == 0)
+    else if (strcmp(btn_txt, "4") == 0)
     {
         selected_level = 4;
     }
-    else if (strcmp(btn_txt, "Aucun") == 0)
+    else if (strcmp(btn_txt, "Annuler") == 0)
     {
         selected_level = 0;
     }
-    else if (strcmp(btn_txt, "Ventouse bas") == 0)
-    {
-        selected_level = 1;
-    }
-    else if (strcmp(btn_txt, " Ventouse haut") == 0)
-    {
-        selected_level = 2;
-    }
-    else if (strcmp(btn_txt, "Tt Ventouse") == 0)
+//     else if (strcmp(btn_txt, "Ventouse bas") == 0)
+//     {
+//         selected_level = 1;
+//     }
+//     else if (strcmp(btn_txt, " Ventouse haut") == 0)
+//     {
+//         selected_level = 2;
+//     }
+    else if (strcmp(btn_txt, "Toutes") == 0)
     {
         selected_level = 3;
     }
@@ -539,11 +539,11 @@ static void selection_event_handler(lv_event_t *e)
 void Ihm::showButtonSelectionBox()
 {
     static const char *btns[] = {
-        "Niveaux 1", "Niveaux 2", "Stable", "Tout", "\n",            // Première ligne
-        "Ventouse bas", " Ventouse haut", "Tt Ventouse", "Aucun", "" // Deuxième ligne avec dernier élément vide
+        "1", "2", "3", "4", "\n",            // Première ligne
+        "Toutes", "Annuler", "" // Deuxième ligne avec dernier élément vide
     };
 
-    msgBoxSelection = lv_msgbox_create(lv_scr_act(), "Sélectionner un niveau", "Choisissez un paramètre et attendez un délai de 5s :", btns, true);
+    msgBoxSelection = lv_msgbox_create(lv_scr_act(), "Sélectionner une  ventouse a tester", "Choisissez un paramètre et attendez un délai de 5s :", btns, true);
     lv_obj_set_size(msgBoxSelection, 740, 420);
     lv_obj_add_event_cb(msgBoxSelection, selection_event_handler, LV_EVENT_VALUE_CHANGED, NULL);
 
@@ -568,11 +568,11 @@ static void selection_ascenseur_event_handler(lv_event_t *e)
     lv_obj_t *btn = lv_event_get_target(e);
     const char *btn_txt = lv_msgbox_get_active_btn_text(msgBoxSelectionascenceur);
 
-    if (strcmp(btn_txt, "Avant") == 0)
+    if (strcmp(btn_txt, "Gauche") == 0)
     {
         selected_ascenceur = 1;
     }
-    else if (strcmp(btn_txt, "Arriére") == 0)
+    else if (strcmp(btn_txt, "Droite") == 0)
     {
         selected_ascenceur = 2;
     }
@@ -580,7 +580,7 @@ static void selection_ascenseur_event_handler(lv_event_t *e)
     {
         selected_ascenceur = 3;
     }
-    else if (strcmp(btn_txt, "annuler") == 0)
+    else if (strcmp(btn_txt, "Annuler") == 0)
     {
         selected_ascenceur = 4;
     }
@@ -597,7 +597,7 @@ void Ihm::showButtonascenceurBoxClose()
 
 void Ihm::showButtonascenceurBox()
 {
-    static const char *btns[] = {"Avant", "Arriére", "Les Deux", "annuler", ""}; // Dernier élément vide
+    static const char *btns[] = {"Gauche", "Droite", "Les Deux", "Annuler", ""}; // Dernier élément vide
 
     msgBoxSelectionascenceur = lv_msgbox_create(lv_scr_act(), "Sélectionner une partie du robot", "Une fois selectionnée attendre un delai de 5s :", btns, true);
     lv_obj_set_size(msgBoxSelectionascenceur, 740, 420);
