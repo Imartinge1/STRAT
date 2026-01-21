@@ -8,6 +8,7 @@
 #include "mbed.h"
 
 extern Herkulex herkulex;
+extern Ihm ihm;
 extern int recalageErreur;  // 0 si recalage réussi, valeur négative sinon
 
 struct S_Dodge_queue dodgeq;
@@ -143,7 +144,11 @@ Timer timer_evitement;
 void canProcessRx(CANMessage *rxMsg)
 {
         int identifiant=rxMsg->id;
-      
+
+        // Afficher le message CAN dans l'IHM
+        printf("CAN RX: ID=0x%03X Len=%d\n", rxMsg->id, rxMsg->len);
+        ihm.updateCANMessages(rxMsg->id, rxMsg->data, rxMsg->len);
+
         // printCANMsg(*rxMsg);
         if (waitingId == identifiant) {waitingId = 0;}
         switch(identifiant) {

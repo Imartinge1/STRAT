@@ -16,6 +16,7 @@ Ihm::Ihm(ThreadLvgl *t)
 {
     m_threadLvgl = t;
     msgBoxmatchmessage = nullptr;
+    canMessagesTextArea = nullptr;
 
     t->lock();
 
@@ -195,7 +196,7 @@ void Ihm::ActionneurInit()
 
     static lv_coord_t col[] = {LV_GRID_FR(1), LV_GRID_FR(1), LV_GRID_FR(1), LV_GRID_TEMPLATE_LAST};
 
-    static lv_coord_t row[] = {30, LV_GRID_FR(1), LV_GRID_FR(1), LV_GRID_TEMPLATE_LAST};
+    static lv_coord_t row[] = {30, LV_GRID_FR(1), LV_GRID_FR(1), LV_GRID_FR(1), LV_GRID_TEMPLATE_LAST};
 
     tabActionneur = lv_tabview_add_tab(tabView, "Test Actionneur");
     /*Create a container with grid*/
@@ -235,7 +236,15 @@ void Ihm::ActionneurInit()
                          LV_GRID_ALIGN_STRETCH, 2, 1);
     lv_obj_add_event_cb(testventouse, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
-    // // Bouton "Test Construction"  
+    // Zone de texte pour afficher les messages CAN
+    canMessagesTextArea = lv_textarea_create(container);
+    lv_textarea_set_text(canMessagesTextArea, "Messages CAN:\n");
+    lv_textarea_set_cursor_click_pos(canMessagesTextArea, false);
+    lv_obj_set_style_text_font(canMessagesTextArea, &liberation_24, 0);
+    lv_obj_set_grid_cell(canMessagesTextArea, LV_GRID_ALIGN_STRETCH, 0, 3,
+                         LV_GRID_ALIGN_STRETCH, 2, 1);
+
+    // // Bouton "Test Construction"
     // Gradinniveaux2 = lv_btn_create(container);
     // label = lv_label_create(Gradinniveaux2);
     // lv_label_set_text(label, "Test Construction");
@@ -615,4 +624,55 @@ void Ihm::showButtonascenceurBox()
     }
 }
 
+void Ihm::updateCANMessages(uint32_t id, const uint8_t *data, uint8_t len)
+{
+    printf("updateCANMessages called: ID=0x%03X\n", (unsigned int)id);
+
+    m_threadLvgl->lock();
+
+    if (canMessagesTextArea != nullptr)
+    {
+        printf("TextArea is valid, updating...\n");
+        // Récupérer le texte actuel
+        const char* currentText = lv_textarea_get_text(canMessagesTextArea);
+
+        // Créer le nouveau message formaté
+        char newMsg[100];
+        int pos = sprintf(newMsg, "ID:0x%03X Len:%d Data:", (unsigned int)id, len);
+
+        for (int i = 0; i < len && i < 8; i++)
+        {
+            pos += sprintf(newMsg + pos, " %02X", data[i]);
+        }
+        sprintf(newMsg + pos, "\n");
+
+        // Compter le nombre de lignes
+        int lineCount = 0;
+        for (const char* p = currentText; *p; p++)
+        {
+            if (*p == '\n') lineCount++;
+        }
+
+        // Si plus de 10 lignes, supprimer la plus ancienne
+        if (lineCount > 10)
+        {
+            const char* secondLine = strchr(currentText, '\n');
+            if (secondLine != nullptr)
+            {
+                secondLine++; // Passer le \n
+                lv_textarea_set_text(canMessagesTextArea, secondLine);
+            }
+        }
+
+        // Ajouter le nouveau message
+        lv_textarea_add_text(canMessagesTextArea, newMsg);
+        printf("Message added to textarea\n");
+    }
+    else
+    {
+        printf("ERROR: canMessagesTextArea is nullptr!\n");
+    }
+
+    m_threadLvgl->unlock();
+}
 

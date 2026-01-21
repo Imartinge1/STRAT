@@ -102,6 +102,7 @@ protected:
 
     lv_obj_t * lacher ;
     lv_obj_t * autre ;
+    lv_obj_t * canMessagesTextArea ;
 
     // Onglet "CarteSD"
     lv_obj_t *tabCarteSD;
@@ -155,7 +156,6 @@ public:
 bool autretest(bool clearIfSet = true) { return getFlag(IHM_FLAG__autre, clearIfSet); }
     bool testVentousesClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG__autre, clearIfSet); }
 
-
     bool refreshSDClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_REFRESH_SD, clearIfSet); }
     bool recalageClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_RECALAGE, clearIfSet); }
     bool jackSimuleClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_START, clearIfSet); }
@@ -203,6 +203,8 @@ bool autretest(bool clearIfSet = true) { return getFlag(IHM_FLAG__autre, clearIf
     // CarteSD methods
     void updateCarteSDStatus(bool detected, int fileCount);
 
+    // CAN messages methods
+    void updateCANMessages(uint32_t id, const uint8_t *data, uint8_t len);
 
 };
 
