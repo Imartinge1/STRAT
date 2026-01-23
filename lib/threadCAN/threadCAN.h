@@ -50,8 +50,8 @@ public:
     void send(uint32_t id, const char *data, int len = 8);
     void send(uint32_t id);
     void send(uint32_t id, uint8_t d1);
-    void send(uint32_t id, uint16_t d1);
-    void send(uint32_t id, uint32_t d1);
+    // void send(uint32_t id, uint16_t d1);
+    // void send(uint32_t id, uint32_t d1);
     void send(uint32_t id, uint8_t d1, uint8_t d2);
     void send(uint32_t id, uint16_t d1, uint16_t d2);
     void send(uint32_t id, uint8_t d1, uint8_t d2, uint8_t d3);

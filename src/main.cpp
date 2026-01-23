@@ -69,6 +69,10 @@ int main()
 
     printf("\n Show debut de l'écran de stratégie ->  \n");
 
+    // Envoi d'une trame CAN de test : ID=0x7A0, Data=0x01
+    threadCAN.send(0x7A0, 0x01);
+    printf("Trame CAN envoyée : ID=0x7A0, Data=0x01\n");
+
     char buf[100];                                    // tab de char de 100 // pour ecrire des message
     threadSD.registerCANControl(threadCAN);           // enregistrement de la communication can pour la carte sd
     threadCAN.registerIds(0x01, 0x7FF, canProcessRx); // enregistrement des id can pour la strategie

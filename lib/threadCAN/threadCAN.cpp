@@ -257,7 +257,7 @@ void ThreadCAN::dispatch()
     }
 }
 
-void ThreadCAN::write()
+void ThreadCAN::write() // envoi des messages CAN
 {
     while (1) {
         CANMessage *canMsg = m_mailWriteMsg->try_get_for(Kernel::wait_for_u32_forever);
@@ -282,7 +282,7 @@ void ThreadCAN::write()
     }
 }
 
-void ThreadCAN::send(const CANMessage &msg)
+void ThreadCAN::send(const CANMessage &msg) // envoi d'un message CAN
 {
     CANMessage *canMsg;
     if (m_mailWriteMsg->full()) { // si boite pleine, on vire le plus ancien message
@@ -295,7 +295,7 @@ void ThreadCAN::send(const CANMessage &msg)
     m_mailWriteMsg->put(canMsg);
 }
 
-void ThreadCAN::send(uint32_t id, const char *data, int len)
+void ThreadCAN::send(uint32_t id, const char *data, int len) // envoi d'un message CAN   
 {
     send(CANMessage(id, data, len));
 }
@@ -308,15 +308,17 @@ void ThreadCAN::send(uint32_t id)
     send(msg);
 }
 
-void ThreadCAN::send(uint32_t id, uint16_t d1)
-{
-    CANMessage msg;
-    msg.id=id;
-    msg.len=2;
-    msg.data[0]=(uint8_t)d1;
-    msg.data[1]=(uint8_t)(d1>>8);
-    send(msg);
-}
+// void ThreadCAN::send(uint32_t id, uint16_t d1)
+// {
+//     CANMessage msg;
+//     msg.id=id;
+//     msg.len=2;
+//     msg.data[0]=(uint8_t)d1;
+//     msg.data[1]=(uint8_t)(d1>>8);
+//     send(msg);
+// }
+
+
 
 void ThreadCAN::send(uint32_t id, uint16_t d1, uint16_t d2)
 {
@@ -459,17 +461,17 @@ void ThreadCAN::send(uint32_t id, uint8_t d1, uint16_t d2, uint8_t d3)
     send(msg);
 }
 
-void ThreadCAN::send(uint32_t id, uint32_t d1)
-{
-    CANMessage msg;
-    msg.id=id;
-    msg.len=4;
-    msg.data[0]=(uint8_t)d1;
-    msg.data[1]=(uint8_t)(d1>>8);
-    msg.data[2]=(uint8_t)(d1>>16);
-    msg.data[3]=(uint8_t)(d1>>24);
-    send(msg);
-}
+// void ThreadCAN::send(uint32_t id, uint32_t d1)
+// {
+//     CANMessage msg;
+//     msg.id=id;
+//     msg.len=4;
+//     msg.data[0]=(uint8_t)d1;
+//     msg.data[1]=(uint8_t)(d1>>8);
+//     msg.data[2]=(uint8_t)(d1>>16);
+//     msg.data[3]=(uint8_t)(d1>>24);
+//     send(msg);
+// }
 
 void ThreadCAN::sendAck(uint32_t id, uint16_t from)
 {
