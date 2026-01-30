@@ -25,7 +25,7 @@ public:
 /*                   1 => oui                                                                */
 /*                   2 => dernière instruction de l'enchainement                             */
 /*********************************************************************************************/
-    void toutDroit(int16_t distance);
+    void toutDroit(int16_t distance); 
     void recalage(int16_t distance, uint8_t recalage, uint16_t newValue);
     void courbure(int16_t rayon, int16_t angle, int8_t sens);
 
