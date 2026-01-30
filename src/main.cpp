@@ -72,6 +72,7 @@ int main()
     // Envoi d'une trame CAN de test : ID=0x320, Data=0x01
     threadCAN.send(0x320, 0x01);
     printf("Trame CAN envoyée : ID=0x320, Data=0x01\n");
+    // Attente de 1s
     ThisThread::sleep_for(1s);
     threadCAN.send(0x320, 0x02);
 
