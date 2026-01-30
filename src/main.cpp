@@ -75,10 +75,13 @@ int main()
     ThisThread::sleep_for(1s);
     threadCAN.send(0x320, 0x02);
 
+
     char buf[100];                                    // tab de char de 100 // pour ecrire des message
     threadSD.registerCANControl(threadCAN);           // enregistrement de la communication can pour la carte sd
+    
     threadCAN.registerIds(0x01, 0x7FF, canProcessRx); // enregistrement des id can pour la strategie
-    int secReboot = 60;                               // delai avant reboot si pas de carte sd
+    int secReboot = 60;                               // delai avant reboot si pas de carte sd 
+
 
     // verif de la presence carte sd
 
@@ -441,10 +444,7 @@ int main()
                     NVIC_SystemReset();
                 }
             }
-            else if (ihm.autretest())
-            {
-                threadCAN.sendAck(TEST_BRAS_1, 8);
-            }
+            
             break;
 
         case show_run_page:
@@ -476,7 +476,7 @@ int main()
 
             ihm.showButtonSelectionBoxClose();
             printf("\n Test effectuer  : ID envoyer - >  0x%x ", idprisencompte);
-            ihm.msgBoxInit("C.R.A.C 2025", "\n\nTest en cours\nVeuillez patienter", true);
+            ihm.msgBoxInit("C.R.A.C 2026", "\n\nTest en cours\nVeuillez patienter", true);
             threadCAN.sendAck(idprisencompte, choix_niveau);
             //    threadCAN.sendAck(idprisencompte2 , choix_niveau) ;
             ThisThread::sleep_for(3s);
@@ -494,6 +494,7 @@ int main()
 void run_show()
 {
     color = hyou;
+   
     threadCAN.send(simulateur);
     printf("\n\n Envoie pour le simulateur\n");
     printf("\n\n La stratégie est %s  \n", fichiers[choix].c_str());

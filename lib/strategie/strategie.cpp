@@ -994,17 +994,17 @@ void procesInstructions(Instruction instruction) {
                 {
                     if ( instruction.arg2 == 1 ) // avant 
                      {
-                        threadCAN.send(prendreG) ; 
-                        waitingAckID =prendreG ;
-                       waitingAckID_FIN =prendreG ; 
+                        threadCAN.send(saisir_arriere) ; 
+                        waitingAckID =saisir_arriere ;
+                       waitingAckID_FIN =saisir_arriere ; 
                         printf ("Action saisir gauche \n") ; 
 
                      }
                     else if ( instruction.arg2 == 0 ) // arriere 
                     {
-                        threadCAN.send(prendreD) ; 
-                        waitingAckID =prendreD ;
-                       waitingAckID_FIN =prendreD ; 
+                        threadCAN.send(saisir_avant) ; 
+                        waitingAckID =saisir_avant ;
+                       waitingAckID_FIN =saisir_avant ; 
                         printf ("Action saisir droite \n") ; 
 
                     }

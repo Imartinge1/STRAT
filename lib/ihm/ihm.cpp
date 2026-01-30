@@ -279,13 +279,11 @@ void Ihm::ActionneurInit()
     // lv_obj_set_grid_cell(lacher, LV_GRID_ALIGN_STRETCH, 2, 1, LV_GRID_ALIGN_STRETCH, 1, 1);
     // lv_obj_add_event_cb(lacher, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
-    // // Bouton "Autre"
+    // // Bouton "Test CAN 0x7A0" - Désactivé
     // autre = lv_btn_create(container);
     // label = lv_label_create(autre);
-    // lv_label_set_text(label, "Test jpo");
-    // lv_obj_add_flag(autre, LV_OBJ_FLAG_CHECKABLE);
+    // lv_label_set_text(label, "Test CAN 0x7A0");
     // lv_obj_set_style_bg_color(autre, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
-    // lv_obj_set_style_bg_color(autre, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
     // lv_obj_center(label);
     // lv_obj_set_grid_cell(autre, LV_GRID_ALIGN_STRETCH, 2, 1, LV_GRID_ALIGN_STRETCH, 2, 1);
     // lv_obj_add_event_cb(autre, Ihm::eventHandler, LV_EVENT_CLICKED, this);
@@ -336,10 +334,11 @@ void Ihm::eventHandler(lv_event_t *e)
     {
         ihm->flags.set(IHM_FLAG__Position_init);
     }
-    else if (emetteur == ihm->autre && lv_obj_has_state(emetteur, LV_STATE_CHECKED))
-    {
-        ihm->flags.set(IHM_FLAG__autre);
-    }
+    // else if (emetteur == ihm->autre)
+    // {
+    //     // Bouton push simple : un clic = un envoi de trame
+    //     ihm->flags.set(IHM_FLAG__autre);
+    // }
     else if (emetteur == ihm->depart)
     {
         ihm->departCouleur = lv_obj_get_state(ihm->couleur);

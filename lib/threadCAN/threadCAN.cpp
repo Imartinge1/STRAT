@@ -1,6 +1,5 @@
 #include "threadCAN.h"
 
-
 ThreadCAN::ThreadCAN(bool serialEmul, PinName rd, PinName td) : m_readThread(osPriorityHigh), m_dispatchThread(osPriorityHigh), m_writeThread(osPriorityAboveNormal)
 {
     m_mailReadMsg = new Mail<CANMessage, CAN_MAIL_BUFFER_SIZE>;
@@ -18,8 +17,6 @@ ThreadCAN::ThreadCAN(bool serialEmul, PinName rd, PinName td) : m_readThread(osP
     m_dispatchThread.start(callback(ThreadCAN::dispatchThread, this));
     m_writeThread.start(callback(ThreadCAN::writeThread, this));
 }
-
-
 
 ThreadCAN::~ThreadCAN()
 {
@@ -46,8 +43,6 @@ ThreadCAN::~ThreadCAN()
     m_mailWriteMsg = nullptr;
 }
 
-
-
 void ThreadCAN::attach()
 {
     CANMessage *canMsg;
@@ -60,7 +55,6 @@ void ThreadCAN::attach()
     m_can->read(*canMsg);
     m_mailReadMsg->put(canMsg);
 }
-
 
 void ThreadCAN::serialToCanBusMachine()
 {
@@ -150,8 +144,6 @@ void ThreadCAN::serialToCanBusMachine()
     }
 }
 
-
-
 void ThreadCAN::sendCanBusToSerial(const CANMessage &msg)
 {
     uint8_t msgSerial[15];
@@ -192,7 +184,6 @@ void ThreadCAN::sendCanBusToSerial(const CANMessage &msg)
     msgSerial[lenMsgSerial++] = ~checksum;
     m_pc->write(msgSerial, lenMsgSerial);
 }
-
 
 void ThreadCAN::registerIds(int idMin, int idMax, void (*func)(CANMessage *))
 {
@@ -257,7 +248,7 @@ void ThreadCAN::dispatch()
     }
 }
 
-void ThreadCAN::write() // envoi des messages CAN
+void ThreadCAN::write()
 {
     while (1) {
         CANMessage *canMsg = m_mailWriteMsg->try_get_for(Kernel::wait_for_u32_forever);
@@ -270,7 +261,7 @@ void ThreadCAN::write() // envoi des messages CAN
                     if (ok) break;
                 }
                 if (!ok) {
-                    while (!m_can->write(*canMsg)) {
+                    while (!m_can->write(*canMsg)) { 
                         ThisThread::sleep_for(10ms);
                     }
                 }
@@ -282,7 +273,7 @@ void ThreadCAN::write() // envoi des messages CAN
     }
 }
 
-void ThreadCAN::send(const CANMessage &msg) // envoi d'un message CAN
+void ThreadCAN::send(const CANMessage &msg) //
 {
     CANMessage *canMsg;
     if (m_mailWriteMsg->full()) { // si boite pleine, on vire le plus ancien message
@@ -295,7 +286,7 @@ void ThreadCAN::send(const CANMessage &msg) // envoi d'un message CAN
     m_mailWriteMsg->put(canMsg);
 }
 
-void ThreadCAN::send(uint32_t id, const char *data, int len) // envoi d'un message CAN   
+void ThreadCAN::send(uint32_t id, const char *data, int len)
 {
     send(CANMessage(id, data, len));
 }
@@ -317,8 +308,6 @@ void ThreadCAN::send(uint32_t id)
 //     msg.data[1]=(uint8_t)(d1>>8);
 //     send(msg);
 // }
-
-
 
 void ThreadCAN::send(uint32_t id, uint16_t d1, uint16_t d2)
 {
@@ -375,7 +364,7 @@ void ThreadCAN::send(uint32_t id, uint16_t d1, uint8_t d2, uint16_t d3, uint8_t 
     send(msg);
 }
 
-void ThreadCAN::send(uint32_t id, uint16_t d1, uint16_t d2, uint8_t d3, uint8_t d4)
+void ThreadCAN::send(uint32_t id, uint16_t d1, uint16_t d2, uint8_t d3, uint8_t d4) 
 {
     CANMessage msg;
     msg.id=id;
@@ -389,7 +378,7 @@ void ThreadCAN::send(uint32_t id, uint16_t d1, uint16_t d2, uint8_t d3, uint8_t 
     send(msg);
 }
 
-void ThreadCAN::send(uint32_t id, uint8_t d1)
+void ThreadCAN::send(uint32_t id, uint8_t d1) 
 {
     CANMessage msg;
     msg.id=id;
@@ -398,7 +387,7 @@ void ThreadCAN::send(uint32_t id, uint8_t d1)
     send(msg);    
 }
 
-void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2)
+void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2) 
 {
     CANMessage msg;
     msg.id=id;
@@ -408,7 +397,7 @@ void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2)
     send(msg);    
 }
 
-void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2, uint8_t d3)
+void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2, uint8_t d3) 
 {
     CANMessage msg;
     msg.id=id;
@@ -419,7 +408,7 @@ void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2, uint8_t d3)
     send(msg);    
 }
 
-void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2, uint16_t d3, uint8_t d4, uint8_t d5)
+void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2, uint16_t d3, uint8_t d4, uint8_t d5) 
 {
     CANMessage msg;
     msg.id=id;
@@ -433,7 +422,7 @@ void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2, uint16_t d3, uint8_t d
     send(msg);
 }
 
-void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2, uint16_t d3, uint8_t d4, uint16_t d5, uint8_t d6)
+void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2, uint16_t d3, uint8_t d4, uint16_t d5, uint8_t d6) 
 {
     CANMessage msg;
     msg.id=id;
@@ -449,7 +438,7 @@ void ThreadCAN::send(uint32_t id, uint8_t d1, uint8_t d2, uint16_t d3, uint8_t d
     send(msg);
 }
 
-void ThreadCAN::send(uint32_t id, uint8_t d1, uint16_t d2, uint8_t d3)
+void ThreadCAN::send(uint32_t id, uint8_t d1, uint16_t d2, uint8_t d3) 
 {
     CANMessage msg;
     msg.id=id;
@@ -461,7 +450,7 @@ void ThreadCAN::send(uint32_t id, uint8_t d1, uint16_t d2, uint8_t d3)
     send(msg);
 }
 
-// void ThreadCAN::send(uint32_t id, uint32_t d1)
+// void ThreadCAN::send(uint32_t id, uint32_t d1) // envoyer 32 bits
 // {
 //     CANMessage msg;
 //     msg.id=id;
@@ -473,7 +462,7 @@ void ThreadCAN::send(uint32_t id, uint8_t d1, uint16_t d2, uint8_t d3)
 //     send(msg);
 // }
 
-void ThreadCAN::sendAck(uint32_t id, uint16_t from)
+void ThreadCAN::sendAck(uint32_t id, uint16_t from) 
 {
     CANMessage msg;
     msg.id = id;
@@ -483,7 +472,7 @@ void ThreadCAN::sendAck(uint32_t id, uint16_t from)
     send(msg);
 }
 
-void ThreadCAN::sendRemote(uint32_t id, int len)
+void ThreadCAN::sendRemote(uint32_t id, int len) 
 {
     CANMessage msg;
     msg.id = id;
