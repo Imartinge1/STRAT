@@ -275,9 +275,9 @@ void ThreadCAN::write()
 
 void ThreadCAN::send(const CANMessage &msg)
 {
-    CANMessage *canMsg;
+    CANMessage *canMsg; 
     if (m_mailWriteMsg->full()) { // si boite pleine, on vire le plus ancien message
-        canMsg = m_mailWriteMsg->try_get();
+        canMsg = m_mailWriteMsg->try_get(); 
         m_mailWriteMsg->free(canMsg);
         m_canFlags.set(CAN_MSG_WR_LOST);
     }
@@ -308,6 +308,8 @@ void ThreadCAN::send(uint32_t id, uint16_t d1)
     msg.data[1]=(uint8_t)(d1>>8);
     send(msg);
 }
+
+
 
 void ThreadCAN::send(uint32_t id, uint16_t d1, uint16_t d2)
 {

@@ -3,7 +3,7 @@
 
 // ID CRCAC 2026
 
-// Géneral 
+// Géneral
 #define GLOBAL_START 0x002                // Start
 #define GLOBAL_GAME_END 0x004             // Stop fin du match
 #define RECALAGE_START 0x010              // on a commencé le recalage de début
@@ -15,13 +15,13 @@
 #define ATTENDRE 0x285                    // temps en ms à attendre
 // ENVOI DE PARAMETRES
 #define CHOICE_COLOR 0x602      // Couleur  (0->jaune;1->bleu)
-#define RECEPTION_COULEUR 0x603 // Code Couleur 
+#define RECEPTION_COULEUR 0x603 // Code Couleur
 #define ECRAN_ALL_CHECK 0x620   // Carte all check  (Si provient de carte strat => toutes les cartes sont en ligne, Si provient IHM => forcer le lancement)
 // // Constantes de temps
 #define PLAYTIME 0x321 // temps de jeu en secondes
 #define TEMPS_VENTOUSE 0x320 // temps de pompe en ms
 // Simulation
-#define simulateur 0x765 
+#define simulateur 0x765
 //  ACTION 2026
 #define noisetteB 0x022
 #define noisetteJ 0x023
@@ -37,18 +37,18 @@
 #define VENT_D 0x267
 // Asservissement
 #define ASSERVISSEMENT_ENABLE 0x1F7     // Activation asservissement  (0 : désactivation, 1 : activation)
-#define ASSERVISSEMENT_XYT_ROTATE 0x037 // Asservissement position XYT avec rotation initiale 
-#define ASSERVISSEMENT_LINE 0x038       // Asservissement position XYT ligne droite 
-#define ASSERVISSEMENT_GO_TO_XYT 0x039 // Asservissement position XYZ (x en mm, y en mm,theta en degré) 
+#define ASSERVISSEMENT_XYT_ROTATE 0x037 // Asservissement position XYT avec rotation initiale
+#define ASSERVISSEMENT_LINE 0x038       // Asservissement position XYT ligne droite
+#define ASSERVISSEMENT_GO_TO_XYT 0x039 // Asservissement position XYZ (x en mm, y en mm,theta en degré)
 #define ASSERVISSEMENT_COURBURE 0x021   // Asservissement rayon de courbure  (+ gauche, - droite , sens : 1avt , -1arr; enchainement => 1 oui, 0 => non, 2=>derniére instruction de l'enchainement)
 #define ASSERVISSEMENT_RECALAGE 0x024   // Moteur tout droit  (recalage : 0 mouvement seul, 1 x, 2y valeur : coordonnée à laquelle est recalé x/y; enchainement => 1 oui, 0 => non)
 #define ASSERVISSEMENT_STOP 0x001       // Stop moteur
 #define ASSERVISSEMENT_BEZIER 0x02A     // Asservissement courbe de bezier
-#define ASSERVISSEMENT_CONFIG 0x022     // Asservissement paramètre   
-#define ASSERVISSEMENT_CONFIG_VIT 0x011   // Vitesse max    
+#define ASSERVISSEMENT_CONFIG 0x022     // Asservissement paramètre
+#define ASSERVISSEMENT_CONFIG_VIT 0x011   // Vitesse max
 #define ASSERVISSEMENT_CONFIG_ACCEL 0x012   // Accélération max
-#define ASSERVISSEMENT_SPEED_DANGER 0x006      // Vitesse en danger 
-#define ASSERVISSEMENT_INFO_CONSIGNE 0x1F0     // Info Consigne et Commande moteur 
+#define ASSERVISSEMENT_SPEED_DANGER 0x006      // Vitesse en danger
+#define ASSERVISSEMENT_INFO_CONSIGNE 0x1F0     // Info Consigne et Commande moteur
 #define ASSERVISSEMENT_CONFIG_KPP_DROITE 0x1F1 // Config coef KPP_Droit
 #define ASSERVISSEMENT_CONFIG_KPI_DROITE 0x1F2 // Config coef KPI_Droit
 #define ASSERVISSEMENT_CONFIG_KPD_DROITE 0x1F3 // Config coef KPD_Droit
@@ -59,7 +59,7 @@
 #define ASSERVISSEMENT_CONFIG_KPI 0x711        // Config coef KPI
 #define ASSERVISSEMENT_CONFIG_KPD 0x712        // Config coef KPD
 #define ASSERVISSEMENT_CONFIG_LARG 0x713     // Largeur entre les roues
-#define ASSERVISSEMENT_CONFIG_PERIM 0x714   // Périmètre des roues  
+#define ASSERVISSEMENT_CONFIG_PERIM 0x714   // Périmètre des roues
 #define ASSERVISSEMENT_CONFIG_COEF_G 0x715  // Config coef de conversion des tics en mm pour la roue gauche
 #define ASSERVISSEMENT_CONFIG_COEF_D 0x716          // Config coef de conversion des tics en mm pour la roue droite
 #define ASSERVISSEMENT_ERREUR 0x025     // Erreur asservissement  (Indique la raison de l'arrêt de l'asservissement)po
@@ -87,25 +87,25 @@
 #define OdoD 0x027 // Odométrie position robot droite
 #define Odo_request 0x028 // Demande odométrie  (Demande la position actuel du robot)
 // #define ODOMETRIE_BIG_VITESSE 0x029  // Odométrie vitesse  (Indication sur l'état actuel)
-// #define ODOMETRIE_SMALL_VITESSE 0x027  // Odométrie vitesse  (Indication sur l'état actuel)
+// #define ODOMETRIE_SMALL_VITESSE 0027  // Odométrie vitesse  (Indication sur l'état actuel)
 // #define ODOMETRIE_BIG_POSITION 0x028   // Odométrie position robot  (Position actuel du robot)
 // #define ODOMETRIE_SMALL_POSITION 0x026 // Odométrie position robot  (Position actuel du robot)
-//Débug asserv 
-#define ID_FIN_CLOTHO 0x501 
-#define ID_ENTRAXE 0x510 
-#define ID_RAYON 0x511 
-#define ID_ALPHA 0x512 
-#define ID_VITESSE 0x513 
-#define ID_ACCELERATION 0x514 
-#define ID_TCLOTHO 0x515 
-#define ID_TARC 0x516 
-#define ID_TEMPS 0x517 
-#define ID_VIT 0x518 
-#define ID_VIT1 0x519 
+//Débug asserv
+#define ID_FIN_CLOTHO 0x501
+#define ID_ENTRAXE 0x510
+#define ID_RAYON 0x511
+#define ID_ALPHA 0x512
+#define ID_VITESSE 0x513
+#define ID_ACCELERATION 0x514
+#define ID_TCLOTHO 0x515
+#define ID_TARC 0x516
+#define ID_TEMPS 0x517
+#define ID_VIT 0x518
+#define ID_VIT1 0x519
 #define ID_POS 0x520
 #define ID_POS1 0x521
 #define ID_T_CALCUL 0x522
-#define ERREUR_TEMP_CALCUL 0x5A0 
+#define ERREUR_TEMP_CALCUL 0x5A0
 #define ID_DBUG_ETAT 0x5A1
 #define ID_DBUG_ETAT_DPL 0x5A2
 #define ID_DBUG_LIGNE_TPS 0x5A3
@@ -124,7 +124,7 @@
 #define ID_TEST_VITESSE 0x5C5
 #define ID_REACLLAGE_AVANT 0x5C6
 // Reset cartes
-#define RESET_BALISE 0x030      // Reset balise 
+#define RESET_BALISE 0x030      // Reset balise
 #define RESET_MOTEUR 0x031      // Reset moteur
 #define RESET_IHM 0x032         // Reset écran tactile
 #define RESET_ACTIONNEURS 0x033 // Reset actionneurs
@@ -147,8 +147,8 @@
 
 // A changer ?
 
-//Capteurs 
-//Debug 
+//Capteurs
+//Debug
 //Son
 
 
@@ -238,10 +238,10 @@ serial5 : RX4-TX4*/
 #define ALIVE_HERKULEX 0x075            // Alive AX12
 #define ALIVE_TELEMETRE 0x076           // Alive telemetre
 
-// Carte herkulex 
-#define IDCAN_ACK 0x40 
-#define IDCAN_HERKULEX 0x50 
-#define ID_HERKULEX_VITESSE 0x63  
+// Carte herkulex
+#define IDCAN_ACK 0x40
+#define IDCAN_HERKULEX 0x50
+#define ID_HERKULEX_VITESSE 0x63
 #define ID_HERKULEX_TOURNER_NB_TOUR 0x64
 #define IDCAN_HERKULEX_ANSWER 0x51
 #define IDCAN_HERKULEX_Torque 0x52
@@ -318,7 +318,7 @@ serial5 : RX4-TX4*/
 #define VENT_AR 0x267
 
 
-// IDENT NECESSAIRE ANCIENS CODE 
+// IDENT NECESSAIRE ANCIENS CODE
 
 #define ALIVE_ACTIONNEURS_AVANT 0x073  // Alive actionneurs
 #define ALIVE_ACTIONNEURS_ARRIERE 0x074  // Alive pompes
