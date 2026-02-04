@@ -323,7 +323,7 @@ serial5 : RX4-TX4*/
 #define ALIVE_ACTIONNEURS_AVANT 0x073  // Alive actionneurs
 #define ALIVE_ACTIONNEURS_ARRIERE 0x074  // Alive pompes
 #define ODOMETRIE_BIG_VITESSE 0x029  // Odométrie vitesse  (Indication sur l'état actuel)
-#define ODOMETRIE_SMALL_VITESSE 0027  // Odométrie vitesse  (Indication sur l'état actuel)
+#define ODOMETRIE_SMALL_VITESSE 0x027  // Odométrie vitesse  (Indication sur l'état actuel)
 #define ODOMETRIE_BIG_POSITION 0x028  // Odométrie position robot  (Position actuel du robot)
 #define ODOMETRIE_SMALL_POSITION 0x026  // Odométrie position robot  (Position actuel du robot)
 #define IDCAN_SET_SCORE 0x97
