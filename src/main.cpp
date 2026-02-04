@@ -64,24 +64,14 @@ void run_show(void);
 
 int main()
 
-
 {
 
     printf("\n Show debut de l'écran de stratégie ->  \n");
 
-    // Envoi d'une trame CAN de test : ID=0x320, Data=0x01
-    threadCAN.send(0x320, 0x01);
-    printf("Trame CAN envoyée : ID=0x320, Data=0x01\n");
-    // Attente de 1s
-    ThisThread::sleep_for(1s);
-    threadCAN.send(0x320, 0x02);
-
-    char buf[100];                                    // tab de char de 100 // pour ecrire des message
-    threadSD.registerCANControl(threadCAN);           // enregistrement de la communication can pour la carte sd
-    
+    char buf[100];                          // tab de char de 100 // pour ecrire des message
+    threadSD.registerCANControl(threadCAN); // enregistrement de la communication can pour la carte sd
     threadCAN.registerIds(0x01, 0x7FF, canProcessRx); // enregistrement des id can pour la strategie
-    int secReboot = 60;                               // delai avant reboot si pas de carte sd 
-
+    int secReboot = 60;                               // delai avant reboot si pas de carte sd
 
     // verif de la presence carte sd
 
@@ -104,8 +94,6 @@ int main()
     //     if (secReboot-- <= 0)
     //         NVIC_SystemReset();
     // }
-
-   
 
     readConfig(); // lecture du de carte sd avec les dossier et parametre
 
@@ -142,7 +130,6 @@ int main()
     led2 = 0;
     led3 = 0;
 
-   
     // Démarrage du Ticket pour mise à jour CarteSD toutes les 2 secondes
     carteSDUpdateTicker.attach(callback(updateCarteSD), 2s);
 
@@ -156,8 +143,7 @@ int main()
     {
         ihm.updateCarteSDStatus(false, 0);
     }
-   
-    
+
     typedef enum
     {
         multi_init,
@@ -169,7 +155,7 @@ int main()
 
     while (1)
     {
-       //  Mise à jour périodique de l'onglet CarteSD 
+        //  Mise à jour périodique de l'onglet CarteSD
         if (flagUpdateCarteSD)
         {
             flagUpdateCarteSD = false;
@@ -185,7 +171,7 @@ int main()
                 ihm.updateCarteSDStatus(false, 0);
             }
         }
-   
+
         switch (etat)
         {
 
@@ -444,7 +430,7 @@ int main()
                     NVIC_SystemReset();
                 }
             }
-            
+
             break;
 
         case show_run_page:
@@ -494,9 +480,8 @@ int main()
 void run_show()
 {
     color = hyou;
-   
+
     threadCAN.send(simulateur);
-    threadCAN.send(Bras);
     printf("\n\n Envoie pour le simulateur\n");
     printf("\n\n La stratégie est %s  \n", fichiers[choix].c_str());
     printf("\n Couleur de départ : %d\n", color);
@@ -520,7 +505,7 @@ bool listeFichiers()
     {
         return false;
     }
-    // Récupère le résultat 
+    // Récupère le résultat
     {
         reply.pop_back();
     }
@@ -531,7 +516,7 @@ bool listeFichiers()
     {
         while (getline(txtStream, item, ':'))
         {
-            // Range chaque nom de fichier 
+            // Range chaque nom de fichier
             fichiers.push_back(item);
         }
     }
@@ -544,11 +529,11 @@ bool lectureFichier(int choix)
     string ligne;
     if (choix < 0)
     {
-        
+
         return false;
     }
     ficStrat = "/sd" + config["Dossiers"]["strategie"] + "/" + fichiers[choix];
- 
+
     FILE *f = fopen(ficStrat.c_str(), "r"); // Ouverture d'un fichier en lecture
     if (f)
     {
@@ -573,8 +558,7 @@ bool lectureFichier(int choix)
         fclose(f);
         return true;
     }
-  
-    
+
     return false;
 }
 // bool lectureFichier(int choix) {
@@ -606,8 +590,6 @@ bool jack()
     return ((jackPin.read()) || getFlag(JACK, true));
 }
 
-
-
 void runRecalage()
 {
     if (machineRecalageInit())
@@ -634,7 +616,7 @@ int tempsRestant()
     return std::chrono::duration_cast<std::chrono::seconds>(timerMatch.remaining_time()).count();
 }
 
-//Fonctions de mise à jour CarteSD
+// Fonctions de mise à jour CarteSD
 void updateCarteSD()
 {
     flagUpdateCarteSD = true;
@@ -645,4 +627,3 @@ int countStrategyFiles()
 {
     return fichiers.size();
 }
-

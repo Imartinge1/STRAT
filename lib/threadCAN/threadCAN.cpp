@@ -309,8 +309,6 @@ void ThreadCAN::send(uint32_t id, uint16_t d1)
     send(msg);
 }
 
-
-
 void ThreadCAN::send(uint32_t id, uint16_t d1, uint16_t d2)
 {
     CANMessage msg;

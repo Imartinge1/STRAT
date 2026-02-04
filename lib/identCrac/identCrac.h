@@ -9,6 +9,7 @@
 #define RECALAGE_START 0x010              // on a commencé le recalage de début
 #define Pos_Init 0x005                    // Fin positionnement robot avant depart
 #define GLOBAL_JACK 0x008                 // Jack inséré
+#define JACK_RETIRE 0x007                // Jack retiré
 #define BALISE_STOP 0x003                 // stop
 #define BALISE_DANGER 0xA                 // danger
 #define BALISE_END_DANGER 0xB             // fin de danger stop-urgence
@@ -43,7 +44,7 @@
 #define ASSERVISSEMENT_COURBURE 0x021   // Asservissement rayon de courbure  (+ gauche, - droite , sens : 1avt , -1arr; enchainement => 1 oui, 0 => non, 2=>derniére instruction de l'enchainement)
 #define ASSERVISSEMENT_RECALAGE 0x024   // Moteur tout droit  (recalage : 0 mouvement seul, 1 x, 2y valeur : coordonnée à laquelle est recalé x/y; enchainement => 1 oui, 0 => non)
 #define ASSERVISSEMENT_STOP 0x001       // Stop moteur
-#define ASSERVISSEMENT_BEZIER 0x02A     // Asservissement courbe de bezier
+// #define ASSERVISSEMENT_BEZIER 0x02A     // Asservissement courbe de bezier
 #define ASSERVISSEMENT_CONFIG 0x022     // Asservissement paramètre
 #define ASSERVISSEMENT_CONFIG_VIT 0x011   // Vitesse max
 #define ASSERVISSEMENT_CONFIG_ACCEL 0x012   // Accélération max
@@ -56,12 +57,12 @@
 #define ASSERVISSEMENT_CONFIG_KPI_GAUCHE 0x1F5 // Config coef KPI_Gauche
 #define ASSERVISSEMENT_CONFIG_KPD_GAUCHE 0x1F6 // Config coef KPD_Gauche
 #define ASSERVISSEMENT_CONFIG_KPP 0x710        // Config coef KPP
-#define ASSERVISSEMENT_CONFIG_KPI 0x711        // Config coef KPI
+#define ASSERVISSEMENT_CONFIG_KPI 0x711        // Config coef KPI 
 #define ASSERVISSEMENT_CONFIG_KPD 0x712        // Config coef KPD
 #define ASSERVISSEMENT_CONFIG_LARG 0x713     // Largeur entre les roues
 #define ASSERVISSEMENT_CONFIG_PERIM 0x714   // Périmètre des roues
 #define ASSERVISSEMENT_CONFIG_COEF_G 0x715  // Config coef de conversion des tics en mm pour la roue gauche
-#define ASSERVISSEMENT_CONFIG_COEF_D 0x716          // Config coef de conversion des tics en mm pour la roue droite
+#define ASSERVISSEMENT_CONFIG_COEF_D 0x716  // Config coef de conversion des tics en mm pour la roue droite
 #define ASSERVISSEMENT_ERREUR 0x025     // Erreur asservissement  (Indique la raison de l'arrêt de l'asservissement)po
 #define ASSERVISSEMENT_ERROR_MOTEUR 0x015 // robot s'arrete car percuté quelque chose
 #define ASSERVISSEMENT_XYT 0x020  // Asservissement (x,y,theta)  (0 : au choix 1 : avant -1 : arrière)
@@ -91,14 +92,14 @@
 // #define ODOMETRIE_BIG_POSITION 0x028   // Odométrie position robot  (Position actuel du robot)
 // #define ODOMETRIE_SMALL_POSITION 0x026 // Odométrie position robot  (Position actuel du robot)
 //Débug asserv
-#define ID_FIN_CLOTHO 0x501
-#define ID_ENTRAXE 0x510
-#define ID_RAYON 0x511
+#define ID_FIN_CLOTHO 0x501 // Fin calcul clothoide
+#define ID_ENTRAXE 0x510 
+#define ID_RAYON 0x511 
 #define ID_ALPHA 0x512
 #define ID_VITESSE 0x513
 #define ID_ACCELERATION 0x514
-#define ID_TCLOTHO 0x515
-#define ID_TARC 0x516
+#define ID_TCLOTHO 0x515 // Temps clothoide
+#define ID_TARC 0x516 
 #define ID_TEMPS 0x517
 #define ID_VIT 0x518
 #define ID_VIT1 0x519
@@ -123,6 +124,7 @@
 #define TEST_BRAS_1 0x254
 #define ID_TEST_VITESSE 0x5C5
 #define ID_REACLLAGE_AVANT 0x5C6
+
 // Reset cartes
 #define RESET_BALISE 0x030      // Reset balise
 #define RESET_MOTEUR 0x031      // Reset moteur
@@ -169,8 +171,8 @@ serial3 : RX3-TX3
 serial4 : RX6-TX6
 serial5 : RX4-TX4*/
 // ID servo bras Bas Avant (BAV)
-#define BAV_BASE 1
-#define BAV_MILIEU 2
+#define BAV_BASE 1 
+#define BAV_MILIEU 2 
 #define BAV_HAUT 3
 // ID servo bras Bas Arriere (BAR)
 #define BAR_BASE 4
@@ -204,7 +206,7 @@ serial5 : RX4-TX4*/
 #define CHASSE_NEIGE 0x170
 #define PRISE_BORDURE 0x175
 #define POSE_BORDURE 0x176
-#define PRISE_DISTRIBUTEUR 0x177
+#define PRISE_DISTRIBUTEUR 0x177 
 #define RANGEMENT 0x178
 #define GESTION_TORQUE 0x179
 #define saisir_avant 0x171
@@ -239,8 +241,8 @@ serial5 : RX4-TX4*/
 #define ALIVE_TELEMETRE 0x076           // Alive telemetre
 
 // Carte herkulex
-#define IDCAN_ACK 0x40
-#define IDCAN_HERKULEX 0x50
+#define IDCAN_ACK 0x40  //
+#define IDCAN_HERKULEX 0x50 
 #define ID_HERKULEX_VITESSE 0x63
 #define ID_HERKULEX_TOURNER_NB_TOUR 0x64
 #define IDCAN_HERKULEX_ANSWER 0x51

@@ -49,15 +49,15 @@ void Deplacement::asservOn(bool enable)
     m_can->send(ASSERVISSEMENT_ENABLE, status);
 }
 
-// void Deplacement::setOdoGrand(uint16_t x, uint16_t y, int16_t theta)
-// {
-//      m_can->send(ODOMETRIE_BIG_POSITION/*ASSERVISSEMENT_ODOMETRIE*/, x, y, (uint16_t)theta);
-// }
+void Deplacement::setOdoGrand(uint16_t x, uint16_t y, int16_t theta)
+{
+     m_can->send(ODOMETRIE_BIG_POSITION/*ASSERVISSEMENT_ODOMETRIE*/, x, y, (uint16_t)theta);
+}
 
-// void Deplacement::setOdoPetit(uint16_t x, uint16_t y, int16_t theta)
-// {
-//      m_can->send(ODOMETRIE_SMALL_POSITION/*ASSERVISSEMENT_ODOMETRIE*/, x, y, (uint16_t)theta);
-// }
+void Deplacement::setOdoPetit(uint16_t x, uint16_t y, int16_t theta)
+{
+     m_can->send(ODOMETRIE_SMALL_POSITION/*ASSERVISSEMENT_ODOMETRIE*/, x, y, (uint16_t)theta);
+}
 
 void Deplacement::vitesse(uint16_t valeur)
 {

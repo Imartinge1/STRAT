@@ -4,7 +4,10 @@
       "Bash(git add:*)",
       "Bash(git revert:*)",
       "Bash(grep:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(where:*)",
+      "Bash(powershell:*)",
+      "Bash(\"C:\\\\Users\\\\yanis\\\\.platformio\\\\penv\\\\Scripts\\\\platformio.exe\" run)"
     ]
   }
 }
