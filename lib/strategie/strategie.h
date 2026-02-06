@@ -51,7 +51,7 @@ typedef enum {
     
 typedef enum
 {
-    ETAT_DOING_NOTHING,
+    ETAT_DOING_NOTHING, 
     ETAT_CHECK_CARTE_SCREEN, //Envoie check carte screen 
     ETAT_CHECK_CARTE_SCREEN_WAIT_ACK, //Time out de 1s si erreur clignotement des led et fin prog 
     ETAT_CHECK_CARTES, //Envoie check toutes les carte 
@@ -65,12 +65,12 @@ typedef enum
     ETAT_GAME_LOAD_NEXT_INSTRUCTION, // 
     ETAT_GAME_PROCESInstruction, // 
     ETAT_GAME_WAIT_ACK, // 
-    ETAT_GAME_JUMP_TIME,
+    ETAT_GAME_JUMP_TIME, 
     ETAT_GAME_JUMP_CONFIG,
     ETAT_GAME_JUMP_POSITION,
     ETAT_GAME_WAIT_END_INSTRUCTION,
     ETAT_GAME_MVT_DANGER,
-    ETAT_GAME_INSTRUCTION_FINIE,
+    ETAT_GAME_INSTRUCTION_FINIE, 
     ETAT_GAME_OBSTACLE,
     ETAT_END,
     ETAT_END_LOOP,

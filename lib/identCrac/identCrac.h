@@ -44,7 +44,7 @@
 #define ASSERVISSEMENT_COURBURE 0x021   // Asservissement rayon de courbure  (+ gauche, - droite , sens : 1avt , -1arr; enchainement => 1 oui, 0 => non, 2=>derniére instruction de l'enchainement)
 #define ASSERVISSEMENT_RECALAGE 0x024   // Moteur tout droit  (recalage : 0 mouvement seul, 1 x, 2y valeur : coordonnée à laquelle est recalé x/y; enchainement => 1 oui, 0 => non)
 #define ASSERVISSEMENT_STOP 0x001       // Stop moteur
-// #define ASSERVISSEMENT_BEZIER 0x02A     // Asservissement courbe de bezier
+#define ASSERVISSEMENT_BEZIER 0x02A     // Asservissement courbe de bezier
 #define ASSERVISSEMENT_CONFIG 0x022     // Asservissement paramètre
 #define ASSERVISSEMENT_CONFIG_VIT 0x011   // Vitesse max
 #define ASSERVISSEMENT_CONFIG_ACCEL 0x012   // Accélération max
@@ -84,9 +84,9 @@
 #define INSTRUCTION_END_IHM 0x112         // Fin instruction ecran tactile  (Indique que l'instruction est terminée)
 #define INSTRUCTION_END_ACTIONNEURS 0x113 // Fin instruction actionneurs  (Indique que l'instruction est terminée)
 // Odométrie
-#define OdoG 0x026   // Odométrie position robot gauche
-#define OdoD 0x027 // Odométrie position robot droite
-#define Odo_request 0x028 // Demande odométrie  (Demande la position actuel du robot)
+// #define OdoG 0x026   // Odométrie position robot gauche
+// #define OdoD 0x027 // Odométrie position robot droite
+// #define Odo_request 0x028 // Demande odométrie  (Demande la position actuel du robot)
 // #define ODOMETRIE_BIG_VITESSE 0x029  // Odométrie vitesse  (Indication sur l'état actuel)
 // #define ODOMETRIE_SMALL_VITESSE 0027  // Odométrie vitesse  (Indication sur l'état actuel)
 // #define ODOMETRIE_BIG_POSITION 0x028   // Odométrie position robot  (Position actuel du robot)
