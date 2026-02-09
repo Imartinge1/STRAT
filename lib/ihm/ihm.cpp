@@ -236,13 +236,17 @@ void Ihm::ActionneurInit()
                          LV_GRID_ALIGN_STRETCH, 2, 1);
     lv_obj_add_event_cb(testventouse, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
-    // Zone de texte pour afficher les messages CAN
-    canMessagesTextArea = lv_textarea_create(container);
-    lv_textarea_set_text(canMessagesTextArea, "Messages CAN:\n");
-    lv_textarea_set_cursor_click_pos(canMessagesTextArea, false);
-    lv_obj_set_style_text_font(canMessagesTextArea, &liberation_24, 0);
-    lv_obj_set_grid_cell(canMessagesTextArea, LV_GRID_ALIGN_STRETCH, 0, 3,
-                         LV_GRID_ALIGN_STRETCH, 2, 1);
+    // Bouton "Demo JPO"
+    demo_jpo = lv_btn_create(container);
+    label = lv_label_create(demo_jpo);
+    lv_label_set_text(label, "Demo JPO");
+    lv_obj_add_flag(demo_jpo, LV_OBJ_FLAG_CHECKABLE);
+    lv_obj_set_style_bg_color(demo_jpo, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(demo_jpo, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
+    lv_obj_center(label);
+    lv_obj_set_grid_cell(demo_jpo, LV_GRID_ALIGN_STRETCH, 1, 1,
+                         LV_GRID_ALIGN_STRETCH, 1, 1);
+    lv_obj_add_event_cb(demo_jpo, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
     // // Bouton "Test Construction"
     // Gradinniveaux2 = lv_btn_create(container);
@@ -333,6 +337,10 @@ void Ihm::eventHandler(lv_event_t *e)
     else if (emetteur == ihm->Pos_init && lv_obj_has_state(emetteur, LV_STATE_CHECKED))
     {
         ihm->flags.set(IHM_FLAG__Position_init);
+    }
+    else if (emetteur == ihm->demo_jpo && lv_obj_has_state(emetteur, LV_STATE_CHECKED))
+    {
+        ihm->flags.set(IHM_FLAG_DEMO_JPO);
     }
     // else if (emetteur == ihm->autre)
     // {

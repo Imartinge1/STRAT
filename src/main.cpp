@@ -68,8 +68,8 @@ int main()
 
     printf("\n Show debut de l'écran de stratégie ->  \n");
 
-    char buf[100];                                    // tab de char de 100 // pour ecrire des message
-    threadSD.registerCANControl(threadCAN);           // enregistrement de la communication can pour la carte sd
+    char buf[100];                          // tab de char de 100 // pour ecrire des message
+    threadSD.registerCANControl(threadCAN); // enregistrement de la communication can pour la carte sd
     threadCAN.registerIds(0x01, 0x7FF, canProcessRx); // enregistrement des id can pour la strategie
     int secReboot = 60;                               // delai avant reboot si pas de carte sd
 
@@ -172,10 +172,10 @@ int main()
             }
         }
 
-        switch (etat) 
+        switch (etat)
         {
 
-        case multi_init: 
+        case multi_init:
 
             if (ihm.departClicked())
             {
@@ -430,6 +430,16 @@ int main()
                     NVIC_SystemReset();
                 }
             }
+            else if (ihm.demoJPOClicked())
+            {
+                printf("ID: 0x172 (prendreD)\n");
+                printf("Data: 0x01 (1)\n");
+                threadCAN.send(0x172, uint8_t(1));
+                printf(" Attente de 1 seconde...\n\n");
+                ThisThread::sleep_for(100ms);
+                printf("ID: 0x027 (poserD)\n");
+                threadCAN.send(0x27);
+            }
 
             break;
 
@@ -480,6 +490,7 @@ int main()
 void run_show()
 {
     color = hyou;
+
     threadCAN.send(simulateur);
     printf("\n\n Envoie pour le simulateur\n");
     printf("\n\n La stratégie est %s  \n", fichiers[choix].c_str());
@@ -491,7 +502,6 @@ void run_show()
     printf("\n\n Fermeture de l'onglet msg \n ");
     NVIC_SystemReset();
 }
-
 bool listeFichiers()
 {
     // Vide la liste de fichiers
@@ -558,17 +568,17 @@ bool lectureFichier(int choix)
         fclose(f);
         return true;
     }
-    
+
     return false;
 }
-//  bool lectureFichier(int choix) {
+// bool lectureFichier(int choix) {
 //     string ficStrat;
 //     if (choix < 0) {
 //         // Que faire si choix == -1 ????
 //         return false;
 //     }
 //     ficStrat = "/sd" + config["Dossiers"]["strategie"] + "/" + fichiers[choix];
-//   ifstream monFlux(ficStrat);  // Ouverture d'un fichier en lecture
+//     ifstream monFlux(ficStrat);  // Ouverture d'un fichier en lecture
 //     if (monFlux) {
 //         // Tout est prêt pour la lecture.
 //         string ligne;
@@ -585,7 +595,6 @@ bool lectureFichier(int choix)
 //     // On fait la même chose que pour choix == -1 ????
 //     return false;
 // }
-
 bool jack()
 {
     return ((jackPin.read()) || getFlag(JACK, true));
@@ -599,7 +608,6 @@ void runRecalage()
             ;
     }
 }
-
 void runMatch()
 {
     printf("debut du match\n");
@@ -609,24 +617,23 @@ void runMatch()
     printf("\n\n Fermeture de l'onglet msg \n ");
     ihm.msgBoxmatchshowclose();
 }
-
 void forceFinMatch()
 {
     flagForceFinMatch = true;
 }
-
 int tempsRestant()
 {
     return std::chrono::duration_cast<std::chrono::seconds>(timerMatch.remaining_time()).count();
 }
 
+// Fonctions de mise à jour CarteSD
 void updateCarteSD()
 {
     flagUpdateCarteSD = true;
 }
 
+// Fonction pour compter les fichiers de stratégie
 int countStrategyFiles()
 {
     return fichiers.size();
 }
-

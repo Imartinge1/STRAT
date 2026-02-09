@@ -62,6 +62,7 @@ protected:
         IHM_FLAG_ACTIONNEUR_ASSERV_ON =     (1UL << 22),
         IHM_FLAG_ACTIONNEUR_ASSERV_OFF =    (1UL << 23),
         IHM_FLAG__autre= (1UL << 30 )  ,
+        IHM_FLAG_DEMO_JPO = (1UL << 24),
 
     } IhmFlag;
     EventFlags flags;
@@ -103,6 +104,7 @@ protected:
     lv_obj_t * lacher ;
     lv_obj_t * autre ;
     lv_obj_t * canMessagesTextArea ;
+    lv_obj_t * demo_jpo;
 
     // Onglet "CarteSD"
     lv_obj_t *tabCarteSD;
@@ -155,6 +157,7 @@ public:
  bool departClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_DEPART, clearIfSet); }
 bool autretest(bool clearIfSet = true) { return getFlag(IHM_FLAG__autre, clearIfSet); }
     bool testVentousesClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG__autre, clearIfSet); }
+    bool demoJPOClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_DEMO_JPO, clearIfSet); }
 
     bool refreshSDClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_REFRESH_SD, clearIfSet); }
     bool recalageClicked(bool clearIfSet = true) { return getFlag(IHM_FLAG_RECALAGE, clearIfSet); }
