@@ -48,7 +48,7 @@ protected:
             IHM_FLAG_Testventouse_arriere= (1UL <<29),
 
         IHM_FLAG_Gradin_niveaux_2 =   (1UL << 18),
-            IHM_FLAG_Gradin_niveaux_2_avant =   (1UL << 24),
+            // IHM_FLAG_Gradin_niveaux_2_avant =   (1UL << 24),
             IHM_FLAG_Gradin_niveaux_2_arriere =   (1UL << 25),
 
         IHM_FLAG_Niveaux_base =    (1UL << 19),
@@ -125,6 +125,7 @@ protected:
     lv_obj_t *msgBoxChoixNIV ;
 
     void carteSDInit(lv_obj_t *parent);
+    void debugCANInit(lv_obj_t *parent);
     static void eventHandler(lv_event_t *e);
     bool getFlag(IhmFlag f, bool clearIfSet = true);
 
@@ -140,7 +141,7 @@ public:
           bool Test_ventouse_arriere(bool clearIfSet = true) { return getFlag(  IHM_FLAG_Testventouse_arriere, clearIfSet); }
 
     bool construction_niveaux_2(bool clearIfSet = true) { return getFlag(IHM_FLAG_Gradin_niveaux_2, clearIfSet); }
-        bool construction_niveaux_2_avant(bool clearIfSet = true) { return getFlag(IHM_FLAG_Gradin_niveaux_2_avant, clearIfSet); }
+        // bool construction_niveaux_2_avant(bool clearIfSet = true) { return getFlwag(IHM_FLAG_Gradin_niveaux_2_avant, clearIfSet); }
         bool construction_niveaux_2_arriere(bool clearIfSet = true) { return getFlag(IHM_FLAG_Gradin_niveaux_2_arriere, clearIfSet); }
 
     bool Niveaux_base(bool clearIfSet = true) { return getFlag(   IHM_FLAG_Niveaux_base, clearIfSet); }

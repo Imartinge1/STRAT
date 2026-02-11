@@ -33,7 +33,27 @@ Ihm::Ihm(ThreadLvgl *t)
     tabCarteSD = lv_tabview_add_tab(tabView, "CarteSD");
     carteSDInit(tabCarteSD);
 
+    // Ajout de l'onglet Debug CAN
+    lv_obj_t *tabDebugCAN = lv_tabview_add_tab(tabView, "Debug CAN");
+    debugCANInit(tabDebugCAN);
+
     t->unlock();
+}
+
+void Ihm::debugCANInit(lv_obj_t *parent)
+{
+    // Titre
+    lv_obj_t *titre = lv_label_create(parent);
+    lv_label_set_text(titre, LV_SYMBOL_LIST " Messages CAN");
+    lv_obj_set_style_text_font(titre, FONT_LARGE, 0);
+    lv_obj_align(titre, LV_ALIGN_TOP_MID, 0, 20);
+
+    // Créer le textarea pour afficher les messages CAN
+    canMessagesTextArea = lv_textarea_create(parent);
+    lv_obj_set_size(canMessagesTextArea, 700, 330);
+    lv_obj_align(canMessagesTextArea, LV_ALIGN_CENTER, 0, 30);
+    lv_textarea_set_text(canMessagesTextArea, "En attente de messages CAN...\n");
+    lv_obj_set_style_text_font(canMessagesTextArea, FONT_NORMAL, 0);
 }
 
 void Ihm::carteSDInit(lv_obj_t *parent)
@@ -236,13 +256,11 @@ void Ihm::ActionneurInit()
                          LV_GRID_ALIGN_STRETCH, 2, 1);
     lv_obj_add_event_cb(testventouse, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
-    // Bouton "Demo JPO"
+    // Bouton "Demo JPO" - Bouton push simple (pas checkable)
     demo_jpo = lv_btn_create(container);
     label = lv_label_create(demo_jpo);
     lv_label_set_text(label, "Demo JPO");
-    lv_obj_add_flag(demo_jpo, LV_OBJ_FLAG_CHECKABLE);
     lv_obj_set_style_bg_color(demo_jpo, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(demo_jpo, lv_palette_main(LV_PALETTE_DEEP_PURPLE), LV_STATE_CHECKED);
     lv_obj_center(label);
     lv_obj_set_grid_cell(demo_jpo, LV_GRID_ALIGN_STRETCH, 1, 1,
                          LV_GRID_ALIGN_STRETCH, 1, 1);
@@ -338,8 +356,9 @@ void Ihm::eventHandler(lv_event_t *e)
     {
         ihm->flags.set(IHM_FLAG__Position_init);
     }
-    else if (emetteur == ihm->demo_jpo && lv_obj_has_state(emetteur, LV_STATE_CHECKED))
+    else if (emetteur == ihm->demo_jpo)
     {
+        // Bouton push simple : un clic = un envoi de trame
         ihm->flags.set(IHM_FLAG_DEMO_JPO);
     }
     // else if (emetteur == ihm->autre)
