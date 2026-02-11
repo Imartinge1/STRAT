@@ -7,13 +7,13 @@ EnumInstructionType decodeInstructionType(char type)
 {
     switch(type)
     {
-        case 'B': return MV_BEZIER;
-        case 'C': return MV_COURBURE;
+        case 'B': return MV_BEZIER; 
+        case 'C': return MV_COURBURE; 
         case 'L': return MV_LINE;
         case 'T': return MV_TURN;
         case 'X': return MV_XYT;
         case 'R': return MV_RECALAGE;
-        case 'A': return ACTION;
+        case 'A': return ACTION; 
         case 'H': return PINCE;
         case 'P': return POSITION;
         default:  return UNKNOWN;
@@ -89,7 +89,7 @@ Instruction ListeInstructions::stringToInstruction(const char *line) {
     %u -> Entier non signé
     %c -> char
     */
-  errorCode = sscanf(line, "%hd,%c,%c,%hu,%hu,%hd,%c,%c,%c,%hu,%hu,%hd,%hd,%hu,%hu,%hd",
+  errorCode = sscanf(line, "%hd,%c,%c,%hu,%hu,%hd,%c,%c,%c,%hu,%hu,%hd,%hd,%hu,%hu,%hd", 
         &instruction.lineNumber,
         &instructionOrder,
         &instructionDirection,

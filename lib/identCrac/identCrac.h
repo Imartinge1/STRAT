@@ -84,9 +84,9 @@
 #define INSTRUCTION_END_IHM 0x112         // Fin instruction ecran tactile  (Indique que l'instruction est terminée)
 #define INSTRUCTION_END_ACTIONNEURS 0x113 // Fin instruction actionneurs  (Indique que l'instruction est terminée)
 // Odométrie
-#define OdoG 0x026   // Odométrie position robot gauche
-#define OdoD 0x027 // Odométrie position robot droite
-#define Odo_request 0x028 // Demande odométrie  (Demande la position actuel du robot)
+// #define OdoG 0x026   // Odométrie position robot gauche
+// #define OdoD 0x027 // Odométrie position robot droite
+// #define Odo_request 0x028 // Demande odométrie  (Demande la position actuel du robot)
 // #define ODOMETRIE_BIG_VITESSE 0x029  // Odométrie vitesse  (Indication sur l'état actuel)
 // #define ODOMETRIE_SMALL_VITESSE 0027  // Odométrie vitesse  (Indication sur l'état actuel)
 // #define ODOMETRIE_BIG_POSITION 0x028   // Odométrie position robot  (Position actuel du robot)
