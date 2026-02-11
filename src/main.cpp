@@ -430,16 +430,6 @@ int main()
                     NVIC_SystemReset();
                 }
             }
-            else if (ihm.demoJPOClicked())
-            {
-                printf("ID: 0x172 (prendreD)\n");
-                printf("Data: 0x01 (1)\n");
-                threadCAN.send(0x172, uint8_t(1));
-                printf(" Attente de 1 seconde...\n\n");
-                ThisThread::sleep_for(100ms);
-                printf("ID: 0x027 (poserD)\n");
-                threadCAN.send(0x27);
-            }
 
             break;
 

@@ -257,6 +257,7 @@ void Ihm::ActionneurInit()
     lv_obj_add_event_cb(testventouse, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Bouton "Demo JPO" - Bouton push simple (pas checkable)
     demo_jpo = lv_btn_create(container);
     label = lv_label_create(demo_jpo);
@@ -267,6 +268,8 @@ void Ihm::ActionneurInit()
                          LV_GRID_ALIGN_STRETCH, 1, 1);
     lv_obj_add_event_cb(demo_jpo, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 =======
+=======
+>>>>>>> parent of 3b47911 (09/02)
     // Zone de texte pour afficher les messages CAN
     canMessagesTextArea = lv_textarea_create(container);
     lv_textarea_set_text(canMessagesTextArea, "Messages CAN:\n");
@@ -274,6 +277,9 @@ void Ihm::ActionneurInit()
     lv_obj_set_style_text_font(canMessagesTextArea, &liberation_24, 0);
     lv_obj_set_grid_cell(canMessagesTextArea, LV_GRID_ALIGN_STRETCH, 0, 3,
                          LV_GRID_ALIGN_STRETCH, 2, 1);
+<<<<<<< HEAD
+>>>>>>> parent of 3b47911 (09/02)
+=======
 >>>>>>> parent of 3b47911 (09/02)
 
     // // Bouton "Test Construction"
@@ -367,11 +373,14 @@ void Ihm::eventHandler(lv_event_t *e)
         ihm->flags.set(IHM_FLAG__Position_init);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     else if (emetteur == ihm->demo_jpo)
     {
         // Bouton push simple : un clic = un envoi de trame
         ihm->flags.set(IHM_FLAG_DEMO_JPO);
     }
+=======
+>>>>>>> parent of 3b47911 (09/02)
 =======
 >>>>>>> parent of 3b47911 (09/02)
     // else if (emetteur == ihm->autre)
