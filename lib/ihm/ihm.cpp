@@ -16,7 +16,6 @@ Ihm::Ihm(ThreadLvgl *t)
 {
     m_threadLvgl = t;
     msgBoxmatchmessage = nullptr;
-    canMessagesTextArea = nullptr;
 
     t->lock();
 
@@ -33,27 +32,7 @@ Ihm::Ihm(ThreadLvgl *t)
     tabCarteSD = lv_tabview_add_tab(tabView, "CarteSD");
     carteSDInit(tabCarteSD);
 
-    // Ajout de l'onglet Debug CAN
-    lv_obj_t *tabDebugCAN = lv_tabview_add_tab(tabView, "Debug CAN");
-    debugCANInit(tabDebugCAN);
-
     t->unlock();
-}
-
-void Ihm::debugCANInit(lv_obj_t *parent)
-{
-    // Titre
-    lv_obj_t *titre = lv_label_create(parent);
-    lv_label_set_text(titre, LV_SYMBOL_LIST " Messages CAN");
-    lv_obj_set_style_text_font(titre, FONT_LARGE, 0);
-    lv_obj_align(titre, LV_ALIGN_TOP_MID, 0, 20);
-
-    // Créer le textarea pour afficher les messages CAN
-    canMessagesTextArea = lv_textarea_create(parent);
-    lv_obj_set_size(canMessagesTextArea, 700, 330);
-    lv_obj_align(canMessagesTextArea, LV_ALIGN_CENTER, 0, 30);
-    lv_textarea_set_text(canMessagesTextArea, "En attente de messages CAN...\n");
-    lv_obj_set_style_text_font(canMessagesTextArea, FONT_NORMAL, 0);
 }
 
 void Ihm::carteSDInit(lv_obj_t *parent)
@@ -256,31 +235,17 @@ void Ihm::ActionneurInit()
                          LV_GRID_ALIGN_STRETCH, 2, 1);
     lv_obj_add_event_cb(testventouse, Ihm::eventHandler, LV_EVENT_CLICKED, this);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    // Bouton "Demo JPO" - Bouton push simple (pas checkable)
-    demo_jpo = lv_btn_create(container);
-    label = lv_label_create(demo_jpo);
-    lv_label_set_text(label, "Demo JPO");
-    lv_obj_set_style_bg_color(demo_jpo, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
-    lv_obj_center(label);
-    lv_obj_set_grid_cell(demo_jpo, LV_GRID_ALIGN_STRETCH, 1, 1,
-                         LV_GRID_ALIGN_STRETCH, 1, 1);
-    lv_obj_add_event_cb(demo_jpo, Ihm::eventHandler, LV_EVENT_CLICKED, this);
-=======
-=======
->>>>>>> parent of 3b47911 (09/02)
-    // Zone de texte pour afficher les messages CAN
-    canMessagesTextArea = lv_textarea_create(container);
-    lv_textarea_set_text(canMessagesTextArea, "Messages CAN:\n");
-    lv_textarea_set_cursor_click_pos(canMessagesTextArea, false);
-    lv_obj_set_style_text_font(canMessagesTextArea, &liberation_24, 0);
-    lv_obj_set_grid_cell(canMessagesTextArea, LV_GRID_ALIGN_STRETCH, 0, 3,
-                         LV_GRID_ALIGN_STRETCH, 2, 1);
-<<<<<<< HEAD
->>>>>>> parent of 3b47911 (09/02)
-=======
->>>>>>> parent of 3b47911 (09/02)
+
+    // // Bouton "Demo JPO" - Bouton push simple (pas checkable)
+    // demo_jpo = lv_btn_create(container);
+    // label = lv_label_create(demo_jpo);
+    // lv_label_set_text(label, "Demo JPO");
+    // lv_obj_set_style_bg_color(demo_jpo, lv_palette_main(LV_PALETTE_LIGHT_BLUE), LV_STATE_DEFAULT);
+    // lv_obj_center(label);
+    // lv_obj_set_grid_cell(demo_jpo, LV_GRID_ALIGN_STRETCH, 1, 1,
+    //                      LV_GRID_ALIGN_STRETCH, 1, 1);
+    // lv_obj_add_event_cb(demo_jpo, Ihm::eventHandler, LV_EVENT_CLICKED, this);
+
 
     // // Bouton "Test Construction"
     // Gradinniveaux2 = lv_btn_create(container);
@@ -372,17 +337,13 @@ void Ihm::eventHandler(lv_event_t *e)
     {
         ihm->flags.set(IHM_FLAG__Position_init);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-    else if (emetteur == ihm->demo_jpo)
-    {
-        // Bouton push simple : un clic = un envoi de trame
-        ihm->flags.set(IHM_FLAG_DEMO_JPO);
-    }
-=======
->>>>>>> parent of 3b47911 (09/02)
-=======
->>>>>>> parent of 3b47911 (09/02)
+
+//     else if (emetteur == ihm->demo_jpo)
+//     {
+//         // Bouton push simple : un clic = un envoi de trame
+//         ihm->flags.set(IHM_FLAG_DEMO_JPO);
+//     }
+
     // else if (emetteur == ihm->autre)
     // {
     //     // Bouton push simple : un clic = un envoi de trame
@@ -672,55 +633,4 @@ void Ihm::showButtonascenceurBox()
     }
 }
 
-void Ihm::updateCANMessages(uint32_t id, const uint8_t *data, uint8_t len)
-{
-    printf("updateCANMessages called: ID=0x%03X\n", (unsigned int)id);
-
-    m_threadLvgl->lock();
-
-    if (canMessagesTextArea != nullptr)
-    {
-        printf("TextArea is valid, updating...\n");
-        // Récupérer le texte actuel
-        const char* currentText = lv_textarea_get_text(canMessagesTextArea);
-
-        // Créer le nouveau message formaté
-        char newMsg[100];
-        int pos = sprintf(newMsg, "ID:0x%03X Len:%d Data:", (unsigned int)id, len);
-
-        for (int i = 0; i < len && i < 8; i++)
-        {
-            pos += sprintf(newMsg + pos, " %02X", data[i]);
-        }
-        sprintf(newMsg + pos, "\n");
-
-        // Compter le nombre de lignes
-        int lineCount = 0;
-        for (const char* p = currentText; *p; p++)
-        {
-            if (*p == '\n') lineCount++;
-        }
-
-        // Si plus de 10 lignes, supprimer la plus ancienne
-        if (lineCount > 10)
-        {
-            const char* secondLine = strchr(currentText, '\n');
-            if (secondLine != nullptr)
-            {
-                secondLine++; // Passer le \n
-                lv_textarea_set_text(canMessagesTextArea, secondLine);
-            }
-        }
-
-        // Ajouter le nouveau message
-        lv_textarea_add_text(canMessagesTextArea, newMsg);
-        printf("Message added to textarea\n");
-    }
-    else
-    {
-        printf("ERROR: canMessagesTextArea is nullptr!\n");
-    }
-
-    m_threadLvgl->unlock();
-}
 

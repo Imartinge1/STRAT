@@ -140,11 +140,7 @@ void canProcessRx(CANMessage *rxMsg)
 {
     int identifiant = rxMsg->id;
 
-    // Afficher le message CAN dans l'IHM
-    printf("CAN RX: ID=0x%03X Len=%d\n", rxMsg->id, rxMsg->len);
-    ihm.updateCANMessages(rxMsg->id, rxMsg->data, rxMsg->len);
-
-    // printCANMsg(*rxMsg);
+    printCANMsg(*rxMsg);
     if (waitingId == identifiant)
     {
         waitingId = 0;

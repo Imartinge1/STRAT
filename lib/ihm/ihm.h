@@ -102,7 +102,6 @@ protected:
 
     lv_obj_t * lacher ;
     lv_obj_t * autre ;
-    lv_obj_t * canMessagesTextArea ;
 
     // Onglet "CarteSD"
     lv_obj_t *tabCarteSD;
@@ -123,7 +122,6 @@ protected:
     lv_obj_t *msgBoxChoixNIV ;
 
     void carteSDInit(lv_obj_t *parent);
-    void debugCANInit(lv_obj_t *parent);
     static void eventHandler(lv_event_t *e);
     bool getFlag(IhmFlag f, bool clearIfSet = true);
 
@@ -203,9 +201,6 @@ bool autretest(bool clearIfSet = true) { return getFlag(IHM_FLAG__autre, clearIf
 
     // CarteSD methods
     void updateCarteSDStatus(bool detected, int fileCount);
-
-    // CAN messages methods
-    void updateCANMessages(uint32_t id, const uint8_t *data, uint8_t len);
 
 };
 
