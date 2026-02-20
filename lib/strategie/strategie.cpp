@@ -253,7 +253,7 @@ void canProcessRx(CANMessage *rxMsg)
         unsigned short recieveAckID = (unsigned short)rxMsg->data[0] | (((unsigned short)rxMsg->data[1]) << 8);
         if ((waitingAckFrom == identifiant) && (recieveAckID == waitingAckID))
         {
-            ////printf(" ack de debut recu \n");
+            //printf(" ack de debut recu \n");
             waitingAckFrom = 0;
             waitingAckID = 0;
             flag.set(AckFrom_FLAG);
@@ -269,7 +269,9 @@ void canProcessRx(CANMessage *rxMsg)
     break;
     case INSTRUCTION_END_Actionneur:
     {
-        unsigned short recieveAckID = (unsigned short)rxMsg->data[0] | (((unsigned short)rxMsg->data[1]) << 8);
+        
+        unsigned short recieveAckID = ((unsigned short)rxMsg->data[0] | (((unsigned short)rxMsg->data[1]) << 8));
+        // if ((waitingAckFrom == identifiant) && (recieveAckID == waitingAckID))
         if ((waitingAckFrom == identifiant) && (recieveAckID == waitingAckID))
         {
             printf(" ack de debut recu \n");
@@ -496,8 +498,7 @@ void printCANMsg(CANMessage &msg)
     printf("  Type    = %d\r\n", msg.type);
     printf("  format  = %d\r\n", msg.format);
     printf("  Length  = %d\r\n", msg.len);
-    printf("  Data    =");
-    (unsigned short)msg.data[0] | (((unsigned short)msg.data[1]) << 8);
+    printf("  Data    = %d\r\n", (unsigned short)msg.data[0] | (((unsigned short)msg.data[1]) << 8));
     printf("\r\n");
 }
 
@@ -916,7 +917,7 @@ void procesInstructions(Instruction instruction)
     }
     break;
     case ACTION:
-    {
+    {  
         actionPrecedente = ACTION;
         int niveaux = 8;
         printf("\n suivant : %d \n", instruction.arg1);
@@ -1081,24 +1082,56 @@ void procesInstructions(Instruction instruction)
             }
             flag.wait_all(AckFrom_FLAG, timeopr);
         }
+        
+
 
         else if (instruction.arg1 == 160) // action prendreG
         {
-            threadCAN.send(prendreG);
-            waitingAckID = prendreG;
-            waitingAckID_FIN = prendreG;
-            printf("Action prendre Gauche (ID CAN: 0x171)\n");
+            if (instruction.arg2 == 1) // avant
+            {
+                threadCAN.send(prendreG,uint8_t(1));
+                waitingAckID = prendreG;
+                waitingAckID_FIN = prendreG;
+                printf("Action prendre Gauche avant (ID CAN: 0x171)\n");
+            }
+            else if (instruction.arg2 == 0) // arriere
+            {
+                threadCAN.send(prendreG,uint8_t(0));
+                waitingAckID = prendreG;
+                waitingAckID_FIN = prendreG;
+                printf("Action prendre Gauche arriére (ID CAN: 0x171)\n");
+            }
+            flag.wait_all(AckFrom_FLAG, timeopr);
+
+
+        }
+        else if (instruction.arg1 == 165) // action prendreD
+        {
+            if (instruction.arg2 == 1) // avant
+            {
+                threadCAN.send(prendreD,uint8_t(1));
+                waitingAckID = prendreD;
+                waitingAckID_FIN = prendreD;
+                printf("Action prendre Droite  (ID CAN: 0x172)\n");
+            }
+            else if (instruction.arg2 == 0) // arriere
+            {
+                threadCAN.send(prendreD,uint8_t(0));
+                waitingAckID = prendreD;
+                waitingAckID_FIN = prendreD;
+                printf("Action prendre Droite (ID CAN: 0x172)\n");
+            }
             flag.wait_all(AckFrom_FLAG, timeopr);
         }
 
-        else if (instruction.arg1 == 165) // action prendreD
-        { 
-            threadCAN.send(prendreD);
-            waitingAckID = prendreD;
-            waitingAckID_FIN = prendreD;
-            printf("Action prendre Droite (ID CAN: 0x172)\n");
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
+        // else if (instruction.arg1 == 165) // action prendreD
+        // { 
+        //     threadCAN.send(prendreD);
+        //     waitingAckID = prendreD;
+        //     waitingAckID_FIN = prendreD;
+        //     printf("Action prendre Droite (ID CAN: 0x172)\n");
+        //     flag.wait_all(AckFrom_FLAG, timeopr);
+        // }
 
         else if (instruction.arg1 == 170) // action lacherG
         {
@@ -1118,14 +1151,14 @@ void procesInstructions(Instruction instruction)
             flag.wait_all(AckFrom_FLAG, timeopr);
         }
 
-        else if (instruction.arg1 == 170) // action trier
-        {
-            threadCAN.send(trier);
-            waitingAckID = trier;
-            waitingAckID_FIN = trier;
-            printf("Action trier (ID CAN: 0x028)\n");
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
+        // else if (instruction.arg1 == 170) // action trier
+        // {
+        //     threadCAN.send(trier);
+        //     waitingAckID = trier;
+        //     waitingAckID_FIN = trier;
+        //     printf("Action trier (ID CAN: 0x028)\n");
+        //     flag.wait_all(AckFrom_FLAG, timeopr);
+        // }
         waitingAckFrom_FIN = INSTRUCTION_END_Actionneur;
         flag.wait_all(AckFrom_FIN_FLAG);
         gameEtat = ETAT_GAME_INSTRUCTION_FINIE;

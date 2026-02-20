@@ -84,9 +84,9 @@
 #define INSTRUCTION_END_IHM 0x112         // Fin instruction ecran tactile  (Indique que l'instruction est terminée)
 #define INSTRUCTION_END_ACTIONNEURS 0x113 // Fin instruction actionneurs  (Indique que l'instruction est terminée)
 // Odométrie
-// #define OdoG 0x026   // Odométrie position robot gauche
-// #define OdoD 0x027 // Odométrie position robot droite
-// #define Odo_request 0x028 // Demande odométrie  (Demande la position actuel du robot)
+// #define OdoG 0x027   // Odométrie position robot gauche
+// #define OdoD 0x028 // Odométrie position robot droite
+// #define Odo_request 0x026 // Demande odométrie  (Demande la position actuel du robot)
 // #define ODOMETRIE_BIG_VITESSE 0x029  // Odométrie vitesse  (Indication sur l'état actuel)
 // #define ODOMETRIE_SMALL_VITESSE 0027  // Odométrie vitesse  (Indication sur l'état actuel)
 // #define ODOMETRIE_BIG_POSITION 0x028   // Odométrie position robot  (Position actuel du robot)
@@ -282,7 +282,7 @@ serial5 : RX4-TX4*/
 #define capteur_arriere 0x251
 // DEBUGS
 #define DEBUG_STRATEGIE_AUTOMATE 0x760 // Etat automate stratégie  (Permet de savoir l'etat de l'automate)
-#define DEBUG_FAKE_JAKE 0x761          // Fake jack  (Permet d'outre passerr le JACk du robot)
+#define DEBUG_FAKE_JAKE 0x761          // Fake jack  (Permet d'outre passer le JACk du robot)
 #define DEBUG_ASSERV 0x762             // Info debug carte moteur
 // SOMO
 #define SOMO_answers 0x4A0
@@ -299,8 +299,8 @@ serial5 : RX4-TX4*/
 #define SOMO_previous 0x4AB
 #define SOMO_repeat 0x4AC
 // jsp
-#define IDCAN_LACHE_AV 0x172 // PASSE
-#define IDCAN_LACHE_AR 0x173 //  RELACHE_BAS
+#define IDCAN_LACHE_AV 0x200 // PASSE
+#define IDCAN_LACHE_AR 0x201 //  RELACHE_BAS
 #define MONTER_IMMEUBLE_DOUBLE 0x090 // Monte deux immeubles selon un code couleur
 #define MONTER_IMMEUBLE 0x091        // Monte un immeuble selon un code couleur
 #define ACCELERATEUR_INSERTION_AVANT_GAUCHE 0X218
