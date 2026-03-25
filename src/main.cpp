@@ -331,105 +331,105 @@ int main()
                     NVIC_SystemReset();
                 }
             }
-            else if (ihm.Position_init())
-            {
+            // else if (ihm.Position_init())
+            // {
 
-                ihm.showButtonascenceurBox();
-                ThisThread::sleep_for(5s);
-                selasc = selected_ascenceur;
-                ihm.showButtonascenceurBoxClose();
+            //     ihm.showButtonascenceurBox();
+            //     ThisThread::sleep_for(5s);
+            //     selasc = selected_ascenceur;
+            //     ihm.showButtonascenceurBoxClose();
 
-                if (selasc == 1) // avant
-                {
+            //     if (selasc == 1) // avant
+            //     {
 
-                    idprisencompte = POS_avant;
-                    idprisencompte2 = 0;
-                    ihm.showButtonSelectionBox();
-                    ThisThread::sleep_for(5s);
-                    choix_niveau = selected_level;
+            //         idprisencompte = POS_avant;
+            //         idprisencompte2 = 0;
+            //         ihm.showButtonSelectionBox();
+            //         ThisThread::sleep_for(5s);
+            //         choix_niveau = selected_level;
 
-                    etat = test;
-                }
-                else if (selasc == 2)
-                {
+            //         etat = test;
+            //     }
+            //     else if (selasc == 2)
+            //     {
 
-                    idprisencompte = POS_arriere;
-                    idprisencompte2 = 0;
-                    ihm.showButtonSelectionBox();
-                    ThisThread::sleep_for(5s);
-                    choix_niveau = selected_level;
+            //         idprisencompte = POS_arriere;
+            //         idprisencompte2 = 0;
+            //         ihm.showButtonSelectionBox();
+            //         ThisThread::sleep_for(5s);
+            //         choix_niveau = selected_level;
 
-                    etat = test;
-                }
-                else if (selasc == 3)
-                {
+            //         etat = test;
+            //     }
+            //     else if (selasc == 3)
+            //     {
 
-                    idprisencompte = POS_avant;
-                    idprisencompte2 = POS_arriere;
-                    ihm.showButtonSelectionBox();
-                    ThisThread::sleep_for(5s);
-                    choix_niveau = selected_level;
+            //         idprisencompte = POS_avant;
+            //         idprisencompte2 = POS_arriere;
+            //         ihm.showButtonSelectionBox();
+            //         ThisThread::sleep_for(5s);
+            //         choix_niveau = selected_level;
 
-                    etat = test;
-                }
-                else if (selasc == 4) // bouton annuler
-                {
-                    idprisencompte = 0;
-                    idprisencompte2 = 0;
-                    choix_niveau = 0;
-                    etat = multi_init;
-                    NVIC_SystemReset();
-                }
-            }
-            else if (ihm.lacherflag())
-            {
-                ihm.showButtonascenceurBox();
-                ThisThread::sleep_for(5s);
-                selasc = selected_ascenceur;
-                ihm.showButtonascenceurBoxClose();
+            //         etat = test;
+            //     }
+            //     else if (selasc == 4) // bouton annuler
+            //     {
+            //         idprisencompte = 0;
+            //         idprisencompte2 = 0;
+            //         choix_niveau = 0;
+            //         etat = multi_init;
+            //         NVIC_SystemReset();
+            //     }
+            // }
+            // else if (ihm.lacherflag())
+            // {
+            //     ihm.showButtonascenceurBox();
+            //     ThisThread::sleep_for(5s);
+            //     selasc = selected_ascenceur;
+            //     ihm.showButtonascenceurBoxClose();
 
-                if (selasc == 1) // avant
-                {
+            //     if (selasc == 1) // avant
+            //     {
 
-                    idprisencompte = IDCAN_LACHE_AV;
-                    idprisencompte2 = 0;
-                    ihm.showButtonSelectionBox();
-                    ThisThread::sleep_for(5s);
-                    choix_niveau = selected_level;
+            //         idprisencompte = IDCAN_LACHE_AV;
+            //         idprisencompte2 = 0;
+            //         ihm.showButtonSelectionBox();
+            //         ThisThread::sleep_for(5s);
+            //         choix_niveau = selected_level;
 
-                    etat = test;
-                }
-                else if (selasc == 2)
-                {
+            //         etat = test;
+            //     }
+            //     else if (selasc == 2)
+            //     {
 
-                    idprisencompte = IDCAN_LACHE_AR;
-                    idprisencompte2 = 0;
-                    ihm.showButtonSelectionBox();
-                    ThisThread::sleep_for(5s);
-                    choix_niveau = selected_level;
+            //         idprisencompte = IDCAN_LACHE_AR;
+            //         idprisencompte2 = 0;
+            //         ihm.showButtonSelectionBox();
+            //         ThisThread::sleep_for(5s);
+            //         choix_niveau = selected_level;
 
-                    etat = test;
-                }
-                else if (selasc == 3)
-                {
+            //         etat = test;
+            //     }
+            //     else if (selasc == 3)
+            //     {
 
-                    idprisencompte = IDCAN_LACHE_AV;
-                    idprisencompte2 = IDCAN_LACHE_AR;
-                    ihm.showButtonSelectionBox();
-                    ThisThread::sleep_for(5s);
-                    choix_niveau = selected_level;
+            //         idprisencompte = IDCAN_LACHE_AV;
+            //         idprisencompte2 = IDCAN_LACHE_AR;
+            //         ihm.showButtonSelectionBox();
+            //         ThisThread::sleep_for(5s);
+            //         choix_niveau = selected_level;
 
-                    etat = test;
-                }
-                else if (selasc == 4) // bouton annuler
-                {
-                    idprisencompte = 0;
-                    idprisencompte2 = 0;
-                    choix_niveau = 0;
-                    etat = multi_init;
-                    NVIC_SystemReset();
-                }
-            }
+            //         etat = test;
+            //     }
+            //     else if (selasc == 4) // bouton annuler
+            //     {
+            //         idprisencompte = 0;
+            //         idprisencompte2 = 0;
+            //         choix_niveau = 0;
+            //         etat = multi_init;
+            //         NVIC_SystemReset();
+            //     }
+            // }
 
             break;
 

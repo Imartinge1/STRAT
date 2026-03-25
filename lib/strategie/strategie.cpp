@@ -147,76 +147,76 @@ void canProcessRx(CANMessage *rxMsg)
     }
     switch (identifiant)
     {
-    case ALIVE_MOTEUR:
-    {
-        if (gameEtat != ETAT_GAME_INIT) 
-        {
-            deplacement.setOdoPetit(x_robot, y_robot, theta_robot); // Pose probléme au debut lors du recalage du debut
-        }
-        printf("Base roulante a reset !! \n");
-    }
-    break;
+    // case ALIVE_MOTEUR:
+    // {
+    //     if (gameEtat != ETAT_GAME_INIT)
+    //     {
+    //         deplacement.setOdoPetit(x_robot, y_robot, theta_robot); // Pose probléme au debut lors du recalage du debut
+    //     }
+    //     printf("Base roulante a reset !! \n");
+    // }
+    // break;
 
-    case ALIVE_BALISE:
-    {
-    }
-    break;
+    // case ALIVE_BALISE:
+    // {
+    // }
+    // break;
 
-    case RESET_IHM:
-        // {strat_etat_s = CHOIX;}
-        break;
+    // case RESET_IHM:
+    //     // {strat_etat_s = CHOIX;}
+    //     break;
 
-    case DEBUG_FAKE_JAKE: // Permet de lancer le match à distance
-    case GLOBAL_JACK:
-    {
-        // if(gameEtat == ETAT_GAME_WAIT_FOR_JACK) {
-        //     gameEtat = ETAT_GAME_START;
-        //     //SendRawId(ACKNOWLEDGE_JACK);
-        // }
-        flag.set(JACK);
-    }
-    break;
+    // case DEBUG_FAKE_JAKE: // Permet de lancer le match à distance
+    // case GLOBAL_JACK:
+    // {
+    //     // if(gameEtat == ETAT_GAME_WAIT_FOR_JACK) {
+    //     //     gameEtat = ETAT_GAME_START;
+    //     //     //SendRawId(ACKNOWLEDGE_JACK);
+    //     // }
+    //     flag.set(JACK);
+    // }
+    // break;
 
-    case ALIVE_ACTIONNEURS_AVANT: // pas de break donc passe directement dans ECRAN_ALL_CHECK mais conserve l'ident initial
-    // case ALIVE_ACTIONNEURS_ARRIERE:
-    case ALIVE_HERKULEX:
-    case ECRAN_ALL_CHECK:
-    {
-        if (waitingAckFrom == rxMsg->id)
-        {
-            waitingAckFrom = 0; // C'est la bonne carte qui indique qu'elle est en ligne
-        }
-        flag_check_carte = 1;
-    }
-    break;
-    case ASSERVISSEMENT_ERROR_MOTEUR:
-    { // erreur asservissement
+    // case ALIVE_ACTIONNEURS_AVANT: // pas de break donc passe directement dans ECRAN_ALL_CHECK mais conserve l'ident initial
+    // // case ALIVE_ACTIONNEURS_ARRIERE:
+    // case ALIVE_HERKULEX:
+    // case ECRAN_ALL_CHECK:
+    // {
+    //     if (waitingAckFrom == rxMsg->id)
+    //     {
+    //         waitingAckFrom = 0; // C'est la bonne carte qui indique qu'elle est en ligne
+    //     }
+    //     flag_check_carte = 1;
+    // }
+    // break;
+    // case ASSERVISSEMENT_ERROR_MOTEUR:
+    // { // erreur asservissement
 
-        // unsigned short recieveAckID= (unsigned short)rxMsg->data[0]  | ( ((unsigned short)rxMsg->data[1]) <<8);
-        // memcpy(&recieveAckID, rxMsg->data, 2);
-        //  if(recieveAckID == waitingAckID_FIN && waitingAckFrom_FIN == INSTRUCTION_END_MOTEUR) {
-        //      if(flagNonRepriseErrorMot) {
-        //          actual_instruction = instruction.nextLineError;
-        //          gameEtat = ETAT_GAME_LOAD_NEXT_INSTRUCTION;
-        //          flagNonRepriseErrorMot = 0;
-        //      } else {
-        //          flagNonRepriseErrorMot = 1;
-        //          timeoutWarningWaitEnd.reset();
-        //          timeoutWarningWaitEnd.start();
-        //          //gameEtat = ETAT_WARING_END_BALISE_WAIT;
-        //      }
-        //  }
-        /*
-        if(flagNonRepriseErrorMot) {
-            actual_instruction = instruction.nextLineError;
-            gameEtat = ETAT_GAME_LOAD_NEXT_INSTRUCTION;
-            flagNonRepriseErrorMot = 0;
-        } else {
-            flagNonRepriseErrorMot = 1;
-            gameEtat = ETAT_WARNING_END_LAST_INSTRUCTION;
-        }*/
-    }
-    break;
+    //     // unsigned short recieveAckID= (unsigned short)rxMsg->data[0]  | ( ((unsigned short)rxMsg->data[1]) <<8);
+    //     // memcpy(&recieveAckID, rxMsg->data, 2);
+    //     //  if(recieveAckID == waitingAckID_FIN && waitingAckFrom_FIN == INSTRUCTION_END_MOTEUR) {
+    //     //      if(flagNonRepriseErrorMot) {
+    //     //          actual_instruction = instruction.nextLineError;
+    //     //          gameEtat = ETAT_GAME_LOAD_NEXT_INSTRUCTION;
+    //     //          flagNonRepriseErrorMot = 0;
+    //     //      } else {
+    //     //          flagNonRepriseErrorMot = 1;
+    //     //          timeoutWarningWaitEnd.reset();
+    //     //          timeoutWarningWaitEnd.start();
+    //     //          //gameEtat = ETAT_WARING_END_BALISE_WAIT;
+    //     //      }
+    //     //  }
+    //     /*
+    //     if(flagNonRepriseErrorMot) {
+    //         actual_instruction = instruction.nextLineError;
+    //         gameEtat = ETAT_GAME_LOAD_NEXT_INSTRUCTION;
+    //         flagNonRepriseErrorMot = 0;
+    //     } else {
+    //         flagNonRepriseErrorMot = 1;
+    //         gameEtat = ETAT_WARNING_END_LAST_INSTRUCTION;
+    //     }*/
+    // }
+    // break;
 
     /////////////////////////////////////Acknowledges de Reception de la demande d'action////////////////////////////////////////
     case ACKNOWLEDGE_HERKULEX:
@@ -227,7 +227,7 @@ void canProcessRx(CANMessage *rxMsg)
     {
     }
     break;
-    case ACKNOWLEDGE_ACTIONNEURS: 
+    case ACKNOWLEDGE_ACTIONNEURS:
     {
         unsigned short recieveAckID = (unsigned short)rxMsg->data[0] | (((unsigned short)rxMsg->data[1]) << 8);
         if ((waitingAckFrom == identifiant) && (recieveAckID == waitingAckID))
@@ -253,7 +253,7 @@ void canProcessRx(CANMessage *rxMsg)
         unsigned short recieveAckID = (unsigned short)rxMsg->data[0] | (((unsigned short)rxMsg->data[1]) << 8);
         if ((waitingAckFrom == identifiant) && (recieveAckID == waitingAckID))
         {
-            //printf(" ack de debut recu \n");
+            // printf(" ack de debut recu \n");
             waitingAckFrom = 0;
             waitingAckID = 0;
             flag.set(AckFrom_FLAG);
@@ -269,7 +269,7 @@ void canProcessRx(CANMessage *rxMsg)
     break;
     case INSTRUCTION_END_Actionneur:
     {
-        
+
         unsigned short recieveAckID = ((unsigned short)rxMsg->data[0] | (((unsigned short)rxMsg->data[1]) << 8));
         // if ((waitingAckFrom == identifiant) && (recieveAckID == waitingAckID))
         if ((waitingAckFrom == identifiant) && (recieveAckID == waitingAckID))
@@ -359,20 +359,20 @@ void canProcessRx(CANMessage *rxMsg)
     }
 
     break;
-    case ODOMETRIE_BIG_POSITION:
-    {
-        x_robot = rxMsg->data[0] | ((unsigned short)(rxMsg->data[1]) << 8);
-        y_robot = rxMsg->data[2] | ((unsigned short)(rxMsg->data[3]) << 8);
-        theta_robot = rxMsg->data[4] | ((signed short)(rxMsg->data[5]) << 8);
-    }
-    break;
-    case ODOMETRIE_SMALL_POSITION:
-    {
-        x_robot = rxMsg->data[0] | ((unsigned short)(rxMsg->data[1]) << 8);
-        y_robot = rxMsg->data[2] | ((unsigned short)(rxMsg->data[3]) << 8);
-        theta_robot = rxMsg->data[4] | ((signed short)(rxMsg->data[5]) << 8);
-    }
-    break;
+    // case ODOMETRIE_BIG_POSITION:
+    // {
+    //     x_robot = rxMsg->data[0] | ((unsigned short)(rxMsg->data[1]) << 8);
+    //     y_robot = rxMsg->data[2] | ((unsigned short)(rxMsg->data[3]) << 8);
+    //     theta_robot = rxMsg->data[4] | ((signed short)(rxMsg->data[5]) << 8);
+    // }
+    // break;
+    // case ODOMETRIE_SMALL_POSITION:
+    // {
+    //     x_robot = rxMsg->data[0] | ((unsigned short)(rxMsg->data[1]) << 8);
+    //     y_robot = rxMsg->data[2] | ((unsigned short)(rxMsg->data[3]) << 8);
+    //     theta_robot = rxMsg->data[4] | ((signed short)(rxMsg->data[5]) << 8);
+    // }
+    // break;
 
     case ACK_ACTION:
     {
@@ -492,8 +492,8 @@ void canProcessRx(CANMessage *rxMsg)
     }
 }
 
-void printCANMsg(CANMessage &msg) 
-{ 
+void printCANMsg(CANMessage &msg)
+{
     printf("  ID      = 0x%.3x\r\n", msg.id);
     printf("  Type    = %d\r\n", msg.type);
     printf("  format  = %d\r\n", msg.format);
@@ -917,7 +917,7 @@ void procesInstructions(Instruction instruction)
     }
     break;
     case ACTION:
-    {  
+    {
         actionPrecedente = ACTION;
         int niveaux = 8;
         printf("\n suivant : %d \n", instruction.arg1);
@@ -967,187 +967,154 @@ void procesInstructions(Instruction instruction)
             printf("\n suivant \n");
         }
 
-        else if (instruction.arg1 == 90) // action poser ou lacher
-        {
+        // else if (instruction.arg1 == 90) // action poser ou lacher
+        // {
 
-            if (instruction.arg2 == 1) // avant
-            {
-                niveaux = instruction.arg3;
-                threadCAN.sendAck(IDCAN_LACHE_AV, niveaux);
-                waitingAckID = IDCAN_LACHE_AV;
-                waitingAckID_FIN = IDCAN_LACHE_AV;
+        //     if (instruction.arg2 == 1) // avant
+        //     {
+        //         niveaux = instruction.arg3;
+        //         threadCAN.sendAck(IDCAN_LACHE_AV, niveaux);
+        //         waitingAckID = IDCAN_LACHE_AV;
+        //         waitingAckID_FIN = IDCAN_LACHE_AV;
 
-                printf("Action poser  avant \n");
-            }
-            else if (instruction.arg2 == 2) //  arriere
-            {
+        //         printf("Action poser  avant \n");
+        //     }
+        //     else if (instruction.arg2 == 2) //  arriere
+        //     {
 
-                niveaux = instruction.arg3;
-                threadCAN.sendAck(IDCAN_LACHE_AR, niveaux);
-                waitingAckID = IDCAN_LACHE_AR;
-                waitingAckID_FIN = IDCAN_LACHE_AR;
-                printf("Action poser  arriére \n");
-            }
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-
-        else if (instruction.arg1 == 100) // action Position initiale
-        {
-            if (instruction.arg2 == 1) // avant
-            {
-
-                threadCAN.send(POS_avant);
-                waitingAckID = POS_avant;
-                waitingAckID_FIN = POS_avant;
-                printf("Action position initiale  avant \n");
-            }
-            else if (instruction.arg2 == 2) //  arriere
-            {
-
-                threadCAN.send(POS_arriere);
-                waitingAckID = POS_arriere;
-                waitingAckID_FIN = POS_arriere;
-                printf("Action position initiale arriére \n");
-            }
-
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-
-        else if (instruction.arg1 == 110) // action deploiyement banderole
-        {
-            threadCAN.send(DEP_banderole);
-            waitingAckID = DEP_banderole;
-            waitingAckID_FIN = DEP_banderole;
-            printf("Action delploiyement de la banderole\n ");
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-
-        else if (instruction.arg1 == 120) // action ventouse
-        {
-            if (instruction.arg2 == 1) // avant
-            {
-
-                threadCAN.send(VENT_AV);
-                waitingAckID = VENT_AV;
-                waitingAckID_FIN = VENT_AV;
-                printf("Action ventouse avant \n");
-            }
-            else if (instruction.arg2 == 2) //  arriere
-            {
-
-                threadCAN.send(VENT_AR);
-                waitingAckID = VENT_AR;
-                waitingAckID_FIN = VENT_AR;
-                printf("Action ventouse  arriére \n");
-            }
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-
-        else if (instruction.arg1 == 130) // action pompe
-        {
-            if (instruction.arg2 == 1) // avant
-            {
-
-                threadCAN.send(Pompe_av);
-                waitingAckID = VENT_AV;
-                waitingAckID_FIN = VENT_AV;
-                printf("Action pompe avant \n");
-            }
-            else if (instruction.arg2 == 2) //  arriere
-            {
-
-                threadCAN.send(Pompe_ar);
-                waitingAckID = Pompe_ar;
-                waitingAckID_FIN = Pompe_ar;
-                printf("Action pompe  arriére \n");
-            }
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-
-        else if (instruction.arg1 == 140) // action saisir
-        {
-            if (instruction.arg2 == 1) // avant
-            {
-                threadCAN.send(saisir_arriere);
-                waitingAckID = saisir_arriere;
-                waitingAckID_FIN = saisir_arriere;
-                printf("Action saisir gauche \n");
-            }
-            else if (instruction.arg2 == 0) // arriere
-            {
-                threadCAN.send(saisir_avant);
-                waitingAckID = saisir_avant;
-                waitingAckID_FIN = saisir_avant;
-                printf("Action saisir droite \n");
-            }
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-        
-
-
-        else if (instruction.arg1 == 160) // action prendreG
-        {
-            if (instruction.arg2 == 1) // avant
-            {
-                threadCAN.send(prendreG,uint8_t(1));
-                waitingAckID = prendreG;
-                waitingAckID_FIN = prendreG;
-                printf("Action prendre Gauche avant (ID CAN: 0x171)\n");
-            }
-            else if (instruction.arg2 == 0) // arriere
-            {
-                threadCAN.send(prendreG,uint8_t(0));
-                waitingAckID = prendreG;
-                waitingAckID_FIN = prendreG;
-                printf("Action prendre Gauche arriére (ID CAN: 0x171)\n");
-            }
-            flag.wait_all(AckFrom_FLAG, timeopr);
-
-
-        }
-        else if (instruction.arg1 == 165) // action prendreD
-        {
-            if (instruction.arg2 == 1) // avant
-            {
-                threadCAN.send(prendreD,uint8_t(1));
-                waitingAckID = prendreD;
-                waitingAckID_FIN = prendreD;
-                printf("Action prendre Droite  (ID CAN: 0x172)\n");
-            }
-            else if (instruction.arg2 == 0) // arriere
-            {
-                threadCAN.send(prendreD,uint8_t(0));
-                waitingAckID = prendreD;
-                waitingAckID_FIN = prendreD;
-                printf("Action prendre Droite (ID CAN: 0x172)\n");
-            }
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-
-        // else if (instruction.arg1 == 165) // action prendreD
-        // { 
-        //     threadCAN.send(prendreD);
-        //     waitingAckID = prendreD;
-        //     waitingAckID_FIN = prendreD;
-        //     printf("Action prendre Droite (ID CAN: 0x172)\n");
+        //         niveaux = instruction.arg3;
+        //         threadCAN.sendAck(IDCAN_LACHE_AR, niveaux);
+        //         waitingAckID = IDCAN_LACHE_AR;
+        //         waitingAckID_FIN = IDCAN_LACHE_AR;
+        //         printf("Action poser  arriére \n");
+        //     }
         //     flag.wait_all(AckFrom_FLAG, timeopr);
         // }
 
-        else if (instruction.arg1 == 170) // action lacherG
+        // else if (instruction.arg1 == 100) // action Position initiale
+        // {
+        //     if (instruction.arg2 == 1) // avant
+        //     {
+
+        //         threadCAN.send(POS_avant);
+        //         waitingAckID = POS_avant;
+        //         waitingAckID_FIN = POS_avant;
+        //         printf("Action position initiale  avant \n");
+        //     }
+        //     else if (instruction.arg2 == 2) //  arriere
+        //     {
+
+        //         threadCAN.send(POS_arriere);
+        //         waitingAckID = POS_arriere;
+        //         waitingAckID_FIN = POS_arriere;
+        //         printf("Action position initiale arriére \n");
+        //     }
+
+        //     flag.wait_all(AckFrom_FLAG, timeopr);
+        // }
+
+        // else if (instruction.arg1 == 110) // action deploiyement banderole
+        // {
+        //     threadCAN.send(DEP_banderole);
+        //     waitingAckID = DEP_banderole;
+        //     waitingAckID_FIN = DEP_banderole;
+        //     printf("Action delploiyement de la banderole\n ");
+        //     flag.wait_all(AckFrom_FLAG, timeopr);
+        // }
+
+        // else if (instruction.arg1 == 120) // action ventouse
+        // {
+        //     if (instruction.arg2 == 1) // avant
+        //     {
+
+        //         threadCAN.send(VENT_AV);
+        //         waitingAckID = VENT_AV;
+        //         waitingAckID_FIN = VENT_AV;
+        //         printf("Action ventouse avant \n");
+        //     }
+        //     else if (instruction.arg2 == 2) //  arriere
+        //     {
+
+        //         threadCAN.send(VENT_AR);
+        //         waitingAckID = VENT_AR;
+        //         waitingAckID_FIN = VENT_AR;
+        //         printf("Action ventouse  arriére \n");
+        //     }
+        //     flag.wait_all(AckFrom_FLAG, timeopr);
+        // }
+
+        // else if (instruction.arg1 == 130) // action pompe
+        // {
+        //     if (instruction.arg2 == 1) // avant
+        //     {
+
+        //         threadCAN.send(Pompe_av);
+        //         waitingAckID = VENT_AV;
+        //         waitingAckID_FIN = VENT_AV;
+        //         printf("Action pompe avant \n");
+        //     }
+        //     else if (instruction.arg2 == 2) //  arriere
+        //     {
+
+        //         threadCAN.send(Pompe_ar);
+        //         waitingAckID = Pompe_ar;
+        //         waitingAckID_FIN = Pompe_ar;
+        //         printf("Action pompe  arriére \n");
+        //     }
+        //     flag.wait_all(AckFrom_FLAG, timeopr);
+        // }
+
+        // else if (instruction.arg1 == 140) // action saisir
+        // {
+        //     if (instruction.arg2 == 1) // avant
+        //     {
+        //         threadCAN.send(saisir_arriere);
+        //         waitingAckID = saisir_arriere;
+        //         waitingAckID_FIN = saisir_arriere;
+        //         printf("Action saisir gauche \n");
+        //     }
+        //     else if (instruction.arg2 == 0) // arriere
+        //     {
+        //         threadCAN.send(saisir_avant);
+        //         waitingAckID = saisir_avant;
+        //         waitingAckID_FIN = saisir_avant;
+        //         printf("Action saisir droite \n");
+        //     }
+        //     flag.wait_all(AckFrom_FLAG, timeopr);
+        // }
+
+        else if (instruction.arg1 == 160) // action prendreG
         {
-            threadCAN.send(poserG);
-            waitingAckID = poserG;
-            waitingAckID_FIN = poserG;
-            printf("Action lacher gauche (ID CAN: 0x026)\n");
+            threadCAN.send(prendreG);
+            waitingAckID = prendreG;
+            waitingAckID_FIN = prendreG;
+            printf("Action prendre gauche (ID CAN: 0x171)\n");
+            flag.wait_all(AckFrom_FLAG, timeopr);
+        }
+        else if (instruction.arg1 == 165) // action prendreD
+        {
+            threadCAN.send(prendreD);
+            waitingAckID = prendreD;
+            waitingAckID_FIN = prendreD;
+            printf("Action prendre droite (ID CAN: 0x172)\n");
             flag.wait_all(AckFrom_FLAG, timeopr);
         }
 
-         else if (instruction.arg1 == 175) // action lacherD
+        else if (instruction.arg1 == 170) // action lacherG
         {
-            threadCAN.send(poserD);
+            threadCAN.send(poserG, uint8_t(instruction.arg2), uint8_t(instruction.arg3));
+            waitingAckID = poserG;
+            waitingAckID_FIN = poserG;
+            printf("Action lacher gauche (ID CAN: 0x014)\n");
+            flag.wait_all(AckFrom_FLAG, timeopr);
+        }
+
+        else if (instruction.arg1 == 175) // action lacherD
+        {
+            threadCAN.send(poserD, uint8_t(instruction.arg2), uint8_t(instruction.arg3));
             waitingAckID = poserD;
             waitingAckID_FIN = poserD;
-            printf("Action lacher droite (ID CAN: 0x027)\n");
+            printf("Action lacher droite (ID CAN: 0x015)\n");
             flag.wait_all(AckFrom_FLAG, timeopr);
         }
 
