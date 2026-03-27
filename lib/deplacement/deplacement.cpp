@@ -98,8 +98,8 @@ void Deplacement::courbeBezier(uint8_t nbCourbes, int16_t P1[][2], int16_t C1[][
 }
 
 void Deplacement::sendJack(bool enable){
-    if(enable){m_can->send(GLOBAL_JACK);}
-}
+    if(enable){m_can->send(GLOBAL_JACK);} 
+} 
 void Deplacement::stop(bool enable){
     if(enable){m_can->send(ASSERVISSEMENT_STOP);}
 }

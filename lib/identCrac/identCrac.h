@@ -4,32 +4,26 @@
 // ID CRCAC 2026
 
 // Géneral
-#define GLOBAL_START 0x001              // Start
-#define BALISE_STOP 0x003                 // stop
-#define GLOBAL_GAME_END 0x004           // Stop fin du match
-#define Pos_Init 0x005                    // Fin positionnement robot avant depart
-#define JACK_RETIRE 0x007                // Jack retiré
-#define GLOBAL_JACK 0x008                 // Jack inséré
-#define ACKNOWLEDGE_JACK 0X009        // Ack Jack inséré
-#define BALISE_DANGER 0x00A                 // danger
-#define BALISE_END_DANGER 0x00B             // fin de danger stop-urgence
-#define ATTENDRE 0x00C                    // temps en ms à attendre
-#define RECALAGE_START 0x00D             // on a commencé le recalage de début
-// 0x00E 0x00F       
-
-// ENVOI DE PARAMETRES
-#define CHOICE_COLOR 0x602      // Couleur  (0->jaune;1->bleu)
-#define RECEPTION_COULEUR 0x603 // Code Couleur
-#define ECRAN_ALL_CHECK 0x604   // Carte all check  (Si provient de carte strat => toutes les cartes sont en ligne, Si provient IHM => forcer le lancement)
-
-// Constantes de temps
-#define TEMPS_VENTOUSE 0x320 // temps de pompe en ms
+#define GAME_START 0x001              // Startdebut du match
+#define STOP 0x003                 // stop
+#define GAME_END 0x004           // Stop fin du match
+#define Pos_Init 0x005                     //  a revoir  position initiale deja dans etat debut match
+#define JACK_RETIRE 0x007                // Jack retiré 
+#define GLOBAL_JACK 0x008                 // Gestion Jack
+#define ACKNOWLEDGE_JACK 0X009        // Ack Jack inséré 
+#define DANGER 0x00A                 // danger 
+#define END_DANGER 0x00B             // fin de danger stop-urgence 
+#define ATTENDRE 0x00C                    // temps en ms à attendre 
+#define RECALAGE_START 0x00D             // on a commencé le recalage de début 
+#define RECALAGE_END 0x00E               // on a fini le recalage de début
+#define ETAT_DEBUT_MATCH 0x00F // envoie au début du match pour que les cartes se mettent en mode match
 #define PLAYTIME 0x321 // temps de jeu en secondes
+#define CHOICE_COLOR 0x602      // Couleur  (0->jaune;1->bleu) 
 
 // Simulation
-#define simulateur 0x765
+#define simulateur 0x765 // jsp a quoi ce sert 
 
-//  ACTION 2026
+//  ACTION 2026  // rediger les actions avec editeurs 
 #define noisetteB 0x010
 #define noisetteJ 0x011
 #define prendreG 0x012
@@ -39,25 +33,28 @@
 #define trier 0x016
 
 // ventouses 
+#define VENT_G 0x266 
+#define VENT_D 0x267
 #define vent_on 0x268
 #define vent_off 0x269
 #define vent_etat 0x27A
-#define VENT_G 0x266
-#define VENT_D 0x267
+#define TEMPS_VENTOUSE 0x320 // temps de pompe en ms 
 
-// Asservissement
-#define ASSERVISSEMENT_ENABLE 0x1F7     // Activation asservissement  (0 : désactivation, 1 : activation)
+// Asservissement // voir paramètres 
+#define ASSERVISSEMENT_STOP 0x002      // Stop moteur
+#define ASSERVISSEMENT_SPEED_DANGER 0x006      // Vitesse en danger
+#define ASSERVISSEMENT_ERROR_MOTEUR 0x15 //robot s'arrete car percuté quelque chose
 #define ASSERVISSEMENT_XYT_ROTATE 0x37 // Asservissement position XYT avec rotation initiale
 #define ASSERVISSEMENT_LINE 0x38       // Asservissement position XYT ligne droite
 #define ASSERVISSEMENT_GO_TO_XYT 0x39 // Asservissement position XYZ (x en mm, y en mm,theta en degré)
-#define ASSERVISSEMENT_COURBURE 0x21   // Asservissement rayon de courbure  (+ gauche, - droite , sens : 1avt , -1arr; enchainement => 1 oui, 0 => non, 2=>derniére instruction de l'enchainement)
-#define ASSERVISSEMENT_RECALAGE 0x24   // Moteur tout droit  (recalage : 0 mouvement seul, 1 x, 2y valeur : coordonnée à laquelle est recalé x/y; enchainement => 1 oui, 0 => non)
-#define ASSERVISSEMENT_STOP 0x002      // Stop moteur
-#define ASSERVISSEMENT_BEZIER 0x2A     // Asservissement courbe de bezier
-#define ASSERVISSEMENT_CONFIG 0x22     // Asservissement paramètre
-#define ASSERVISSEMENT_CONFIG_VIT 0x11   // Vitesse max
-#define ASSERVISSEMENT_CONFIG_ACCEL 0x12   // Accélération max
-#define ASSERVISSEMENT_SPEED_DANGER 0x006      // Vitesse en danger
+#define ASSERVISSEMENT_XYT 0x020  // Asservissement (x,y,theta)  (0 : au choix 1 : avant -1 : arrière)
+#define ASSERVISSEMENT_COURBURE 0x021   // Asservissement rayon de courbure  (+ gauche, - droite , sens : 1avt , -1arr; enchainement => 1 oui, 0 => non, 2=>derniére instruction de l'enchainement)
+#define ASSERVISSEMENT_CONFIG 0x022     // Asservissement paramètre
+#define ASSERVISSEMENT_RECALAGE 0x024   // Moteur tout droit  (recalage : 0 mouvement seul, 1 x, 2y valeur : coordonnée à laquelle est recalé x/y; enchainement => 1 oui, 0 => non)
+#define ASSERVISSEMENT_ERREUR 0x025     // Erreur asservissement  (Indique la raison de l'arrêt de l'asservissement)po
+#define ASSERVISSEMENT_BEZIER 0x02A     // Asservissement courbe de bezier
+#define ASSERVISSEMENT_CONFIG_VIT 0x011   // Vitesse max
+#define ASSERVISSEMENT_CONFIG_ACCEL 0x012   // Accélération max
 #define ASSERVISSEMENT_INFO_CONSIGNE 0x1F0     // Info Consigne et Commande moteur
 #define ASSERVISSEMENT_CONFIG_KPP_DROITE 0x1F1 // Config coef KPP_Droit
 #define ASSERVISSEMENT_CONFIG_KPI_DROITE 0x1F2 // Config coef KPI_Droit
@@ -65,6 +62,7 @@
 #define ASSERVISSEMENT_CONFIG_KPP_GAUCHE 0x1F4 // Config coef KPP_Gauche
 #define ASSERVISSEMENT_CONFIG_KPI_GAUCHE 0x1F5 // Config coef KPI_Gauche
 #define ASSERVISSEMENT_CONFIG_KPD_GAUCHE 0x1F6 // Config coef KPD_Gauche
+#define ASSERVISSEMENT_ENABLE 0x1F7     // Activation asservissement  (0 : désactivation, 1 : activation)
 #define ASSERVISSEMENT_CONFIG_KPP 0x710        // Config coef KPP
 #define ASSERVISSEMENT_CONFIG_KPI 0x711        // Config coef KPI 
 #define ASSERVISSEMENT_CONFIG_KPD 0x712        // Config coef KPD
@@ -72,11 +70,8 @@
 #define ASSERVISSEMENT_CONFIG_PERIM 0x714   // Périmètre des roues
 #define ASSERVISSEMENT_CONFIG_COEF_G 0x715  // Config coef de conversion des tics en mm pour la roue gauche
 #define ASSERVISSEMENT_CONFIG_COEF_D 0x716  // Config coef de conversion des tics en mm pour la roue droite
-#define ASSERVISSEMENT_ERREUR 0x25     // Erreur asservissement  (Indique la raison de l'arrêt de l'asservissement)po
-#define ASSERVISSEMENT_ERROR_MOTEUR 0x15 // robot s'arrete car percuté quelque chose
-#define ASSERVISSEMENT_XYT 0x20  // Asservissement (x,y,theta)  (0 : au choix 1 : avant -1 : arrière)
 
-// ACK
+// ACK // ajouter ? 
 #define ACKNOWLEDGE_BALISE 0x101      // Acknowledge balise
 #define ACKNOWLEDGE_MOTEUR 0x102      // Acknowledge moteur
 #define ACKNOWLEDGE_IHM 0x103        // Acknowledge ecran tactile
@@ -88,7 +83,7 @@
 #define ACK_ACTION 0x109               // autre action possible via les herkulex, ne peut pas passer en sendrawid
 #define ACK_FIN_ACTION 0x10A             // Fin instruction actionneurs  (Indique que l'instruction est terminée)
 
-// FIN INSTRUCTION
+// FIN INSTRUCTION // ajouter ?
 #define INSTRUCTION_END_BALISE 0x10B      // Fin instruction balise  (Indique que l'instruction est terminée)
 #define INSTRUCTION_END_MOTEUR 0x10C      // Fin instruction moteur  (Indique que l'instruction est terminée)
 #define INSTRUCTION_END_IHM 0x10D         // Fin instruction ecran tactile  (Indique que l'instruction est terminée)
@@ -99,44 +94,8 @@
 #define OdoD 0x028 // Odométrie position robot droite
 #define Odo_request 0x026 // Demande odométrie  (Demande la position actuel du robot)
 
-
-//Débug asserv
-#define ID_FIN_CLOTHO 0x501 // Fin calcul clothoide
-#define ID_ENTRAXE 0x502 
-#define ID_RAYON 0x503
-#define ID_ALPHA 0x504
-#define ID_VITESSE 0x505
-#define ID_ACCELERATION 0x506
-#define ID_TCLOTHO 0x507 // Temps clothoide
-#define ID_TARC 0x508 
-#define ID_TEMPS 0x509
-#define ID_VIT 0x50A
-#define ID_VIT1 0x50B
-#define ID_POS 0x50C
-#define ID_POS1 0x50D
-#define ID_T_CALCUL 0x50E
-#define ERREUR_TEMP_CALCUL 0x50F
-#define ID_DBUG_ETAT 0x510
-#define ID_DBUG_ETAT_DPL 0x512
-#define ID_DBUG_LIGNE_TPS 0x513
-#define ID_DBUG_LIGNE_PCONS 0x514
-#define ID_DBUG_LIGNE_VIT 0x515
-#define ID_DIST_TIC_GENE 0x516
-#define ID_TEMPS_CALCUL_CLOTHO 0x517
-#define ID_DBUG_LIGNE_GENE_VIT 0x518
-#define ID_CLOTHO_IMPOSSIBLE 0x519
-#define ID_TRAIT_LIGNE_GENE 0x51A
-#define ID_TRAIT_CLOTHO 0x51B
-#define ID_TRAIT 0x51C
-#define ID_TEMPS_LONG_1 0x51D
-#define ID_TEMPS_LONG_2 0x51E
-#define ID_TEST_VITESSE 0x51F
-#define TEST_BRAS_1 0x520
-#define ID_REACLLAGE_AVANT 0x521
-
-
-// Reset cartes
-#define RESET_BALISE 0x031     // Reset balise
+// Reset cartes 
+#define RESET_BALISE 0x031      // Reset balise
 #define RESET_MOTEUR 0x032      // Reset moteur
 #define RESET_IHM 0x033         // Reset écran tactile
 #define RESET_ACTIONNEURS 0x034 // Reset actionneurs
@@ -167,9 +126,10 @@
 #define CHECK_STRAT 0x065               // Check stratégie
 #define CHECK_AX12 0x066                // Check AX12
 #define CHECK_OK_TELEMETRE 0x067        // Check telemetre
+#define ECRAN_ALL_CHECK 0x604   // Carte all check  (Si provient de carte strat => toutes les cartes sont en ligne, Si provient IHM => forcer le lancement)  // pas besoin + commentaire
 
 // Carte herkulex
-#define IDCAN_ACK 0x045  //
+#define IDCAN_ACK 0x045 
 #define IDCAN_HERKULEX 0x051 
 #define ID_HERKULEX_VITESSE 0x068
 #define ID_HERKULEX_TOURNER_NB_TOUR 0x069
@@ -188,7 +148,7 @@
 #define IDCAN_PINCE 0x079
 #define INSTRUCTION_END_STEP_MOTEUR 0x07A
 #define INSTRUCTION_END_HERKULEX 0x07B
-#define INSTRUCTION_END_Actionneur 0x07C
+#define INSTRUCTION_END_Actionneur 0x07C // garder
 #define IDCAN_PINCE_ARRIERE 0x07D
 #define IDCAN_Construire_avant 0x091
 #define IDCAN_Construire_arriere 0x092
@@ -197,22 +157,22 @@
 #define IDCAN_ASPIRATEUR 0x07E
 
 // /CAPTEURS
-#define DATA_TELEMETRE 0x3B0 // Demande de la valeur d'un des télémètres
-#define RECEPTION_DATA 0x3B1 // envoi de la valeur d'un des télémètres
+#define DATA_TELEMETRE 0x3B0 
+#define RECEPTION_DATA 0x3B1 
 #define TELEMETRE_OBJET 0x3B2
 #define OBJET_SUR_TABLE 0x3B3
-#define RECEPTION_RECALAGE 0x3B5 // Valeur des télémètres
-#define DATA_RECALAGE 0x3B6      // Demande de la valeur de tous les télémètres afin de procèder au récalage
+#define RECEPTION_TELEMETRE_LOGIQUE 0x3B4
+#define RECEPTION_RECALAGE 0x3B5 
+#define DATA_RECALAGE 0x3B6      
 #define LIRE_PANNEAU 0x3B7
 #define VIBRO 0x3B8
 #define DATA_TELEMETRE_LOGIQUE 0x3B9
-#define RECEPTION_TELEMETRE_LOGIQUE 0x3B0
 #define capteur_avant 0x250
 #define capteur_arriere 0x251
 
 // DEBUGS
 #define DEBUG_STRATEGIE_AUTOMATE 0x760 // Etat automate stratégie  (Permet de savoir l'etat de l'automate)
-#define DEBUG_FAKE_JAKE 0x761          // Fake jack  (Permet d'outre passer le JACk du robot)
+#define DEBUG_FAKE_JAKE 0x761          // Fake jack  (Permet d'outre passer le JACK du robot)
 #define DEBUG_ASSERV 0x762             // Info debug carte moteur
 
 // SOMO
@@ -230,6 +190,41 @@
 #define SOMO_previous 0x4AB
 #define SOMO_repeat 0x4AC
 
+// ID JSP
+#define ID_FIN_CLOTHO 0x501 // ?  
+#define ID_ENTRAXE 0x502 
+#define ID_RAYON 0x503
+#define ID_ALPHA 0x504
+#define ID_VITESSE 0x505
+#define ID_ACCELERATION 0x506
+#define ID_TCLOTHO 0x507 // 
+#define ID_TARC 0x508 
+#define ID_TEMPS 0x509
+#define ID_VIT 0x50A
+#define ID_VIT1 0x50B
+#define ID_POS 0x50C
+#define ID_POS1 0x50D
+#define ID_T_CALCUL 0x50E
+#define ERREUR_TEMP_CALCUL 0x50F
+#define ID_DBUG_ETAT 0x510
+#define ID_DBUG_ETAT_DPL 0x512
+#define ID_DBUG_LIGNE_TPS 0x513
+#define ID_DBUG_LIGNE_PCONS 0x514
+#define ID_DBUG_LIGNE_VIT 0x515
+#define ID_DIST_TIC_GENE 0x516
+#define ID_TEMPS_CALCUL_CLOTHO 0x517
+#define ID_DBUG_LIGNE_GENE_VIT 0x518
+#define ID_CLOTHO_IMPOSSIBLE 0x519
+#define ID_TRAIT_LIGNE_GENE 0x51A
+#define ID_TRAIT_CLOTHO 0x51B
+#define ID_TRAIT 0x51C
+#define ID_TEMPS_LONG_1 0x51D
+#define ID_TEMPS_LONG_2 0x51E
+#define ID_TEST_VITESSE 0x51F
+#define TEST_BRAS_1 0x520
+#define ID_REACLLAGE_AVANT 0x521
+
+
 // // 2025
 // #define DEP_banderole 0x257
 // #define POS_avant 0x258
@@ -240,10 +235,6 @@
 // #define BRAS_POSE 0x271
 // #define Pompe_av 0x255
 // #define Pompe_ar 0x256
-
-#define VENT_AV 0x900
-#define VENT_AR 0x901
-
 // #define IDCAN_LACHE_AV 0x200 // PASSE
 // #define IDCAN_LACHE_AR 0x201 //  RELACHE_BAS
 // #define MONTER_IMMEUBLE_DOUBLE 0x90 // Monte deux immeubles selon un code couleur
@@ -258,6 +249,9 @@
 // #define ODOMETRIE_SMALL_POSITION 0x26  // Odométrie position robot  (Position actuel du robot)
 #define IDCAN_SET_SCORE 0x97
 #define ASSERVISSEMENT_ROTATION 0x23  // Asservissement rotation
+#define VENT_AV 0x900
+#define VENT_AR 0x901
+
 
 // // 2022
 // // Serial carte interface
@@ -266,6 +260,7 @@
 // #define SERIAL_DROITE 4  // bras 2 et 3
 // #define SERIAL_SPECIAL 5 // bras mesure et chasse neige
 // // 1 serial est cassé aléatoirement sur chaque carte
+
 // /* Correspondance serial --> RX-TX sur la carte
 // serial1 : RX1-TX1
 // serial2 : RX5-TX5
@@ -332,7 +327,6 @@
 // // #define VALEUR_GIROUETTE 0x421
 // // #define TEST_LECTURE_GIROUETTE 0x422
 
-
 // // Alive cartes
 // #define ALIVE_BALISE 0x071              // Alive balise
 // #define ALIVE_MOTEUR 0x072              // Alive moteur
@@ -346,6 +340,5 @@
 // #define ODOMETRIE_SMALL_VITESSE 0027  // Odométrie vitesse  (Indication sur l'état actuel)
 // #define ODOMETRIE_BIG_POSITION 0x028   // Odométrie position robot  (Position actuel du robot)
 // #define ODOMETRIE_SMALL_POSITION 0x026 // Odométrie position robot  (Position actuel du robot)
-
 
 #endif

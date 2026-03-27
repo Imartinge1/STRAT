@@ -424,7 +424,7 @@ void canProcessRx(CANMessage *rxMsg)
         //         timer_evitement.start();
         //         timer_evitement.reset();
 
-        //         threadCAN.send(BALISE_DANGER);
+        //         threadCAN.send(DANGER);
         //     }else if(evitement.lidar_danger(x_obstacle, y_obstacle, theta_obstacle, distance_lidar) == DANGER_ST){  // A enlever en temps de match mais à laisser pour les tests
         //         // printf("IDCAN_POS_XY_OBJET ;DANGER_ST ; x_obstacle : %d ; y_obstacle : %d ; theta_obstacle : %d, distance_lidar : %d\n", x_obstacle, y_obstacle, theta_obstacle, distance_lidar);
         //         // deplacement.stop();
@@ -453,7 +453,7 @@ void canProcessRx(CANMessage *rxMsg)
         //     //     flag.clear(AckFrom_FIN_FLAG);
         //     //     evitement.lidar_end_danger(&instruction, &dodgeq, target_x_robot, target_y_robot, target_theta_robot);
 
-        //     //     threadCAN.send(BALISE_END_DANGER);
+        //     //     threadCAN.send(END_DANGER);
 
         //     // }
         //     if(timer_evitement.read_ms() > 3000){
@@ -1117,15 +1117,23 @@ void procesInstructions(Instruction instruction)
             printf("Action lacher droite (ID CAN: 0x015)\n");
             flag.wait_all(AckFrom_FLAG, timeopr);
         }
+        else if (instruction.arg1 == 180)// action trier
+        {
+            threadCAN.send(trier, uint8_t(instruction.arg2));
+            waitingAckID = trier;
+            waitingAckID_FIN = trier;
+            printf("Action trier (ID CAN: 0x016)\n");
+            flag.wait_all(AckFrom_FLAG, timeopr);
+        }
+        else if (instruction.arg1 == 130)
+        {
+            threadCAN.send(ATTENDRE, uint8_t(instruction.arg2));
+            waitingAckID = ATTENDRE;
+            waitingAckID_FIN = ATTENDRE;
+            printf("Action attendre (ID CAN: 0x00C)\n");
+        }
 
-        // else if (instruction.arg1 == 170) // action trier
-        // {
-        //     threadCAN.send(trier);
-        //     waitingAckID = trier;
-        //     waitingAckID_FIN = trier;
-        //     printf("Action trier (ID CAN: 0x028)\n");
-        //     flag.wait_all(AckFrom_FLAG, timeopr);
-        // }
+        
         waitingAckFrom_FIN = INSTRUCTION_END_Actionneur;
         flag.wait_all(AckFrom_FIN_FLAG);
         gameEtat = ETAT_GAME_INSTRUCTION_FINIE;
