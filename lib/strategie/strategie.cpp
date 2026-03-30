@@ -136,7 +136,7 @@ Timer timer_evitement;
 /* FUNCTION NAME: canProcessRx                                                          */
 /* DESCRIPTION  : Fait évoluer l'automate de l'IHM en fonction des receptions sur le CAN*/
 /****************************************************************************************/
-void canProcessRx(CANMessage *rxMsg)
+void canProcessRx(CANMessage *rxMsg) 
 {
     int identifiant = rxMsg->id;
 
@@ -145,7 +145,7 @@ void canProcessRx(CANMessage *rxMsg)
     {
         waitingId = 0;
     }
-    switch (identifiant)
+    switch (identifiant) 
     {
     // case ALIVE_MOTEUR:
     // {
@@ -219,15 +219,15 @@ void canProcessRx(CANMessage *rxMsg)
     // break;
 
     /////////////////////////////////////Acknowledges de Reception de la demande d'action////////////////////////////////////////
-    case ACKNOWLEDGE_HERKULEX:
+    case ACKNOWLEDGE_HERKULEX: 
     {
     }
     break;
-    case ACKNOWLEDGE_BALISE: // pas de break donc passe directement dans ACK_FIN_ACTION mais conserve l'ident initial
+    case ACKNOWLEDGE_BALISE: 
     {
     }
     break;
-    case ACKNOWLEDGE_ACTIONNEURS:
+    case ACKNOWLEDGE_ACTIONNEURS: 
     {
         unsigned short recieveAckID = (unsigned short)rxMsg->data[0] | (((unsigned short)rxMsg->data[1]) << 8);
         if ((waitingAckFrom == identifiant) && (recieveAckID == waitingAckID))
@@ -245,7 +245,7 @@ void canProcessRx(CANMessage *rxMsg)
             flag.set(AckFrom_FIN_FLAG);
         }
     }
-    break;
+    break; 
     /////////////////////////////////////////////Acknowledges de la fin d'action/////////////////////////////////////////////////
     case ACKNOWLEDGE_MOTEUR:
     {
@@ -359,20 +359,20 @@ void canProcessRx(CANMessage *rxMsg)
     }
 
     break;
-    // case ODOMETRIE_BIG_POSITION:
-    // {
-    //     x_robot = rxMsg->data[0] | ((unsigned short)(rxMsg->data[1]) << 8);
-    //     y_robot = rxMsg->data[2] | ((unsigned short)(rxMsg->data[3]) << 8);
-    //     theta_robot = rxMsg->data[4] | ((signed short)(rxMsg->data[5]) << 8);
-    // }
-    // break;
-    // case ODOMETRIE_SMALL_POSITION:
-    // {
-    //     x_robot = rxMsg->data[0] | ((unsigned short)(rxMsg->data[1]) << 8);
-    //     y_robot = rxMsg->data[2] | ((unsigned short)(rxMsg->data[3]) << 8);
-    //     theta_robot = rxMsg->data[4] | ((signed short)(rxMsg->data[5]) << 8);
-    // }
-    // break;
+        // case ODOMETRIE_BIG_POSITION:
+        // {
+        //     x_robot = rxMsg->data[0] | ((unsigned short)(rxMsg->data[1]) << 8);
+        //     y_robot = rxMsg->data[2] | ((unsigned short)(rxMsg->data[3]) << 8);
+        //     theta_robot = rxMsg->data[4] | ((signed short)(rxMsg->data[5]) << 8);
+        // }
+        // break;
+        // case ODOMETRIE_SMALL_POSITION:
+        // {
+        //     x_robot = rxMsg->data[0] | ((unsigned short)(rxMsg->data[1]) << 8);
+        //     y_robot = rxMsg->data[2] | ((unsigned short)(rxMsg->data[3]) << 8);
+        //     theta_robot = rxMsg->data[4] | ((signed short)(rxMsg->data[5]) << 8);
+        // }
+        // break;
 
     case ACK_ACTION:
     {
@@ -502,7 +502,7 @@ void printCANMsg(CANMessage &msg)
     printf("\r\n");
 }
 
-void remplirStruct(CANMessage &theDATA, int idf, char lenf, char dt0f, char dt1f, char dt2f, char dt3f, char dt4f, char dt5f, char dt6f, char dt7f)
+void remplirStruct(CANMessage &theDATA, int idf, char lenf, char dt0f, char dt1f, char dt2f, char dt3f, char dt4f, char dt5f, char dt6f, char dt7f) 
 {
     theDATA.type = CANData;
     if (idf > 0x7FF)
@@ -525,35 +525,33 @@ void remplirStruct(CANMessage &theDATA, int idf, char lenf, char dt0f, char dt1f
     theDATA.data[7] = dt7f;
 }
 
-bool machineStrategie()
+bool machineStrategie() // Fait évoluer l'automate de la stratégie, retourne true tant que le match n'est pas fini
 {
     // static Instruction instruction;
 
     switch (gameEtat)
     {
-    case ETAT_GAME_LOAD_NEXT_INSTRUCTION:
+    case ETAT_GAME_LOAD_NEXT_INSTRUCTION: 
         // printf("load next instruction\n");
         // if (actual_instruction >= nb_instructions || actual_instruction == 255) {
 
-        if (listeInstructions.fin())
+        if (listeInstructions.fin()) 
         {
             printf("\n Fin des instruction \n");
             gameEtat = ETAT_END;
-
             // Il n'y a plus d'instruction, fin du jeu
         }
         else
         {
             // instruction = strat_instructions[actual_instruction];
-
-            instruction = listeInstructions.enCours();
+            instruction = listeInstructions.enCours(); 
 
             // On effectue le traitement de l'instruction
             gameEtat = ETAT_GAME_PROCESInstruction;
         }
         break;
 
-    case ETAT_GAME_PROCESInstruction:
+    case ETAT_GAME_PROCESInstruction: 
     {
         //      Traitement de l'instruction, envoie de la trame CAN
         printf("\n Liste des instruction en cours \n\n");
@@ -609,36 +607,36 @@ bool machineStrategie()
     return true;
 }
 
-void procesInstructions(Instruction instruction)
+void procesInstructions(Instruction instruction)  // Traite l'instruction, envoie les trames CAN et gère les ack
 {
     gameEtat = ETAT_GAME_INSTRUCTION_FINIE; // Pour passer à la suivante pour toutes les instructions sans MV ou autre
-    int timeopr = 1000;
+    int timeopr = 1000; 
     switch (instruction.order)
     {
 
-    case MV_RECALAGE:
+    case MV_RECALAGE: 
     { // code inversion sur X Fait
         // if (instruction.nextActionType == MECANIQUE) {
-        instruction.nextActionType = WAIT;
-        int16_t distance = (((instruction.direction == FORWARD) ? 1 : -1) * 1000); // On indique une distance de 3000 pour etre sur que le robot va ce recaler
+        instruction.nextActionType = WAIT; 
+        int16_t distance = (((instruction.direction == FORWARD) ? 1 : -1) * 1000);   
         uint8_t coordonnee = 0;
         uint16_t val_recalage;
-        actionPrecedente = MV_RECALAGE;
-        if (instruction.precision == RECALAGE_Y)
+        actionPrecedente = MV_RECALAGE; 
+        if (instruction.precision == RECALAGE_Y) 
         {
-            coordonnee = 2;
-            // if (InversStrat == 1 && ingnorInversionOnce == 0)
+            coordonnee = 2; // Recalage sur Y
+            // if (InversStrat == 1 && ingnorInversionOnce == 0) 
             // {
             //   val_recalage = 3000 - instruction.arg1; // Inversion du Y
             // }
             // else
             // {
-            val_recalage = instruction.arg1;
+            val_recalage = instruction.arg1; 
             // }
         }
         else
         {
-            coordonnee = 1;
+            coordonnee = 1; // Recalage sur X
             if (color == Jaune)
             {
                 val_recalage = 2000 - instruction.arg1; // Inversion du X
@@ -655,29 +653,22 @@ void procesInstructions(Instruction instruction)
         printf("\n\n Recalage du robot \n");
         waitingAckID_FIN = ASSERVISSEMENT_RECALAGE;
         waitingAckFrom_FIN = INSTRUCTION_END_MOTEUR;
-        flag.wait_all(AckFrom_FIN_FLAG, 20000);
-
-        // } else {
-        // }
+        flag.wait_all(AckFrom_FIN_FLAG, 20000); 
     }
     break;
-    case MV_TURN:
+    case MV_TURN: 
     { // code inversion sur X Fait
         int16_t angle = instruction.arg3;
-        target_x_robot = x_robot;
-        target_y_robot = y_robot;
-        target_theta_robot = theta_robot + angle;
-        actionPrecedente = MV_TURN;
-        // if (InversStrat == 1 && ingnorInversionOnce == 0)
-        // {
-        //   angle = -angle;
-        // }
+        target_x_robot = x_robot; // Lors d'une rotation, les coordonnées cibles sont les mêmes que les coordonnées actuelles, seul l'angle change
+        target_y_robot = y_robot;   
+        target_theta_robot = theta_robot + angle; // L'angle cible est l'angle actuel plus l'angle de rotation demandé 
+        actionPrecedente = MV_TURN; 
         if (color == Jaune)
         {
             angle = -angle;
         }
 
-        if (instruction.direction == ABSOLUTE && (int16_t)theta_robot)
+        if (instruction.direction == ABSOLUTE && (int16_t)theta_robot) 
         {
             // C'est une rotation absolu, il faut la convertir en relative
 
@@ -692,13 +683,12 @@ void procesInstructions(Instruction instruction)
             } // Calcule le chemin le plus court
         }
 
-        if (angle)
+        if (angle != 0) 
         {
-            waitingAckID = ASSERVISSEMENT_ROTATION;
-            waitingAckFrom = ACKNOWLEDGE_MOTEUR;
+            waitingAckID = ASSERVISSEMENT_ROTATION; 
+            waitingAckFrom = ACKNOWLEDGE_MOTEUR; 
             angle = angle / 10;
             deplacement.rotation(angle);
-            // printf("deplacement.rotation(angle : %d);\n", angle);
             flag.wait_all(AckFrom_FLAG, timeopr);
 
             waitingAckID_FIN = ASSERVISSEMENT_ROTATION;
@@ -710,6 +700,7 @@ void procesInstructions(Instruction instruction)
         gameEtat = ETAT_GAME_INSTRUCTION_FINIE; // ETAT_GAME_MVT_DANGER
     }
     break;
+
     case MV_LINE:
     {
         waitingAckID = ASSERVISSEMENT_RECALAGE;
@@ -718,16 +709,16 @@ void procesInstructions(Instruction instruction)
         actionPrecedente = MV_LINE;
         int16_t distance = (((instruction.direction == FORWARD) ? 1 : -1) * instruction.arg1);
 
-        target_x_robot = x_robot + distance * cos((double)theta_robot * M_PI / 1800.0);
+        target_x_robot = x_robot + distance * cos((double)theta_robot * M_PI / 1800.0); 
         target_y_robot = y_robot + distance * sin((double)theta_robot * M_PI / 1800.0);
         target_theta_robot = theta_robot;
         target_sens = (instruction.direction == FORWARD) ? 1 : -1;
 
-        deplacement.toutDroit(distance);
+        deplacement.toutDroit(distance); // ?
 
-        flag.wait_all(AckFrom_FLAG, timeopr);
+        flag.wait_all(AckFrom_FLAG, timeopr); 
 
-        waitingAckID_FIN = ASSERVISSEMENT_RECALAGE;
+        waitingAckID_FIN = ASSERVISSEMENT_LINE;
         waitingAckFrom_FIN = INSTRUCTION_END_MOTEUR;
         printf("\n\nEn attente de fin de mouvement \n");
 
@@ -737,12 +728,12 @@ void procesInstructions(Instruction instruction)
         gameEtat = ETAT_GAME_INSTRUCTION_FINIE; // ETAT_GAME_MVT_DANGER
     }
     break;
-    case MV_XYT:
+    case MV_XYT: 
     { // code inversion sur X Fait
         // on effectue XYT normalement selon les instructions
-        uint16_t x;
+        uint16_t x = instruction.arg1;
         uint16_t y = instruction.arg2;
-        int16_t theta;
+        int16_t theta = instruction.arg3;
         uint8_t sens;
         actionPrecedente = MV_XYT;
 
@@ -755,15 +746,15 @@ void procesInstructions(Instruction instruction)
         {
             sens = 1;
         }
-        // --------------------------------
 
         if (color == Jaune)
-        {                                // code inversion sur X Fait
-            x = 2000 - instruction.arg1; // Inversion du X
-            theta = 1800 + instruction.arg3;
+        {                                
+            x = 2000 - instruction.arg1; 
+            theta = 1800 + instruction.arg3; 
+
             if (theta > 1800)
             {
-                theta -= 3600;
+                theta -= 3600; 
             }
             else if (theta < -1800)
             {
@@ -776,13 +767,13 @@ void procesInstructions(Instruction instruction)
             theta = instruction.arg3;
         }
 
-        // ---------------------------
+        // 
 
         waitingAckID = ASSERVISSEMENT_XYT;
         waitingAckFrom = ACKNOWLEDGE_MOTEUR;
 
         // --- ------
-        if ((x <= 0) || (y <= 0))
+        if ((x <= 0) || (y <= 0)) 
         {
             // deplacement.positionXYTheta(target_x_robot, target_y_robot, target_theta_robot, sens);
         }
@@ -806,7 +797,7 @@ void procesInstructions(Instruction instruction)
         printf("\n\n Mouvement vers une valeur x : %u , y : %u , theta : %d et sens : %d\n\n", x, y, theta, sens);
     }
     break;
-    case MV_COURBURE:
+    case MV_COURBURE: 
     { // code inversion Fait mais a tester
         //    int16_t rayon;
         int16_t angle;
@@ -891,7 +882,7 @@ void procesInstructions(Instruction instruction)
         //            flag.wait_all(AckFrom_FIN_FLAG, 20000);
     }
     break;
-    case PINCE:
+    case PINCE: // pas besoin ? 
     {
         uint8_t Etage = (instruction.arg1 & 0xFF);
         uint8_t etatHerkulex = ((instruction.arg2 == 1) ? 1 : 0);
@@ -916,10 +907,11 @@ void procesInstructions(Instruction instruction)
         // }
     }
     break;
+
     case ACTION:
     {
         actionPrecedente = ACTION;
-        int niveaux = 8;
+        int niveaux = 8; 
         printf("\n suivant : %d \n", instruction.arg1);
         waitingAckFrom = ACKNOWLEDGE_ACTIONNEURS;
 
@@ -944,7 +936,6 @@ void procesInstructions(Instruction instruction)
             }
             flag.wait_all(AckFrom_FLAG, timeopr);
         }
-
         else if (instruction.arg1 == 80) // action constuire
         {
             if (instruction.arg2 == 1) // avant
@@ -963,9 +954,64 @@ void procesInstructions(Instruction instruction)
                 waitingAckID_FIN = IDCAN_Construire_arriere;
                 printf("Action constuire un gradin arriére \n");
             }
-            flag.wait_all(AckFrom_FLAG, timeopr);
             printf("\n suivant \n");
+            flag.wait_all(AckFrom_FLAG, timeopr);
         }
+        else if (instruction.arg1 == 160) // action prendreG
+        {
+            threadCAN.send(prendreG);
+            waitingAckID = prendreG;
+            waitingAckID_FIN = prendreG;
+            printf("Action prendre gauche (ID CAN: 0x171)\n");
+            flag.wait_all(AckFrom_FLAG, timeopr);
+        }
+        else if (instruction.arg1 == 165) // action prendreD
+        {
+            threadCAN.send(prendreD);
+            waitingAckID = prendreD;
+            waitingAckID_FIN = prendreD;
+            printf("Action prendre droite (ID CAN: 0x172)\n");
+            flag.wait_all(AckFrom_FLAG, timeopr);
+        }
+
+        else if (instruction.arg1 == 170) // action lacherG
+        {
+            threadCAN.send(poserG, uint8_t(instruction.arg2), uint8_t(instruction.arg3));
+            waitingAckID = poserG;
+            waitingAckID_FIN = poserG;
+            printf("Action lacher gauche (ID CAN: 0x014)\n");
+            flag.wait_all(AckFrom_FLAG, timeopr);
+        }
+
+        else if (instruction.arg1 == 175) // action lacherD
+        {
+            threadCAN.send(poserD, uint8_t(instruction.arg2), uint8_t(instruction.arg3));
+            waitingAckID = poserD;
+            waitingAckID_FIN = poserD;
+            printf("Action lacher droite (ID CAN: 0x015)\n");
+            flag.wait_all(AckFrom_FLAG, timeopr);
+        }
+        else if (instruction.arg1 == 180) // action trier
+        {
+            threadCAN.send(trier, uint8_t(instruction.arg2));
+            waitingAckID = trier;
+            waitingAckID_FIN = trier;
+            printf("Action trier (ID CAN: 0x016)\n");
+            flag.wait_all(AckFrom_FLAG, timeopr);
+        }
+        else if (instruction.arg1 == 130)
+        {
+            threadCAN.send(ATTENDRE, uint8_t(instruction.arg2));
+            waitingAckID = ATTENDRE;
+            waitingAckID_FIN = ATTENDRE;
+            printf("Action attendre (ID CAN: 0x00C)\n");
+        }
+
+        waitingAckFrom_FIN = INSTRUCTION_END_Actionneur;
+        flag.wait_all(AckFrom_FIN_FLAG);
+        gameEtat = ETAT_GAME_INSTRUCTION_FINIE;
+    }
+    break;
 
         // else if (instruction.arg1 == 90) // action poser ou lacher
         // {
@@ -1083,69 +1129,12 @@ void procesInstructions(Instruction instruction)
         //     flag.wait_all(AckFrom_FLAG, timeopr);
         // }
 
-        else if (instruction.arg1 == 160) // action prendreG
-        {
-            threadCAN.send(prendreG);
-            waitingAckID = prendreG;
-            waitingAckID_FIN = prendreG;
-            printf("Action prendre gauche (ID CAN: 0x171)\n");
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-        else if (instruction.arg1 == 165) // action prendreD
-        {
-            threadCAN.send(prendreD);
-            waitingAckID = prendreD;
-            waitingAckID_FIN = prendreD;
-            printf("Action prendre droite (ID CAN: 0x172)\n");
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-
-        else if (instruction.arg1 == 170) // action lacherG
-        {
-            threadCAN.send(poserG, uint8_t(instruction.arg2), uint8_t(instruction.arg3));
-            waitingAckID = poserG;
-            waitingAckID_FIN = poserG;
-            printf("Action lacher gauche (ID CAN: 0x014)\n");
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-
-        else if (instruction.arg1 == 175) // action lacherD
-        {
-            threadCAN.send(poserD, uint8_t(instruction.arg2), uint8_t(instruction.arg3));
-            waitingAckID = poserD;
-            waitingAckID_FIN = poserD;
-            printf("Action lacher droite (ID CAN: 0x015)\n");
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-        else if (instruction.arg1 == 180)// action trier
-        {
-            threadCAN.send(trier, uint8_t(instruction.arg2));
-            waitingAckID = trier;
-            waitingAckID_FIN = trier;
-            printf("Action trier (ID CAN: 0x016)\n");
-            flag.wait_all(AckFrom_FLAG, timeopr);
-        }
-        else if (instruction.arg1 == 130)
-        {
-            threadCAN.send(ATTENDRE, uint8_t(instruction.arg2));
-            waitingAckID = ATTENDRE;
-            waitingAckID_FIN = ATTENDRE;
-            printf("Action attendre (ID CAN: 0x00C)\n");
-        }
-
-        
-        waitingAckFrom_FIN = INSTRUCTION_END_Actionneur;
-        flag.wait_all(AckFrom_FIN_FLAG);
-        gameEtat = ETAT_GAME_INSTRUCTION_FINIE;
-    }
-    break;
-
     case POSITION:
     {
         actionPrecedente = POSITION;
-        uint16_t x;
+        uint16_t x = instruction.arg1;
         uint16_t y = instruction.arg2;
-        int16_t theta;
+        int16_t theta = instruction.arg3;
 
         if (color == Jaune)
         {                                // code inversion sur X Fait
@@ -1579,7 +1568,7 @@ E_Stratposdebut etat_pos = RECALAGE_1;
 //     */
 
 // ACKNOWLEDGE_MOTEUR ACKNOWLEDGE_ACTIONNEURS INSTRUCTION_END_PINCE
-string AckToString(int id)
+string AckToString(int id) 
 {
     switch (id)
     {

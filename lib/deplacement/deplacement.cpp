@@ -30,7 +30,7 @@ void Deplacement::rotation(int16_t angle)
 /*********************************************************************************************/
 void Deplacement::toutDroit(int16_t distance)
 {
-    m_can->send(ASSERVISSEMENT_RECALAGE, (uint16_t)distance, (uint8_t)0, (uint16_t)0, (uint8_t)0);
+    m_can->send(ASSERVISSEMENT_LINE, (uint16_t)distance, (uint8_t)0, (uint16_t)0, (uint8_t)0);
 }
 
 void Deplacement::recalage(int16_t distance, uint8_t recalage, uint16_t newValue)

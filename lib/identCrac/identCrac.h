@@ -49,6 +49,7 @@
 #define ASSERVISSEMENT_GO_TO_XYT 0x39 // Asservissement position XYZ (x en mm, y en mm,theta en degré)
 #define ASSERVISSEMENT_XYT 0x020  // Asservissement (x,y,theta)  (0 : au choix 1 : avant -1 : arrière)
 #define ASSERVISSEMENT_COURBURE 0x021   // Asservissement rayon de courbure  (+ gauche, - droite , sens : 1avt , -1arr; enchainement => 1 oui, 0 => non, 2=>derniére instruction de l'enchainement)
+#define ASSERVISSEMENT_ROTATION 0x023  // Asservissement rotation
 #define ASSERVISSEMENT_CONFIG 0x022     // Asservissement paramètre
 #define ASSERVISSEMENT_RECALAGE 0x024   // Moteur tout droit  (recalage : 0 mouvement seul, 1 x, 2y valeur : coordonnée à laquelle est recalé x/y; enchainement => 1 oui, 0 => non)
 #define ASSERVISSEMENT_ERREUR 0x025     // Erreur asservissement  (Indique la raison de l'arrêt de l'asservissement)po
@@ -248,7 +249,7 @@
 // #define ODOMETRIE_BIG_POSITION 0x28  // Odométrie position robot  (Position actuel du robot)
 // #define ODOMETRIE_SMALL_POSITION 0x26  // Odométrie position robot  (Position actuel du robot)
 #define IDCAN_SET_SCORE 0x97
-#define ASSERVISSEMENT_ROTATION 0x23  // Asservissement rotation
+
 #define VENT_AV 0x900
 #define VENT_AR 0x901
 
