@@ -7,7 +7,7 @@
 #define GAME_START 0x001              // Startdebut du match
 #define STOP 0x003                 // stop
 #define GAME_END 0x004           // Stop fin du match
-#define Pos_Init 0x005                     //  a revoir  position initiale deja dans etat debut match
+// #define Pos_Init 0x005                     //  a revoir  position initiale deja dans etat debut match
 #define JACK_RETIRE 0x007                // Jack retiré 
 #define GLOBAL_JACK 0x008                 // Gestion Jack
 #define ACKNOWLEDGE_JACK 0X009        // Ack Jack inséré 
@@ -44,6 +44,7 @@
 #define ASSERVISSEMENT_STOP 0x002      // Stop moteur
 #define ASSERVISSEMENT_SPEED_DANGER 0x006      // Vitesse en danger
 #define ASSERVISSEMENT_ERROR_MOTEUR 0x15 //robot s'arrete car percuté quelque chose
+#define ASSERVISSEMENT_POS_INIT 0x005 // Position initiale du robot (x en mm, y en mm,theta en degré)
 #define ASSERVISSEMENT_XYT_ROTATE 0x37 // Asservissement position XYT avec rotation initiale
 #define ASSERVISSEMENT_LINE 0x38       // Asservissement position XYT ligne droite
 #define ASSERVISSEMENT_GO_TO_XYT 0x39 // Asservissement position XYZ (x en mm, y en mm,theta en degré)

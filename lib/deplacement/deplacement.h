@@ -13,6 +13,7 @@ public:
     Deplacement(ThreadCAN &threadCAN);
     void positionXYTheta(uint16_t x, uint16_t y, int16_t theta, uint8_t sens);
     void rotation(int16_t angle);
+    void posInit(uint16_t x, uint16_t y, int16_t theta);
 /*********************************************************************************************/
 /* FUNCTION NAME: GoStraight                                                                 */
 /* DESCRIPTION  : Transmission CAN correspondant à une ligne droite, avec ou sans recalage   */

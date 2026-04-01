@@ -16,6 +16,11 @@ void Deplacement::rotation(int16_t angle)
     m_can->send(ASSERVISSEMENT_ROTATION, (uint16_t)angle);
 }
 
+void Deplacement :: posInit(uint16_t x, uint16_t y, int16_t theta)
+{
+    m_can->send(ASSERVISSEMENT_POS_INIT, x, y, (uint16_t)theta);
+}
+
 /*********************************************************************************************/
 /* FUNCTION NAME: GoStraight                                                                 */
 /* DESCRIPTION  : Transmission CAN correspondant à une ligne droite, avec ou sans recalage   */
