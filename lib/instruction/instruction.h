@@ -21,8 +21,8 @@ typedef enum
 
 typedef enum
     {
-        Jaune = 0,
-        BLEU = 1
+        BLEU = 0,
+        Jaune = 1
     }couleurDepart;
 
 
