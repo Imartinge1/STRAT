@@ -148,13 +148,14 @@ void Ihm::show(const vector<string> fichiers)
 
     couleur = lv_btn_create(cont); // Crée un bouton dans le conteneur
     label = lv_label_create(couleur);
-    lv_label_set_text(label, "Couleur");
-    lv_obj_add_flag(couleur, LV_OBJ_FLAG_CHECKABLE);
+    lv_label_set_text(label, "Couleur"); 
+    lv_obj_add_flag(couleur, LV_OBJ_FLAG_CHECKABLE); 
 
-    lv_obj_set_style_bg_color(couleur, lv_color_make(0, 92, 230), LV_STATE_CHECKED);  // Bleu
-    lv_obj_set_style_bg_color(couleur, lv_color_make(255, 255, 0), LV_STATE_DEFAULT); // Jaune
+    lv_obj_set_style_bg_color(couleur, lv_color_make(255, 255, 0), LV_STATE_CHECKED); // Jaune
+    lv_obj_set_style_bg_color(couleur, lv_color_make(0, 92, 230), LV_STATE_DEFAULT);  // Bleu
+    
 
-    lv_obj_center(label);
+    lv_obj_center(label); 
 
     lv_obj_set_grid_cell(couleur, LV_GRID_ALIGN_STRETCH, 1, 1,
                          LV_GRID_ALIGN_STRETCH, 0, 2);

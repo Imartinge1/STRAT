@@ -217,11 +217,11 @@ lv_obj_t * lv_obj_create(lv_obj_t * parent)
  * Attribute set
  *----------------*/
 
-void lv_obj_add_flag(lv_obj_t * obj, lv_obj_flag_t f)
+void lv_obj_add_flag(lv_obj_t * obj, lv_obj_flag_t f)  
 {
     LV_ASSERT_OBJ(obj, MY_CLASS);
 
-    bool was_on_layout = lv_obj_is_layout_positioned(obj);
+    bool was_on_layout = lv_obj_is_layout_positioned(obj); 
 
     if(f & LV_OBJ_FLAG_HIDDEN) lv_obj_invalidate(obj);
 
