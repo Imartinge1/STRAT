@@ -21,7 +21,7 @@ int waitingAckFrom_FIN;
 unsigned short waitingId = 0;
 volatile E_stratGameEtat gameEtat = ETAT_GAME_INIT;
 EventFlags flag;
-couleurDepart color;
+couleurDepart color; // 0 -> JAUNE | 1 -> VIOLET
 int blackdoves = 0;
 
 // // E_stratGameEtat gameEtat = ETAT_CHECK_CARTES;
@@ -623,7 +623,7 @@ void procesInstructions(Instruction instruction) // Traite l'instruction, envoie
 
         if (color == Jaune)
         {                                // code inversion sur X Fait
-            x = 2000 - instruction.arg1; // Inversion du X
+            y = 3000 - instruction.arg2; // Inversion du X
             theta = 1800 + instruction.arg3;
             if (theta > 1800)
             {
@@ -636,7 +636,7 @@ void procesInstructions(Instruction instruction) // Traite l'instruction, envoie
         }
         else
         {
-            x = instruction.arg1;
+            y = instruction.arg2;
             theta = instruction.arg3;
         }
 
@@ -721,7 +721,7 @@ void procesInstructions(Instruction instruction) // Traite l'instruction, envoie
         {
             waitingAckID = ASSERVISSEMENT_ROTATION;
             waitingAckFrom = ACKNOWLEDGE_MOTEUR;
-            angle = angle / 10;
+            angle = angle;
             deplacement.rotation(angle);
             flag.wait_all(AckFrom_FLAG, timeopr);
 
@@ -737,7 +737,7 @@ void procesInstructions(Instruction instruction) // Traite l'instruction, envoie
 
     case MV_LINE:
     {
-        waitingAckID = ASSERVISSEMENT_RECALAGE;
+        waitingAckID = ASSERVISSEMENT_LINE;
         waitingAckFrom = ACKNOWLEDGE_MOTEUR;
 
         actionPrecedente = MV_LINE;
@@ -783,7 +783,7 @@ void procesInstructions(Instruction instruction) // Traite l'instruction, envoie
 
         if (color == Jaune)
         {
-            x = 2000 - instruction.arg1;
+            y = 3000 - instruction.arg2;
             theta = 1800 + instruction.arg3;
 
             if (theta > 1800)
@@ -797,7 +797,7 @@ void procesInstructions(Instruction instruction) // Traite l'instruction, envoie
         }
         else
         {
-            x = instruction.arg1;
+            y = instruction.arg2;
             theta = instruction.arg3;
         }
 
