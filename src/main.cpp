@@ -172,10 +172,10 @@ int main()
             }
         }
 
-        switch (etat) 
+        switch (etat)
         {
 
-        case multi_init: 
+        case multi_init:
 
             if (ihm.departClicked())
             {
@@ -558,7 +558,7 @@ bool lectureFichier(int choix)
         fclose(f);
         return true;
     }
-    
+
     return false;
 }
 //  bool lectureFichier(int choix) {
@@ -629,4 +629,3 @@ int countStrategyFiles()
 {
     return fichiers.size();
 }
-

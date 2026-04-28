@@ -47,10 +47,10 @@
 #define ASSERVISSEMENT_POS_INIT 0x005 // Position initiale du robot (x en mm, y en mm,theta en degré)
 #define ASSERVISSEMENT_XYT_ROTATE 0x37 // Asservissement position XYT avec rotation initiale
 #define ASSERVISSEMENT_LINE 0x38       // Asservissement position XYT ligne droite
-#define ASSERVISSEMENT_GO_TO_XYT 0x39 // Asservissement position XYZ (x en mm, y en mm,theta en degré)
-#define ASSERVISSEMENT_XYT 0x020  // Asservissement (x,y,theta)  (0 : au choix 1 : avant -1 : arrière)
+#define ASSERVISSEMENT_GO_TO_XYT 0x40 // Asservissement position XYZ (x en mm, y en mm,theta en degré)
+#define ASSERVISSEMENT_XYT 0x039  // Asservissement (x,y,theta)  (0 : au choix 1 : avant -1 : arrière)
 #define ASSERVISSEMENT_COURBURE 0x021   // Asservissement rayon de courbure  (+ gauche, - droite , sens : 1avt , -1arr; enchainement => 1 oui, 0 => non, 2=>derniére instruction de l'enchainement)
-#define ASSERVISSEMENT_ROTATION 0x023  // Asservissement rotation
+#define ASSERVISSEMENT_ROTATION 0x037  // Asservissement rotation
 #define ASSERVISSEMENT_CONFIG 0x022     // Asservissement paramètre
 #define ASSERVISSEMENT_RECALAGE 0x024   // Moteur tout droit  (recalage : 0 mouvement seul, 1 x, 2y valeur : coordonnée à laquelle est recalé x/y; enchainement => 1 oui, 0 => non)
 #define ASSERVISSEMENT_ERREUR 0x025     // Erreur asservissement  (Indique la raison de l'arrêt de l'asservissement)po
@@ -103,7 +103,7 @@
 #define RESET_ACTIONNEURS 0x034 // Reset actionneurs
 #define RESET_VENTOUSES 0x035      // Reset pompes
 #define RESET_AX12 0x036        // Reset AX12
-#define RESET_TELEMETRE 0x037   // Reset telemetre
+#define RESET_TELEMETRE 0x023   // Reset telemetre
 #define RESET_STRAT 0x038        // Reset stratégie
 
 // Erreurs
