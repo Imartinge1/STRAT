@@ -624,7 +624,7 @@ void procesInstructions(Instruction instruction) // Traite l'instruction, envoie
         if (color == Jaune)
         {                                // code inversion sur X Fait
             y = 3000 - instruction.arg2; // Inversion du X
-            theta = 1800 + instruction.arg3;
+            theta = - instruction.arg3;
             if (theta > 1800)
             {
                 theta -= 3600;
@@ -784,7 +784,7 @@ void procesInstructions(Instruction instruction) // Traite l'instruction, envoie
         if (color == Jaune)
         {
             y = 3000 - instruction.arg2;
-            theta = 1800 + instruction.arg3;
+            theta = - instruction.arg3;
 
             if (theta > 1800)
             {

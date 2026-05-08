@@ -150,9 +150,10 @@ void Ihm::show(const vector<string> fichiers)
     label = lv_label_create(couleur);
     lv_label_set_text(label, "Couleur"); 
     lv_obj_add_flag(couleur, LV_OBJ_FLAG_CHECKABLE); 
+    lv_obj_add_state(couleur,LV_STATE_CHECKED);
 
-    lv_obj_set_style_bg_color(couleur, lv_color_make(255, 255, 0), LV_STATE_CHECKED); // Jaune
-    lv_obj_set_style_bg_color(couleur, lv_color_make(0, 92, 230), LV_STATE_DEFAULT);  // Bleu
+    lv_obj_set_style_bg_color(couleur, lv_color_make(255, 255, 0), LV_STATE_DEFAULT); // Jaune
+    lv_obj_set_style_bg_color(couleur, lv_color_make(0, 92, 230), LV_STATE_CHECKED);  // Bleu
     
 
     lv_obj_center(label); 
