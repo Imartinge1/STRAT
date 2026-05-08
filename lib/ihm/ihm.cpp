@@ -150,7 +150,11 @@ void Ihm::show(const vector<string> fichiers)
     label = lv_label_create(couleur);
     lv_label_set_text(label, "Couleur"); 
     lv_obj_add_flag(couleur, LV_OBJ_FLAG_CHECKABLE); 
+<<<<<<< HEAD
     lv_obj_add_state(couleur,LV_STATE_CHECKED);
+=======
+    lv_obj_add_state(couleur, LV_STATE_CHECKED); // Par défaut, la couleur est sélectionnée (BLEU)
+>>>>>>> 45b8e0b811604700618274d3d40dcf09608bff58
 
     lv_obj_set_style_bg_color(couleur, lv_color_make(255, 255, 0), LV_STATE_DEFAULT); // Jaune
     lv_obj_set_style_bg_color(couleur, lv_color_make(0, 92, 230), LV_STATE_CHECKED);  // Bleu
@@ -353,7 +357,7 @@ void Ihm::eventHandler(lv_event_t *e)
     // }
     else if (emetteur == ihm->depart)
     {
-        ihm->departCouleur = lv_obj_get_state(ihm->couleur);
+        ihm->departCouleur = lv_obj_get_state(ihm->couleur); // 0 = Jaune, 1 = Bleu
         ihm->departStrategie = int(lv_roller_get_selected(ihm->roller)) - 1;
         ihm->flags.set(IHM_FLAG_DEPART);
     }
@@ -383,14 +387,14 @@ bool Ihm::getFlag(IhmFlag f, bool clearIfSet)
 
 void Ihm::msgBoxRecalageInit(const string &strategie)
 {
-    m_threadLvgl->lock();
-    static const char *btns[] = {"Ok", ""};
-    string str = "Stratégie : " + strategie;
-    str += string("\nCouleur : ") + ((departCouleur == 0) ? string("Jaune\n") : string("BLEU\n"));
-    msgBoxRecalage = lv_msgbox_create(NULL, "Run\n", str.c_str(), btns, true);
+    m_threadLvgl->lock(); 
+    static const char *btns[] = {"Ok", ""}; 
+    string str = "Stratégie : " + strategie; 
+    str += string("\nCouleur : ") + ((departCouleur == 0) ? string("Jaune\n") : string("BLEU\n")); 
+    msgBoxRecalage = lv_msgbox_create(NULL, "Run\n", str.c_str(), btns, true); 
     lv_obj_set_size(msgBoxRecalage, 740, 420);
     lv_obj_center(msgBoxRecalage);
-    lv_obj_set_style_bg_color(msgBoxRecalage, (departCouleur == 0) ? lv_color_make(255, 255, 0) : lv_color_make(0, 92, 230), 0);
+    lv_obj_set_style_bg_color(msgBoxRecalage, (departCouleur == 0) ? lv_color_make(255, 255, 0) : lv_color_make(0, 92, 230), 0); 
     lv_obj_set_style_text_color(msgBoxRecalage, lv_color_white(), 0);
     lv_obj_t *boxbtns = lv_msgbox_get_btns(msgBoxRecalage);
     lv_obj_update_layout(msgBoxRecalage);
