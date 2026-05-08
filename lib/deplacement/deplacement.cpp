@@ -3,7 +3,7 @@
 
 Deplacement::Deplacement(ThreadCAN &threadCAN)
 {
-    m_can = &threadCAN;
+    m_can = &threadCAN;    
 }
 
 void Deplacement::positionXYTheta(uint16_t x, uint16_t y, int16_t theta, uint8_t sens)
